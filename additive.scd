@@ -1,28 +1,6 @@
-// ************************************
-// Additive Synthesis Demo (GUI)
-// Patch 4 - Inharmonic Partials with Multislider
-// Bruno Ruviaro, 2013-07-24
-// ************************************
+(
 
-/*
-
-Multislider interface to control up to 16 inharmonic partials of a timbre.
-
-Two modes of play:
-
-"Continuous Tone" - it simply plays a continuous tone as you change the spectrum.
-"Percussive Tone" - you can play single percussive tones triggered with the 'perc' button, and control attack and decay values of these notes.
-
-How to start: select all (ctrl + A), then evaluate (ctrl + enter).
-(on a Mac, use the command key instead of control)
-
-Click and drag on the big white rectangle to draw the spectrum.
-
-*/
-
-s.waitForBoot({
-
-	var spectrum, numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, sndBus, fundamentalBus, knobArray, partialArray;
+	var numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, fundamentalBus, knobArray, partialArray;
 
 	numharm = 16;
 
@@ -32,9 +10,9 @@ s.waitForBoot({
 	fundamentalBus.set(110);
 
 	ampBus = Bus.control(s);
-	ampBus.value = 0.1;
+	ampBus.value = 0.75;
 
-	sndBus = Bus.audio(s, 2);
+	~sndBus = Bus.audio(s, 2);
 
 	// Main window
 	Window.closeAll;
@@ -52,9 +30,8 @@ s.waitForBoot({
 	multiSlider.indexThumbSize = 29.0;
 	multiSlider.gap = 9;
 	multiSlider.action = {multiSlider.value.do({arg value, count;
-		spectrum[count].set(\amp, value)})};
+		~spectrum[count].set(\amp, value)})};
 
-	// Knob.new(win, Rect(20, 0, 30, 30));
 	knobArray = Array.fill(16, {Knob(win, 29@29)});
 
 	knobArray.do({arg item, count;
@@ -64,8 +41,8 @@ s.waitForBoot({
 			// update array of partials
 			partialArray[count] = knob.value.linlin(0, 1, -0.2, 0.2).round(0.01) + count + 1;
 			// if this partial is currently playing, update its partial number (thus freq):
-			if(spectrum[count].isNil.not,
-				{spectrum[count].set(\partial, partialArray[count])})}});
+			if(~spectrum[count].isNil.not,
+				{~spectrum[count].set(\partial, partialArray[count])})}});
 
 
 	// Initialize array of partials with first knob values
@@ -94,7 +71,7 @@ s.waitForBoot({
 		label: "VOLUME",
 		controlSpec: ControlSpec(1, 100, \lin, 1, 10, "%"),
 		action: {|ez| ampBus.set(ez.value/100)},
-		initVal: 10,
+		initVal: 75,
 		unitWidth: 30)
 	.setColors(
 		stringColor: Color.black,
@@ -133,7 +110,7 @@ s.waitForBoot({
 	singleNoteButton.states = [["perc"]];
 	singleNoteButton.action = {
 		if(modeButton.value==1, {
-			percussiveOut = Synth("percussiveOut", [\inbus, sndBus, \att, att, \rel, rel, \amp, ampBus.asMap], addAction: \addToTail);
+			percussiveOut = Synth("percussiveOut", [\inbus, ~sndBus, \att, att, \rel, rel, \amp, ampBus.asMap], addAction: \addToTail);
 			"bang!".postln});
 	};
 
@@ -173,31 +150,54 @@ s.waitForBoot({
 		}).add;
 
 		SynthDef("continuousOut", {
-			arg inbus, amp = 0.1, gate = 1, att = 0.1, sus = 1, rel = 1;
-			var env = EnvGen.kr(Env.asr(att, sus, rel), gate);
+			arg amp = 0.1, gate = 1, att = 0.1, sus = 1, rel = 1;
+			var inbus, env = EnvGen.kr(Env.asr(att, sus, rel), gate);
+		    inbus = ~sndBus;
 			Out.ar(0, In.ar(inbus, 2) * amp * env * 0.05);
 		}).add;
 
 		SynthDef("percussiveOut", {
-			arg inbus, amp = 0.1, att = 0.01, rel = 2;
-			var env = EnvGen.kr(Env.perc(att, rel), doneAction: 2);
-			Out.ar(0, In.ar(inbus, 2) * amp * env * 0.05);
+		    arg out, amp = 0.1, attack = 0.01, release = 2, pan = 0, sustain = 1;
+			var inbus, sound, env;
+     		inbus = ~sndBus;
+
+		    env = EnvGen.ar(Env.perc(attack, release), timeScale:sustain, doneAction:2);
+			// sound = SinOsc.ar(440);
+			sound = In.ar(inbus, 2);
+
+			OffsetOut.ar(out,
+				DirtPan.ar(sound, ~dirt.numChannels, pan, env)
+			)
 		}).add;
 
 		// Wait for SynthDefs to be added...
 		s.sync;
 
 		// Now call the Synths:
-		spectrum = Array.fill(numharm, {arg i; Synth("additive-multislider-2", [\fundamental, fundamentalBus.asMap, \partial, partialArray[i], \amp, 0.0, \outbus, sndBus])});
+	    ~spectrum = Array.fill(numharm, {
+				arg i;
+				Synth("additive-multislider-2", [\fundamental, fundamentalBus.asMap, \partial, partialArray[i], \amp, 0.0, \outbus, ~sndBus])
+		    });
 
-		continuousOut = Synth("continuousOut", [\inbus, sndBus, \amp, ampBus.asMap], addAction: \addToTail);
+		continuousOut = Synth("continuousOut", [\inbus,~sndBus, \amp, ampBus.asMap], addAction: \addToTail);
 
 	}.fork;
 
 	partialArray.postln;
 
-	s.meter;
+	// View running synths
+	Server.local.plotTree;
+
+
+	// s.meter;
 	"Additive Synthesis Demo 2".postln;
 	"".postln;
+)
 
-}); // end of block.
+
+// Mess about with the synth engine values
+(
+~spectrum[0].set(\amp, 1);
+~spectrum[3].set(\amp, 1);
+~spectrum[8].set(\amp, 1);
+)

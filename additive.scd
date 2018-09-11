@@ -12,18 +12,18 @@
 	ampBus = Bus.control(s);
 	ampBus.value = 0.75;
 
-	~sndBus = Bus.audio(s, 2);
+    ~sndBus = Bus.audio(s, 2);
 
-	// Main window
+	// Main window ///////////////////////////////////////////////////////////////////////
 	Window.closeAll;
-	win = Window.new("Additive Synthesis", Rect(400, 30, 660, 670));
-	win.view.decorator = FlowLayout(win.view.bounds, 20@20, 10@10);
+	win = Window.new("Additive Synthesis", Rect(400, 30, 1320, 1340));
+	win.view.decorator = d = FlowLayout(win.view.bounds, 20@20, 10@10);
 	win.front;
 
 	win.onClose = {s.freeAll; "Done!".postln; "".postln};
 	CmdPeriod.doOnce({win.close});
 
-	// Multislider
+	// Multislider /////////////////////////////////////////////////////////////////////////
 	multiSlider = MultiSliderView(win, Rect(0, 0, 620, 250));
 	multiSlider.value = Array.fill(numharm, {0.0});
 	multiSlider.isFilled = true;
@@ -31,6 +31,8 @@
 	multiSlider.gap = 9;
 	multiSlider.action = {multiSlider.value.do({arg value, count;
 		~spectrum[count].set(\amp, value)})};
+
+    d.nextLine();
 
 	knobArray = Array.fill(16, {Knob(win, 29@29)});
 
@@ -45,7 +47,9 @@
 				{~spectrum[count].set(\partial, partialArray[count])})}});
 
 
-	// Initialize array of partials with first knob values
+    d.nextLine();
+   // Knobs //////////////////////////////////////////////////////////////////////////////
+   // Initialize array of partials with first knob values
 	partialArray.do({arg item, count;
 		partialArray[count] = knobArray[count].value.linlin(0, 1, -0.2, 0.2).round(0.01) + count + 1});
 	// in the line above, "+ 0.5" adjusts for knob center = 0.5 (becomes center = 1);
@@ -64,7 +68,9 @@
 		sliderBackground: Color.grey(0.9),
 		numNormalColor: Color.black);
 
-	// Volume slider
+    d.nextLine();
+
+	// Volume slider //////////////////////////////////////////////////////////////////////
 	volumeSlider = EZSlider(
 		parent: win,
 		bounds: 620 @ 40,
@@ -77,6 +83,8 @@
 		stringColor: Color.black,
 		sliderBackground: Color.grey(0.9),
 		numNormalColor: Color.black);
+
+    d.nextLine();
 
 	// Mode button (toggle between continuous and percussive)
 	modeButton = Button(win, 620 @110);
@@ -100,6 +108,8 @@
 				subwin.background = Color.grey(0.6, 1);
 			}
 	)};
+
+    d.nextLine();
 
 	// CompositeView (sub window)
 	subwin = CompositeView(win, 620@100);
@@ -128,6 +138,8 @@
 		sliderBackground: Color.grey(0.7),
 		numNormalColor: Color.black);
 
+    d.nextLine();
+
 	releaseSlider = EZSlider(
 		parent: subwin,
 		bounds: Rect(80, 55, 530, 30),
@@ -140,6 +152,8 @@
 		stringColor: Color.black,
 		sliderBackground: Color.grey(0.7),
 		numNormalColor: Color.black);
+
+    d.nextLine();
 
 	// Routine to add SynthDefs, wait for Server reply, then start Synths
 	{

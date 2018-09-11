@@ -1,6 +1,6 @@
 (
 
-	var numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, fundamentalBus, knobArray, partialArray;
+	var numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, fundamentalBus, knobArray, partialArray, envArray;
 
 	numharm = 16;
 
@@ -48,6 +48,16 @@
 
 
     d.nextLine();
+
+	// Envelopes //////////////////////////////////////////////////////////////////////////
+	envArray = Array.fill(16, {EnvelopeView(win, 300@100)});
+
+    envArray.do({
+	arg item, count;
+        envArray[count].style = \rects;
+     	envArray[count].setEnv(Env([0, 1], [1,1], \exp))});
+
+
    // Knobs //////////////////////////////////////////////////////////////////////////////
    // Initialize array of partials with first knob values
 	partialArray.do({arg item, count;

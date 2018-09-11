@@ -213,5 +213,22 @@
 (
 ~spectrum[0].set(\amp, 1);
 ~spectrum[3].set(\amp, 1);
-~spectrum[8].set(\amp, 1);
+~spectrum[15].set(\amp, 0);
+
+~spectrum[0].postln;
+
+~spectrum[0].get(\fundamental, { arg value; ("fund is now:" + value).postln; });
+~spectrum[0].get(\partial, { arg value; ("partial is now:" + value).postln; });
+~spectrum[0].get(\amp, { arg value; ("amp is now:" + value).postln; });
+~spectrum[7].get(\fundamental, { arg value; ("fund is now:" + value).postln; });
+~spectrum[7].get(\partial, { arg value; ("partial is now:" + value).postln; });
+~spectrum[7].get(\amp, { arg value; ("amp is now:" + value).postln; });
+~spectrum[15].get(\fundamental, { arg value; ("fund is now:" + value).postln; });
+~spectrum[15].get(\partial, { arg value; ("partial is now:" + value).postln; });
+~spectrum[15].get(\amp, { arg value; ("amp is now:" + value).postln; });
+
+
+
+~spectrum[15].trace;
+
 )

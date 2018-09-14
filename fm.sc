@@ -48,6 +48,10 @@ s.waitForBoot({
 		levels: tmpEnvLevels,
 		times: tmpEnvTimes
 	);
+
+    ~modIndexEnvLevels = Bus.control(s, numberOfPoints);
+    ~modIndexEnvTimes = Bus.control(s, numberOfPoints-1);
+
 	~modIndexEnv = Env.new(
 		levels: tmpEnvLevels,
 		times: tmpEnvTimes
@@ -170,9 +174,8 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
-		~modIndexEnv.levels = b.value[1];
-		~modIndexEnv.times = b.value[0].differentiate.drop(1);
-		scaleEnv.value(~modIndexEnv, 0, 10);
+        ~modIndexEnvLevels.setn(scaleLevels.value(b.value[1], 0, 10));
+        ~modIndexEnvTimes.setn(b.value[0].differentiate.drop(1));
 	})
 	.thumbSize_(18);
 
@@ -270,7 +273,6 @@ s.waitForBoot({
         "yea boy!".postln;
 		Synth.new("freq-mod-with-envs", [
             \outbus, ~sndBus,
-			\modIndexEnv, ~modIndexEnv
 		]);
 
         // Synth("amp", [\amp, 0.5], addAction: \addToTail);
@@ -355,7 +357,9 @@ s.waitForBoot({
 
 		SynthDef("freq-mod-with-envs", {
             arg outbus;
-			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, modIndexCtl, carrier, modulator, amp, ampEnv, pan = 0.5;
+			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, carrier, modulator, amp, ampEnv;
+
+            var pan = 0.5;
 
             var ampEnvLevels = ~ampEnvLevels.kr;
             var ampEnvTimes = ~ampEnvTimes.kr;
@@ -365,6 +369,9 @@ s.waitForBoot({
 
             var modFreqEnvLevels = ~modFreqEnvLevels.kr;
             var modFreqEnvTimes = ~modFreqEnvTimes.kr;
+
+            var modIndexEnvLevels = ~modIndexEnvLevels.kr;
+            var modIndexEnvTimes = ~modIndexEnvTimes.kr;
 
             var envDuration = ~ampEnvDuration.kr;
 
@@ -376,9 +383,9 @@ s.waitForBoot({
             modFreqEnv.duration_(envDuration);
 			modFreq = EnvGen.kr(modFreqEnv);
 
-			modIndexEnv = Env.newClear(numberOfPoints);
-			modIndexCtl = \modIndexEnv.kr(modIndexEnv.asArray);
-			modIndex = EnvGen.kr(modIndexCtl);
+			modIndexEnv = Env.new(modIndexEnvLevels, modIndexEnvTimes);
+			modIndexEnv.duration_(envDuration);
+			modIndex = EnvGen.kr(modIndexEnv);
 
             ampEnv = Env.new(ampEnvLevels, ampEnvTimes);
             ampEnv.duration_(envDuration);

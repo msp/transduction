@@ -218,7 +218,7 @@ s.waitForBoot({
 		parent: win,
 		bounds: Rect(665, 184, 240, 40),
 		label: "dur",
-		controlSpec: ControlSpec(1, 13, \lin, 0.1, timeScale, "sec"),
+		controlSpec: ControlSpec(0.1, 13, \lin, 0.1, timeScale, "sec"),
 		action: {|ez|
 			timeScale = ez.value;
 			evCarrFreq.action.value(evCarrFreq);

@@ -17,7 +17,7 @@ Select all (ctrl + A), then evaluate (ctrl + period).
 
 s.waitForBoot({
 
-	var numberOfPoints, scaleEnv, win, subwin, evCarrFreq, evModFreq, evModIndex, evAmp, font, font2, labelColor, windowColor, timeScale, volumeSlider, durationSlider, printEnvData, adjustEnv, masterOut, presetArray, presetButtons;
+	var numberOfPoints, scaleEnv, win, subwin, evCarrFreq, evModFreq, evModIndex, evAmp, font, font2, labelColor, windowColor, timeScale, volumeSlider, durationSlider, printEnvData, adjustEnv, masterOut, presetArray, presetButtons, tmpAmpEnvLevels, tmpAmpEnvTimes;
 
 	timeScale = 3; // total duration of a "note"
 	numberOfPoints = 8; // how many points in the breakpoint envelopes
@@ -46,11 +46,22 @@ s.waitForBoot({
 		times: ({1.0.rand}!(numberOfPoints-1)).normalizeSum
 	);
 
-	~ampEnv = Env.new(
-		// using 'put' to make sure first and last are 0.0
-		levels: ({1.0.rand}!numberOfPoints).put(0, 0).put(numberOfPoints-1, 0),
-		times: ({1.0.rand}!(numberOfPoints-1)).normalizeSum
-	);
+    ~ampEnvLevels = Bus.control(s, numberOfPoints);
+    ~ampEnvTimes = Bus.control(s, numberOfPoints-1);
+    ~ampEnvDuration = Bus.control(s, 1);
+
+    // using 'put' to make sure first and last are 0.0
+    tmpAmpEnvLevels = ({1.0.rand}!numberOfPoints).put(0, 0).put(numberOfPoints-1, 0);
+    tmpAmpEnvTimes = ({1.0.rand}!(numberOfPoints-1)).normalizeSum;
+
+    ~ampEnvLevels.setn(tmpAmpEnvLevels);
+    ~ampEnvTimes.setn(tmpAmpEnvTimes);
+
+    //
+    ~ampEnv = Env.new(
+        levels: tmpAmpEnvLevels,
+        times: tmpAmpEnvTimes
+    );
 	/*
 	carrFreqEnv = Env.new([0.5, 0.5, 0.4, 0.5], [0.3, 0.3, 0.3, 0.1]);
 	modFreqEnv = Env.new([0.25, 0.25, 0.25, 0.25], [0.3, 0.3 ,0.4]);
@@ -171,9 +182,9 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
-		~ampEnv.levels = b.value[1];
-		~ampEnv.times = b.value[0].differentiate.drop(1);
-		~ampEnv.duration_(timeScale);
+        ~ampEnvLevels.setn(b.value[1]);
+        ~ampEnvTimes.setn(b.value[0].differentiate.drop(1));
+        ~ampEnvDuration.set(timeScale);
 	})
 	.thumbSize_(18);
 
@@ -259,8 +270,7 @@ s.waitForBoot({
             \outbus, ~sndBus,
 			\carrFreqEnv, ~carrFreqEnv,
 			\modFreqEnv, ~modFreqEnv,
-			\modIndexEnv, ~modIndexEnv,
-			\ampEnv, ~ampEnv
+			\modIndexEnv, ~modIndexEnv
 		]);
 
         // Synth("amp", [\amp, 0.5], addAction: \addToTail);
@@ -340,10 +350,11 @@ s.waitForBoot({
 
 		SynthDef("freq-mod-with-envs", {
             arg outbus;
-			var carrFreq, carrFreqEnv, carrFreqCtl, modFreq, modFreqEnv, modFreqCtl, modIndex, modIndexEnv, modIndexCtl, carrier, modulator, amp, ampEnv, ampCtl, pan = 0.5;
+			var carrFreq, carrFreqEnv, carrFreqCtl, modFreq, modFreqEnv, modFreqCtl, modIndex, modIndexEnv, modIndexCtl, carrier, modulator, amp, ampEnv, pan = 0.5;
 
-			// note: variable 'numberOfPoints' is defined
-			// at very beginning of the page.
+            var envLevels = ~ampEnvLevels.kr;
+            var envTimes = ~ampEnvTimes.kr;
+            var envDuration = ~ampEnvDuration.kr;
 
 			carrFreqEnv = Env.newClear(numberOfPoints);
             carrFreqCtl = \carrFreqEnv.kr(carrFreqEnv.asArray);
@@ -357,9 +368,9 @@ s.waitForBoot({
 			modIndexCtl = \modIndexEnv.kr(modIndexEnv.asArray);
 			modIndex = EnvGen.kr(modIndexCtl);
 
-			ampEnv = Env.newClear(numberOfPoints);
-			ampCtl = \ampEnv.kr(ampEnv.asArray);
-			amp = EnvGen.kr(ampCtl, doneAction: Done.freeSelf);
+            ampEnv = Env.new(envLevels, envTimes);
+            ampEnv.duration_(envDuration);
+            amp = EnvGen.kr(ampEnv, doneAction: Done.freeSelf);
 
 			modulator = SinOsc.ar(freq: modFreq, mul: modIndex * modFreq);
             carrier = SinOsc.ar(freq: carrFreq + modulator, mul: amp);

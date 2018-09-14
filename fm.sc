@@ -356,7 +356,7 @@ s.waitForBoot({
 	{
 
 		SynthDef("freq-mod-with-envs", {
-            arg outbus;
+            arg out;
 			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, carrier, modulator, amp, ampEnv;
 
             var pan = 0.5;
@@ -394,8 +394,10 @@ s.waitForBoot({
 			modulator = SinOsc.ar(freq: modFreq, mul: modIndex * modFreq);
             carrier = SinOsc.ar(freq: carrFreq + modulator, mul: amp);
 
-            Out.ar(0, [carrier, carrier]);
-            // Out.ar(outbus, [carrier, carrier]);
+            OffsetOut.ar(out,
+                DirtPan.ar([carrier, carrier] , ~dirt.numChannels, pan)
+            );
+
 		}).add;
 
 

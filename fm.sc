@@ -40,7 +40,11 @@ s.waitForBoot({
 		levels: tmpEnvLevels,
 		times: tmpEnvTimes
 	);
-	~modFreqEnv = Env.new(
+
+    ~modFreqEnvLevels = Bus.control(s, numberOfPoints);
+    ~modFreqEnvTimes = Bus.control(s, numberOfPoints-1);
+
+    ~modFreqEnv = Env.new(
 		levels: tmpEnvLevels,
 		times: tmpEnvTimes
 	);
@@ -153,9 +157,8 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
-		~modFreqEnv.levels = b.value[1];
-		~modFreqEnv.times = b.value[0].differentiate.drop(1);
-		scaleEnv.value(~modFreqEnv, 50, 1000);
+        ~modFreqEnvLevels.setn(scaleLevels.value(b.value[1], 50, 1000));
+        ~modFreqEnvTimes.setn(b.value[0].differentiate.drop(1));
 	})
 	.thumbSize_(18);
 
@@ -267,7 +270,6 @@ s.waitForBoot({
         "yea boy!".postln;
 		Synth.new("freq-mod-with-envs", [
             \outbus, ~sndBus,
-			\modFreqEnv, ~modFreqEnv,
 			\modIndexEnv, ~modIndexEnv
 		]);
 
@@ -353,7 +355,7 @@ s.waitForBoot({
 
 		SynthDef("freq-mod-with-envs", {
             arg outbus;
-			var carrFreq, carrFreqEnv, carrFreqCtl, modFreq, modFreqEnv, modFreqCtl, modIndex, modIndexEnv, modIndexCtl, carrier, modulator, amp, ampEnv, pan = 0.5;
+			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, modIndexCtl, carrier, modulator, amp, ampEnv, pan = 0.5;
 
             var ampEnvLevels = ~ampEnvLevels.kr;
             var ampEnvTimes = ~ampEnvTimes.kr;
@@ -361,15 +363,18 @@ s.waitForBoot({
             var carrFreqEnvLevels = ~carrFreqEnvLevels.kr;
             var carrFreqEnvTimes = ~carrFreqEnvTimes.kr;
 
+            var modFreqEnvLevels = ~modFreqEnvLevels.kr;
+            var modFreqEnvTimes = ~modFreqEnvTimes.kr;
+
             var envDuration = ~ampEnvDuration.kr;
 
 			carrFreqEnv = Env.new(carrFreqEnvLevels, carrFreqEnvTimes);
             carrFreqEnv.duration_(envDuration);
             carrFreq = EnvGen.kr(carrFreqEnv);
 
-			modFreqEnv = Env.newClear(numberOfPoints);
-			modFreqCtl = \modFreqEnv.kr(modFreqEnv.asArray);
-			modFreq = EnvGen.kr(modFreqCtl);
+			modFreqEnv = Env.new(modFreqEnvLevels, modFreqEnvTimes);
+            modFreqEnv.duration_(envDuration);
+			modFreq = EnvGen.kr(modFreqEnv);
 
 			modIndexEnv = Env.newClear(numberOfPoints);
 			modIndexCtl = \modIndexEnv.kr(modIndexEnv.asArray);

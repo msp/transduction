@@ -1,44 +1,36 @@
 Env([0, 1, 0.5, 0], [0.01, 0.2, 1]).test.plot
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// 14/09 00:52 - This works! So long as you recreate the synth def after changing the bus control
+// 15/09 12:16 - This works!
 
-// So, we might as well just split into individual synthdef args?!
-
-// Can then be used from Tidal and UI right?
+// But, if just split into individual synthdef args it can then be used from Tidal and UI right?
 
 // freq
-(
-a = Bus.control(s, 2).setn([700, 403]);
-)
+a = Bus.control(s, 2);
 
-// plot
-// Env([0, 1, 0.5, 0], [0.01, 0.2, 1]).test.plot
+a.setn([1050, 750]);
 
 // levels
-(
-b = Bus.control(s, 4).setn([0, 1, 0.8, 0]);
-)
+b = Bus.control(s, 4);
+
+b.setn([0, 1, 0.8, 0]);
 
 // times
-(
-c = Bus.control(s, 3).setn([0.5, 0.2, 0.1]);
-)
+c = Bus.control(s, 3);
 
-[9,6,7]
+c.setn([0.1, 0.2, 0.1]);
+
 
 // def
 (
 SynthDef(\rlpf, {
-    arg out, rq, t1 = 0.5, t2 = 0.2, t3 = 0.1;
+    arg out, rq, t1 = 0.1, t2 = 0.2, t3 = 0.1;
 
     var numberOfPoints = 4;
     var freqs = a.kr;
     var envLevels = b.kr;
-    // var envTimes = c.kr;
-    var envTimes = Array.with(t1, t2, t3);
+    var envTimes = c.kr;
+    // var envTimes = Array.with(t1, t2, t3);
 
     var ampEnv = Env.new(envLevels, envTimes);
     var env = EnvGen.kr(ampEnv, doneAction: Done.freeSelf);
@@ -48,6 +40,48 @@ SynthDef(\rlpf, {
 )
 
 
+Synth(\rlpf)
+
+// Send new bus levels above to change Env shape
+//
+// d1 $ s "rlpf"
+
+// OR
+
+// Or pass explicit params & switch out the envTimes line above
+//
+// (t1, _) = pF "t1" (Just 0.01)
+// (t2, _) = pF "t2" (Just 0.2)
+// (t3, _) = pF "t3" (Just 0.1)
+
+// d1 $ s "rlpf"
+// # t1 0.01
+// # t2 0.1
+// # t3 0.04
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// OLD /////////////////////////////////////////////////////////////////////////
 // This feels like the closet path but yet doesn't work 14/09 at 12pm
 (
 SynthDef(\mspFoo, {

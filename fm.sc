@@ -267,15 +267,8 @@ s.waitForBoot({
 	Button(win, Rect(710, 21, 100, 147))
 	.states_([["PLAY", Color.black]])
 	.action_({
-		// All Envs arrive here already scaled (levels and times)!
-		// Custom function "scaleEnv" is used elsewhere every time
-		// a change is made (EnvViews or Sliders).
-        "yea boy!".postln;
-		Synth.new("freq-mod-with-envs", [
-            \outbus, ~sndBus,
+		Synth.new("mspFM", [
 		]);
-
-        // Synth("amp", [\amp, 0.5], addAction: \addToTail);
 	})
 	.font_(Font("Verdana", 20));
 
@@ -355,7 +348,7 @@ s.waitForBoot({
 
 	{
 
-		SynthDef("freq-mod-with-envs", {
+		SynthDef("mspFM", {
             arg out;
 			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, carrier, modulator, amp, ampEnv;
 

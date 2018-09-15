@@ -1,37 +1,9 @@
-
-import Sound.Tidal.OscStream
-
-
-let p5Shape = dirt {cpsStamp = False, latency = 0.4}
-    p5Slang = superDirtSlang {ti /   mestamp = NoStamp,
-                              preamble = []
-                             }
-    p5Stream = do
-      s <- makeConnection "127.0.0.1" 1818 p5Slang
-      stream (Backend s $ (\_ _ _ -> return ())) p5Shape
-    (scene, _) = pS "scene" Nothing
-    combinedStream = do p5 <- p5Stream
-                        ds <- superDirtState 57120
-                        let d = setter ds
-                        return $ \p -> do p5 p
-                                          d p
-
-
-x1 <- combinedStream
-x2 <- combinedStream
-x3 <- combinedStream
-x4 <- combinedStream
-
-let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,x1,x2,x3,x4]
-
-let solo = (>>) hush
-
 (freq, _) = pF "freq" (Just 440)
 
 
 -- Simple for mspAdd
 -- [A, S, R] are mapped
-x1
+p1
 $ slow 2
 $ degradeBy 0.1
 $ chunk 4 (density 4)
@@ -46,8 +18,10 @@ $ sound "[mspAdd*8]"
 # pan (scale 0.3 0.7 $ slow 8 $ rand)
 # gain (scale 0.5 0.95 $ slow 8 $ sine)
 
+p1 silence
+
 -- Some bass
-x2
+p2
 $ slow 2
 $ degradeBy 0.6
 $ chunk 4 (density 4)
@@ -74,7 +48,7 @@ $ sound "[msp808*4]"
 
 -- Simple for mspFM
 -- Nothing mapped!
-x3
+p3
 $ slow 2
 $ degradeBy 0.5
 $ chunk 4 (density 4)
@@ -87,7 +61,7 @@ $ sound "[mspFM*4]"
 
 
 -- Snare lines
-x4
+p4
 $ slow 2
 $ degradeBy 0.7
 $ chunk 4 (density 4)

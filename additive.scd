@@ -130,7 +130,7 @@ singleNoteButton = Button(subwin, Rect(10, 10, 70, 80));
 singleNoteButton.states = [["perc"]];
 singleNoteButton.action = {
     if(modeButton.value==1, {
-        percussiveOut = Synth("percussiveOut", [\inbus, ~sndBus, \att, att, \rel, rel, \amp, ampBus.asMap], addAction: \addToTail);
+        percussiveOut = Synth("mspAdd", [\inbus, ~sndBus, \att, att, \rel, rel, \amp, ampBus.asMap], addAction: \addToTail);
         "bang!".postln});
 };
 
@@ -180,7 +180,7 @@ d.nextLine();
         Out.ar(0, In.ar(inbus, 2) * amp * env * 0.05);
     }).add;
 
-    SynthDef("percussiveOut", {
+    SynthDef("mspAdd", {
         arg out, amp = 0.1, attack = 0.01, release = 2, pan = 0, sustain = 1;
         var inbus, sound, env;
         inbus = ~sndBus;

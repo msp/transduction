@@ -79,7 +79,7 @@ s.waitForBoot({
 	*/
 
 
-	Window.closeAll;
+    // Window.closeAll;
 
 	win = Window.new("Frequency Modulation Fun",
         Rect(300, Window.screenBounds.height, 915, 400), resizable: false);
@@ -740,6 +740,7 @@ s.waitForBoot({
         ~ampEnvTimes.setn(~ampEnv.times);
         ~ampEnvDuration.set(timeScale);
 	};
+
 
 	/////////////////////////////////////////////
 	// Function: "Print Current Settings" ///////

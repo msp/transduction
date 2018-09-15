@@ -15,7 +15,7 @@ ampBus.value = 0.75;
 ~sndBus = Bus.audio(s, 2);
 
 // Main window ///////////////////////////////////////////////////////////////////////
-Window.closeAll;
+// Window.closeAll;
 win = Window.new("Additive Synthesis", Rect(400, 30, 1320, 1340));
 win.view.decorator = d = FlowLayout(win.view.bounds, 20@20, 10@10);
 win.front;

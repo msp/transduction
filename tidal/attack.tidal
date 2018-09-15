@@ -1,0 +1,70 @@
+import Sound.Tidal.MaxMspOsc
+
+rpi <- maxmspStream "192.168.86.83" 5005 5
+
+let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9, rpi]
+let nudgeVal = "0.035"
+
+
+cps (180/60/4)
+
+cps 1
+
+let apat = "[super808*5, form-msp5:3/10, m-metal:4*1]"::Pattern String
+
+d1
+$ degradeBy 0.3
+$ every 3 (# crush 2)
+$ sound apat
+# speed (scale 0.4 0.9 (slow 3 (rand)))
+# sustain (scale 0.7 1 (slow 16 (sine)))
+# shape 0.7
+
+
+rpi
+-- $ slow 2
+-- $ sound "rpi*5"
+$ sound apat
+# param1 "255"
+# param2 255
+-- # param2 (scale 255 0 (slow 3 (sine)))
+# param3 2
+# nudge (slow 8 $ sine)
+
+rpi silence
+
+
+# param1 (scale 0 255 (slow 5 (rand)))
+# param2 (scale 255 0 (slow 3 (sine)))
+# param3 (scale 0 255 (slow 2 (sine)))
+
+rpi silence
+
+do
+  -- let apat = "[super808*3 m-metal:3*4?, form-msp5:1]"::Pattern String
+  -- let apat = "super808*2 m-metal form-msp:1"::Pattern String
+  -- let apat = "~"
+  -- let apat = "808bd*1 cp/4 form-msp1:2"::Pattern String
+  let apat = "bd*10"
+  -- let lpat = "foo"
+  let lpat = apat
+  let rnd = choose [3]
+  let spd = (scale 0.3 0.5 (slow 3 (rand)))
+  d1 $ every rnd (# crush 4) $ sound apat # speed spd # shape 0.7 # sustain (scale 0.5 1 (slow 16 (sine)))
+  -- rpi $ sound pat # param1 255 # param2 255 # param3 255
+  rpi $ every rnd (const $ sound lpat # param1 255 # param2 0 # param3 20) $ sound pat # param1 255 # param2 255 # param3 255
+  -- rpi $ sound lpat
+  -- $ param1 (scale 255 0 (slow 3 (sine)))
+  -- # param2 (scale 0 255 (slow 10 (sine)))
+  -- # param3 (scale 255 0 (slow 7 (sine)))
+
+rpi silence
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+-- RECYCLE BIN -----------------------------------------------------------------
+--------------------------------------------------------------------------------

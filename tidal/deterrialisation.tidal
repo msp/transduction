@@ -1,0 +1,146 @@
+
+import Sound.Tidal.OscStream
+
+
+let p5Shape = dirt {cpsStamp = False, latency = 0.4}
+    p5Slang = superDirtSlang {ti /   mestamp = NoStamp,
+                              preamble = []
+                             }
+    p5Stream = do
+      s <- makeConnection "127.0.0.1" 1818 p5Slang
+      stream (Backend s $ (\_ _ _ -> return ())) p5Shape
+    (scene, _) = pS "scene" Nothing
+    combinedStream = do p5 <- p5Stream
+                        ds <- superDirtState 57120
+                        let d = setter ds
+                        return $ \p -> do p5 p
+                                          d p
+
+
+x1 <- combinedStream
+x2 <- combinedStream
+x3 <- combinedStream
+x4 <- combinedStream
+
+let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,x1,x2,x3,x4]
+
+let solo = (>>) hush
+
+(freq, _) = pF "freq" (Just 440)
+
+
+-- Simple for mspAdd
+-- [A, S, R] are mapped
+x1
+$ slow 2
+$ degradeBy 0.1
+$ chunk 4 (density 4)
+$ every 8 (# attack 0.6)
+$ every 4 (# release 3)
+$ sound "[mspAdd*8]"
+# attack 0.001
+-- # attack (scale 0.15 0.001 $ slow 8 $ rand)
+# sustain 1
+# release 0.4
+# nudge (slow 8 $ sine)
+# pan (scale 0.3 0.7 $ slow 8 $ rand)
+# gain (scale 0.5 0.95 $ slow 8 $ sine)
+
+-- Some bass
+x2
+$ slow 2
+$ degradeBy 0.6
+$ chunk 4 (density 4)
+$ every 8 (# attack 0.6)
+$ every 4 (# release 3)
+$ sound "[msp808*4]"
+# shape 0.6
+-- chirp
+-- # n 1
+-- click
+# speed   "2.0  0.4  0.5  0.0    1.0  0.8  0.5  0.7 \
+         \ 1.0  1.0  1.8  0.7    1.0  0.8  1.0  1.0 "
+# attack 0.01
+# release 1
+-- boom
+-- # sustain 3
+# sustain "1.0  0.2  0.5  0.7    1.0  0.8  0.5  0.7 \
+          \ 0.1  0.8  0.3  0.7    1.0  0.8  0.5  0.7 "
+-- # voice 0.5
+# nudge (slow 8 $ sine)
+# pan (scale 0.25 0.65 $ slow 8 $ rand)
+# lpf 100
+# gain 1
+
+-- Simple for mspFM
+-- Nothing mapped!
+x3
+$ slow 2
+$ degradeBy 0.5
+$ chunk 4 (density 4)
+$ every 8 (# attack 0.6)
+$ every 4 (# release 3)
+$ sound "[mspFM*4]"
+# nudge (slow 8 $ sine)
+# pan (scale 0.35 0.77 $ slow 8 $ rand)
+# gain 1
+
+
+-- Snare lines
+x4
+$ slow 2
+$ degradeBy 0.7
+$ chunk 4 (density 4)
+$ every 8 (# attack 0.6)
+$ every 4 (# release 3)
+$ sound "[mspSnare*4]"
+# attack 0.001
+# decay 1
+# sustain 1
+# release 0.4
+# nudge (slow 8 $ sine)
+# pan (scale 0.01 0.95 $ slow 8 $ rand)
+# gain (scale 0.95 0.65 $ slow 8 $ sine)
+
+x4 silence
+
+
+
+-- PLAY
+x1
+-- $ slow 3
+-- $ degradeBy 0.1
+$ chunk 4 (density 2)
+-- $ every 8 (# attack 0.6)
+-- $ every 4 (# release 3)
+-- $ sound "[mspFM]"
+$ sound "[mspAdd*4]"
+-- $ sound "[XmspFM*3?, super808*4 supersnare*4, percussiveOut, superstatic]"
+-- $ sound "[percussiveOut*3?, super808*4 supersnare*4, superzow/16, superstatic]"
+-- $ sound "[percussiveOut*3?, supersnare, superzow/5, superstatic form-msp4]"
+-- $ sound "msprhodes(5,8)"
+-- $ sound "super808*3 percussiveOut*4 supersnare*4 Xsuperzow/3"
+-- $ sound "<mspAdd super808 supersnare*8>(3,8)"
+-- $ sound "<supersnare*8>(3,8)"
+-- $ sound "[[super808*8, percussiveOut*3] [supersnare*8]]"
+# attack 0.001
+-- # attack (scale 0.35 0.0 $ slow 8 $ rand)
+# sustain 3
+# release 0.4
+-- # freq 130
+-- # detune 3
+-- # sustain (scale 1.5 0.3 $ slow 8 $ rand)
+-- # sustain 1
+-- boom
+-- # sustain "1.0  0.2  0.5  0.7    1.0  0.8  0.5  0.7 \
+--          \ 0.1  0.8  0.3  0.7    1.0  0.8  0.5  0.7 "
+-- # shape (choose [0.3,0.6])
+-- # crush (choose [2,3,5])
+-- -- click
+# speed (scale 0.9 0.7 $ slow 8 $ rand)
+-- # speed   "2.0  0.4  0.5  0.0    1.0  0.8  0.5  0.7 \
+--          \ 1.0  1.0  1.8  0.7    1.0  0.8  1.0  1.0 "
+-- # nudge (slow (choose[3,6,9]) $ sine)
+# nudge (slow 8 $ sine)
+# pan (scale 0.4 0.6 $ slow 8 $ rand)
+# gain 1

@@ -42,36 +42,57 @@ void oscEvent(OscMessage m) {
   float release = 0.5;
   Thing thing;
 
-  for(i = 0; i < m.typetag().length(); ++i) {
-    String name = m.get(i).stringValue();
-    switch(name) {
-      case "s":
-        sample = m.get(i+1).stringValue();
-        break;
-      case "pan":
-        pan = m.get(i+1).floatValue();
-        break;
-      case "attack":
-        attack = m.get(i+1).floatValue();
-        break;
-      case "decay":
-        decay = m.get(i+1).floatValue();
-        break;
-      case "sustain":
-        sustain = m.get(i+1).floatValue();
-        break;
-      case "release":
-        release = m.get(i+1).floatValue();
-        break;
-      case "gain":
-        gain = m.get(i+1).floatValue();
-        break;
-      case "scene":
-        String scene = m.get(i+1).stringValue();
-        println("scene: " + scene);
-        break;
+  if(m.getAddress().equals( "/amp/env")) {
+    println("got test message");
+    println("Address\t" + m.getAddress());   
+    println("Typetag\t" + m.getTypetag());
+    byte[]  v0 = m.bytesValue(0);
+    println("Args\t"+v0);
+    println(">--");
+    
+    // TODO: collect into Levels ArrayList and set globally for all 
+    // future FM synths same for env Times    
+    for( Object o : m.getArguments() ) {
+      println( o.getClass().getSimpleName() + "\t" + o );
     }
-    ++i;
+    println("--<");    
+    //r = m.floatValue( 0 );
+  } else if(m.getAddress().equals( "/play2")) {    
+    for(i = 0; i < m.typetag().length(); ++i) {
+      String name = m.get(i).stringValue();
+      switch(name) {
+        case "s":
+          sample = m.get(i+1).stringValue();
+          break;
+        case "pan":
+          pan = m.get(i+1).floatValue();
+          break;
+        case "attack":
+          attack = m.get(i+1).floatValue();
+          break;
+        case "decay":
+          decay = m.get(i+1).floatValue();
+          break;
+        case "sustain":
+          sustain = m.get(i+1).floatValue();
+          break;
+        case "release":
+          release = m.get(i+1).floatValue();
+          break;
+        case "gain":
+          gain = m.get(i+1).floatValue();
+          break;
+        case "scene":
+          String scene = m.get(i+1).stringValue();
+          println("scene: " + scene);
+          break;
+      }
+      ++i;
+    }
+  } else {
+    println( "------------------------------------------------------" );
+    println( "WARNING! Unhandled OSC at:" );
+    println( "Address\t" + m.getAddress() );
   }
   
   if (sample != null) {

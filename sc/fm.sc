@@ -17,7 +17,9 @@ Select all (ctrl + A), then evaluate (ctrl + period).
 
 s.waitForBoot({
 
-	var numberOfPoints, scaleEnv, scaleLevels, win, subwin, evCarrFreq, evModFreq, evModIndex, evAmp, font, font2, labelColor, windowColor, timeScale, volumeSlider, durationSlider, printEnvData, adjustEnv, masterOut, presetArray, presetButtons, tmpAmpEnvLevels, tmpAmpEnvTimes, tmpEnvLevels, tmpEnvTimes;
+	var numberOfPoints, scaleEnv, scaleLevels, win, subwin, evCarrFreq, evModFreq, evModIndex, evAmp, font, font2, labelColor, windowColor, timeScale, volumeSlider, durationSlider, printEnvData, adjustEnv, masterOut, presetArray, presetButtons, tmpAmpEnvLevels, tmpAmpEnvTimes, tmpEnvLevels, tmpEnvTimes, p5;
+
+    p5 = NetAddr.new("127.0.0.1", 1818);
 
 	timeScale = 3; // total duration of a "note"
 	numberOfPoints = 8; // how many points in the breakpoint envelopes
@@ -187,6 +189,8 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
+        ~msg = ["/amp/env",] ++ b.value[1];
+        p5.sendMsg(*~msg);
         ~ampEnvLevels.setn(b.value[1]);
         ~ampEnvTimes.setn(b.value[0].differentiate.drop(1));
         ~ampEnvDuration.set(timeScale);

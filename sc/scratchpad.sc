@@ -1,4 +1,16 @@
 (
+var p5 = NetAddr.new("127.0.0.1", 1818);
+
+// p5.sendMsg(["/amp/env", "aabc", "efg"]);
+// p5.sendMsg("/amp/env", "abc");
+// p5.sendBundle(0.2, ["/amp/env", ["cba", "efg"]]);
+~msg = ["/amp/env", 4000, "gate", 0] ++ [1,2,3];
+p5.sendMsg(*~msg);
+)
+
+
+
+(
 var foo = 1;
 
 if (foo.isNil

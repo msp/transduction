@@ -48,31 +48,33 @@ class Thing {
     float age = millis() - start;
     float progress = age/life;
     float wobble = randomGaussian() * 1;
-    int mainSize = 200;
+    int mainSize = 300;
+    int skew = 3;
     
     if (progress < 1) {      
       fill(204, 102, 0,this.alpha(progress));
       textAlign(CENTER);
-      text(txt,width*pan,height/2);
+      //text(txt,width*pan,height/2);
+      text(txt,width/2,height/2);
       
       if (this.txt.equals("mspAdd") || this.txt.equals("msprhodes")) {
         noStroke();
         //fill(255,255,255,this.alpha(progress));
         fill(255,0,0,this.alpha(progress));
-        ellipse(width*pan,height/2, mainSize*gain,mainSize*gain);
+        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
         //rect((width - wobble)*pan, height/2, 500*gain,500*gain);
         //rect(width*pan, height/2, 500*gain,500*gain);
       } else if (this.txt.equals("mspFM") || this.txt.equals("superzow")) {
         noStroke();
         fill(0,255,0,this.alpha(progress));
-        ellipse(width*pan,height/2, mainSize*gain,mainSize*gain);
+        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
       } else if (this.txt.equals("form-msp4") || this.txt.equals("msp808")) {
         noStroke();
         //strokeWeight(this.sustain * 100+ wobble);
         //stroke(255,0,100,this.alpha(progress));
         //line(0, height*pan, width, height*pan); 
         fill(0,0,255,this.alpha(progress));
-        ellipse(width*pan,height/2, mainSize*gain,mainSize*gain);        
+        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);        
       } else if (this.txt.equals("superstatic")) {
         noStroke();
         fill(200,255,255,this.alpha(progress));
@@ -80,7 +82,7 @@ class Thing {
       } else {
         strokeWeight(1);
         stroke(255,255,255,this.alpha(progress));
-        line((width - wobble)*pan, 0, width*pan, height); 
+        line((width - wobble)*pan, 0, width*pan, height*gain); 
       }
     }
   }

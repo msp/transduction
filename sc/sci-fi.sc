@@ -31,15 +31,16 @@ SynthDef(\help_Control_Sines, { arg out=0;
     numsines = 20;
     control = Control.names(\array).kr(Array.rand(numsines, 400.0, 1000.0));
     sines = Mix(SinOsc.ar(control, 0, numsines.reciprocal)) ;
+    sines = sines * 0.2;
     Out.ar(out, sines ! 2);
 }).add
 )
 
-b = Synth(\help_Control_Sines);
-b.setn(\array, Array.rand(20, 200, 1600));
-b.setn(\array, Array.rand(20, 200, 1600));
+c = Synth(\help_Control_Sines);
+c.setn(\array, Array.rand(20, 200, 1600));
+c.setn(\array, Array.rand(20, 200, 1600));
 
-b.free
+c.free
 
 (
 SynthDef(\help_Control_DynKlank, { arg out=0, freq = 440;
@@ -56,8 +57,25 @@ SynthDef(\help_Control_DynKlank, { arg out=0, freq = 440;
 }).add
 )
 
-a = Synth(\help_Control_DynKlank, [\freq, 300]);
-b = Synth(\help_Control_DynKlank, [\freq, 410]);
+x = []
+
+(
+a = Synth(\help_Control_DynKlank, [\freq, 51]);
+x = x.add(a)
+)
+
+(
+b = Synth(\help_Control_DynKlank, [\freq, 453]);
+x = x.add(b)
+)
+
+(
+x.size.postln;
+z = x.removeAt(x.size.rand);
+z.free;
+x.size.postln;
+)
+
 
 
 a.setn(\harm,   Array.rand(4, 1.0, 4.7))
@@ -67,3 +85,4 @@ a.setn(\ring, Array.rand(4, 0.005, 1.0))
 b.setn(\harm,   Array.rand(4, 1.0, 4.7))
 b.setn(\amp, Array.rand(4, 0.005, 0.1))
 b.setn(\ring, Array.rand(4, 0.005, 1.0))
+

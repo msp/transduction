@@ -20,7 +20,7 @@ SynthDef(\gendy, { |out, sustain = 1, freq = 440, pan, fratio = 0|
 
 Ndef(\ctrl1, 0);
 Ndef(\ctrl1, 1);
-Ndef(\ctrl1, { MouseX.kr(0, 2) });
+Ndef(\ctrl1, { MouseX.kr(0, 4) });
 
 NdefMixer
 

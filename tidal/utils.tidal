@@ -1,5 +1,5 @@
 import Sound.Tidal.OscStream
-
+import Sound.Tidal.MaxMspOsc
 
 let p5Shape = dirt {cpsStamp = False, latency = 0.4}
     p5Slang = superDirtSlang {timestamp = NoStamp,
@@ -21,6 +21,26 @@ p2 <- combinedStream
 p3 <- combinedStream
 p4 <- combinedStream
 
-let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4]
+
+let rpiShape = dirt {cpsStamp = False, latency = 0.4}
+    rpiSlang = superDirtSlang {timestamp = NoStamp,
+                              preamble = []
+                             }
+    rpiStream = do
+      s <- makeConnection "192.168.86.83" 5005 rpiSlang
+      stream (Backend s $ (\_ _ _ -> return ())) rpiShape
+    (scene, _) = pS "scene" Nothing
+    combinedStream = do rpi <- rpiStream
+                        ds <- superDirtState 57120
+                        let d = setter ds
+                        return $ \p -> do rpi p
+                                          d p
+
+
+r1 <- combinedStream
+-- rpi <- maxmspStream "192.168.86.83" 5005 5
+
+
+let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4,r1]
 
 let solo = (>>) hush

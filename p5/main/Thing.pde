@@ -55,7 +55,7 @@ class Thing {
       fill(204, 102, 0,this.alpha(progress));
       textAlign(CENTER);
       //text(txt,width*pan,height/2);
-      text(txt,width/2,height/2);
+      //text(txt,width/2,height/2);
       
       if (this.txt.equals("mspAdd") || this.txt.equals("msprhodes")) {
         noStroke();

@@ -1,0 +1,35 @@
+(freq, _) = pF "freq" (Just 440)
+(f, _) = pF "f" (Just 440)
+(cutoff, _) = pF "cutoff" (Just 200)
+(fatt, _) = pF "fatt" (Just 0.75)
+(red, _) = pF "red" (Just 255)
+(green, _) = pF "green" (Just 255)
+(blue, _) = pF "blue" (Just 255)
+
+
+
+(cps, nudger, getNow) <- cpsUtils'
+
+now <- getNow
+
+
+out1 = 0 -- Focal L&R
+out2 = 1 -- Gen L&R
+live1 = 9
+live2 = 10
+live3 = 11
+live4 = 12
+
+
+d1
+$ slow 2
+$ s "gendy"
+# legato "1.2"
+# freq 140
+-- # fratio 2.3
+-- # hpf (scale 10 8000 $ slow 32 $ saw)
+# nudge (slow 8 $ rand)
+# gain 0.8
+
+
+d1 silence

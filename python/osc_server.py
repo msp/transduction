@@ -1,30 +1,49 @@
 import argparse
 import math
+import time
+import unicornhathd
 
 from pythonosc import dispatcher
 from pythonosc import osc_server
 
 def tidal_handler(*args):
     
-    red = 0
-    blue = 0
-    green = 0
-    crush = False 
+    try:
+        unicornhathd.brightness(1)
+        
+        red = 0
+        blue = 0
+        green = 0
+        crush = False 
     
-    for num, arg in enumerate(args, start=1):
-        #print("{0}: {1}".format(num, arg))
-        
-        if arg == "red":
-            red = int(args[num])
-        elif arg == "green":
-            green = int(args[num])
-        elif arg == "blue":
-            blue = int(args[num])
-        elif arg == "crush":
-            crush = True              
-        
-    print("r: {0} g: {1} b: {2} crush: {3}".format(red, green, blue, crush))
+        for num, arg in enumerate(args, start=1):
+            #print("{0}: {1}".format(num, arg))
+            
+            if arg == "red":
+                red = int(args[num])
+            elif arg == "green":
+                green = int(args[num])
+            elif arg == "blue":
+                blue = int(args[num])
+            elif arg == "crush":
+                crush = True              
 
+        print("r: {0} g: {1} b: {2} crush: {3}".format(red, green, blue, crush))
+
+        if crush == True:
+            red = 255
+            blue = 255
+            green = 255
+
+        unicornhathd.set_all(red, green, blue)
+        unicornhathd.show()
+        
+        time.sleep(0.05)
+        unicornhathd.off()
+
+    except KeyboardInterrupt:
+        unicornhathd.off()
+        
 def print_volume_handler(unused_addr, args, volume):
   print("[{0}] ~ {1}".format(args[0], volume))
 

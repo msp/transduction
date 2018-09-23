@@ -14,10 +14,12 @@ def tidal_handler(*args):
         red = 0
         blue = 0
         green = 0
-        crush = False 
+        crush = False
+        sustain = 1
+        ldecay = 0.05
     
         for num, arg in enumerate(args, start=1):
-            #print("{0}: {1}".format(num, arg))
+##            print("{0}: {1}".format(num, arg))
             
             if arg == "red":
                 red = int(args[num])
@@ -25,20 +27,27 @@ def tidal_handler(*args):
                 green = int(args[num])
             elif arg == "blue":
                 blue = int(args[num])
+            elif arg == "ldecay":
+                ldecay = float(args[num])
+            elif arg == "sustain":
+                sustain = float(args[num]) 
             elif arg == "crush":
                 crush = True              
 
-        print("r: {0} g: {1} b: {2} crush: {3}".format(red, green, blue, crush))
+        print("r: {0}, g: {1}, b: {2}, crush: {3}, sustain: {4}, ldecay: {5}".format(red, green, blue, crush, sustain, ldecay))
 
         if crush == True:
             red = 255
             blue = 255
             green = 255
+            ldecay = 1.0
 
         unicornhathd.set_all(red, green, blue)
         unicornhathd.show()
         
-        time.sleep(0.05)
+##        print("about to sleep for {0}".format(ldecay * sustain))
+        time.sleep(ldecay * sustain)
+##        print(".....awake!")
         unicornhathd.off()
 
     except KeyboardInterrupt:

@@ -1,0 +1,16 @@
+d1
+$ sound "bd*4"
+# orbit 3
+
+# pan 0.2
+
+d1
+$ slow 1
+$ sound "bd*4"
+# pan (slow 4 $ sine)
+
+d1
+$ sound "bd*128"
+# pan (slow 2 $ saw)
+
+d1 silence

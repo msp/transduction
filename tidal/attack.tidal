@@ -5,7 +5,7 @@ cps 1
 
 
 -- CLICKER ---------------------------------------------------------------------
-d6
+d1
 $ degradeBy 0.4
 $ fast 8
 $ rarely (slow 2)
@@ -17,10 +17,10 @@ $ sound "~ ~ ~ <click:2*4 click:2*2>"
 # nudge (slow 8 $ sine)
 # gain 0.7
 
-d6 silence 
+d1 silence
 
 -- SUBZ ------------------------------------------------------------------------
-d5
+r2
 $ every 5 (const
   $ sound "~"
   )
@@ -28,11 +28,14 @@ $ every 2 (const
   $ slow 3
   $ degradeBy 0.1
   $ sound "tutorial3" # n (choose [-27,-27,-26])
-  # sustain 1
   # shape 0.2
   # coarse 4
-  # sustain 1
+  # sustain 2
   # gain 1.2
+  # red 155
+  # green 55
+  # blue 155
+  # ldecay 1
   )
 $ degradeBy 0.3
 $ slow 1
@@ -44,27 +47,29 @@ $ sound "<tutorial5 ~> tutorial5?> <tutorial5 ~> tutorial5>"
 # accelerate 0.3
 # cutoff 50
 # gain 1.2
+# red "255 100"
+# blue "55 255"
 
-d5 silence
+r2 silence
 
 -- ATTK ------------------------------------------------------------------------
 
-r1
+r3
 $ fast 2
 $ degradeBy 0.3
 $ sometimesBy 0.45 (# crush 2)
--- $ scramble 4
+$ scramble 4
 $ every 4 (0.25 ~>)
--- $ striate 4 -- !!CAREFUL!!
+-- $ striate 16 -- !!CAREFUL!!
 -- $ sound "[super808*2]"
 $ sound "[msp808*2, form-msp5:1/16, m-metal:4/8]"
--- $ sound "[msp808*3, Xm-stab*2, m-tape:2]"
+-- $ sound "[msp808*3, m-stab*2, m-tape:2]"
 -- $ sound "[msp808 m-boom/4, ascii*1]"
--- $ sound "808bd:0 cp/8 form-msp1:2"
+-- $ sound "808bd:0 cp/8 Xform-msp1:2"
 -- # n (run (choose [0, 2, 0, 1, 2, 1, 9]))
 -- # n (run (choose [4, 20, 0, 1, 2, 10, 9]))
--- # n (irand 7)
-# n (irand 101) --ASCII
+# n (irand 7)
+-- # n (irand 101) --ASCII
 -- # speed (scale 0.5 0.9 (slow 3 (rand)))
 # sustain (scale 0.4 3 (slow 16 (sine)))
 # shape "0.5"
@@ -72,8 +77,8 @@ $ sound "[msp808*2, form-msp5:1/16, m-metal:4/8]"
 -- # green 255
 -- # blue 255
 # red "255 0 0"
-# green "0 0 255"
-# blue "0 255 0"
+# green "0 255 0"
+# blue "0 0 255"
 -- # orbit (choose [0, 1, 2])
 # nudge (slow 4 $ sine)
 # orbit 0
@@ -81,18 +86,22 @@ $ sound "[msp808*2, form-msp5:1/16, m-metal:4/8]"
 r1 silence
 
 
+
+-- TEST --
 r1
-$ fast 2
-$ sound "bd"
-# red "255 0 0"
-# green "0 0 255"
-# blue "0 255 0"
+-- $ sometimesBy 0.5 (# crush 4)
+$ slow 1
+$ sound "bd*1"
+# green 255
+# red 0
+# ldecay 0.05
+# sustain 1.0
 
-d1 $ sound "msp808"
-# orbit live1
-# shape 0.5
-
-d1 silence
+-- OFF --
+r1
+$ red 0
+# green 0
+# blue 0
 
 
 

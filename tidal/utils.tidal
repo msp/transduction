@@ -22,25 +22,45 @@ p3 <- combinedStream
 p4 <- combinedStream
 
 
-let rpiShape = dirt {cpsStamp = False, latency = 0.4}
+let rpiShape = dirt {cpsStamp = True, latency = 0.4}
     rpiSlang = superDirtSlang {timestamp = NoStamp,
                               preamble = []
                              }
     rpiStream = do
-      s <- makeConnection "192.168.86.83" 5005 rpiSlang
+      s <- makeConnection "192.168.1.149" 5005 rpiSlang
+      stream (Backend s $ (\_ _ _ -> return ())) rpiShape
+    rpi2Stream = do
+      s <- makeConnection "192.168.1.150" 5005 rpiSlang
+      stream (Backend s $ (\_ _ _ -> return ())) rpiShape
+    rpi3Stream = do
+      s <- makeConnection "192.168.1.151" 5005 rpiSlang
+      stream (Backend s $ (\_ _ _ -> return ())) rpiShape
+    rpi4Stream = do
+      s <- makeConnection "192.168.1.152" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     (scene, _) = pS "scene" Nothing
     combinedStream = do rpi <- rpiStream
+                        rpi2 <- rpi2Stream
+                        rpi3 <- rpi3Stream
+                        rpi4 <- rpi4Stream
                         ds <- superDirtState 57120
                         let d = setter ds
                         return $ \p -> do rpi p
+                                          rpi2 p
+                                          rpi3 p
+                                          rpi4 p
                                           d p
 
 
 r1 <- combinedStream
+r2 <- combinedStream
+r3 <- combinedStream
+r4 <- combinedStream
 -- rpi <- maxmspStream "192.168.86.83" 5005 5
 
 
 let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4,r1]
+
+let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,r1,r2,r3,r4]
 
 let solo = (>>) hush

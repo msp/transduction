@@ -5,6 +5,7 @@
 (red, _) = pF "red" (Just 255)
 (green, _) = pF "green" (Just 255)
 (blue, _) = pF "blue" (Just 255)
+(ldecay, _) = pF "ldecay" (Just 0.05)
 
 
 

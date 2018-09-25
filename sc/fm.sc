@@ -195,7 +195,8 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
-        ~msg = ["/amp/env",] ++ b.value[1];
+        "send OSC meesage to P5!".postln;
+        ~msg = ["/amp/env"] ++ b.value[1];
         p5.sendMsg(*~msg);
         ~ampEnvLevels.setn(b.value[1]);
         ~ampEnvTimes.setn(b.value[0].differentiate.drop(1));
@@ -237,7 +238,12 @@ s.waitForBoot({
 			evCarrFreq.action.value(evCarrFreq);
 			evModFreq.action.value(evModFreq);
 			evModIndex.action.value(evModIndex);
-			evAmp.action.value(evAmp)},
+			evAmp.action.value(evAmp);
+
+            "send OSC meesage to P5!".postln;
+           ~msg = ["/amp/env/sustain"] ++ ez.value;
+           p5.sendMsg(*~msg);
+        },
 		numberWidth: 35,
 		unitWidth: 30,
 		layout: 'horz')

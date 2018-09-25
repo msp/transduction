@@ -7,6 +7,7 @@ class Thing {
   float attack;
   float decay;
   float sustain;
+  float globalSustain;
   float release;  
   
   Thing(String txt, float pan, float gain) {
@@ -17,13 +18,14 @@ class Thing {
     this.gain = gain;
   }
 
-  Thing(String txt, float attack, float decay, float sustain, float release, float pan, float gain) {
+  Thing(String txt, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain) {
     start = millis();
     this.txt = txt;
     // this is SC's notion of sustain i.e. a multiplier for each env phase
     this.attack = attack * sustain;
     this.decay = decay * sustain;
     this.sustain = sustain;
+    this.globalSustain = globalSustain;
     this.release = release * sustain;
     this.pan = pan;
     this.gain = gain;
@@ -31,11 +33,20 @@ class Thing {
     
     if (this.txt.equals("mspAdd") 
       || this.txt.equals("msp808")
-      || this.txt.equals("mspSnare")      
+      || this.txt.equals("mspSnare")
       ) {
       life = (this.attack + this.decay + this.release) * 1000;
     } else {
-      life = 350;
+          if (this.txt.equals("mspFM")){
+            // hmmm fudge these as we don't have 'em
+            this.attack = 0.01;
+            this.decay = 0.1;
+            this.sustain += this.globalSustain;
+            this.release = 0.1 * this.sustain;
+            life = (this.attack + this.decay + this.release) * 1000;
+          } else {
+            life = 350;
+          }
     }
   }
   
@@ -89,7 +100,7 @@ class Thing {
   
   Integer alpha(float progress) {
     Integer a;
-    Float maxOp = 180.0;
+    Float maxOp = 220.0;
     
     if (progress <= this.attack) {
       // fade in

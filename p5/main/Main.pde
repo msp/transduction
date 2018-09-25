@@ -6,6 +6,7 @@ OscP5 osc;
 
 ArrayList<Thing> things = new ArrayList<Thing>();
 PFont font;
+float globalSustain = 1.0;
 
 void setup() {
   smooth();
@@ -57,6 +58,13 @@ void oscEvent(OscMessage m) {
     }
     println("--<");    
     //r = m.floatValue( 0 );
+  } else if(m.getAddress().equals( "/amp/env/sustain")) {
+    println("got sustain message");
+    println("Address\t" + m.getAddress());   
+    println("Typetag\t" + m.getTypetag());
+    println("Args\t"+m.floatValue(0));
+    
+    globalSustain = m.floatValue(0);
   } else if(m.getAddress().equals( "/play2")) {    
     for(i = 0; i < m.typetag().length(); ++i) {
       String name = m.get(i).stringValue();
@@ -96,7 +104,7 @@ void oscEvent(OscMessage m) {
   }
   
   if (sample != null) {
-    thing = new Thing(sample, attack, decay, sustain, release, pan, gain);
+    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain);
     println(thing.toString());
     things.add(thing);
   }

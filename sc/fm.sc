@@ -362,7 +362,7 @@ s.waitForBoot({
 	{
 
 		SynthDef("mspFM", {
-            arg out;
+            arg out, sustain;
 			var carrFreq, carrFreqEnv, modFreq, modFreqEnv, modIndex, modIndexEnv, carrier, modulator, amp, ampEnv;
 
             var pan = 0.5;
@@ -379,7 +379,7 @@ s.waitForBoot({
             var modIndexEnvLevels = ~modIndexEnvLevels.kr;
             var modIndexEnvTimes = ~modIndexEnvTimes.kr;
 
-            var envDuration = ~ampEnvDuration.kr;
+            var envDuration = sustain * ~ampEnvDuration.kr;
 
 			carrFreqEnv = Env.new(carrFreqEnvLevels, carrFreqEnvTimes);
             carrFreqEnv.duration_(envDuration);

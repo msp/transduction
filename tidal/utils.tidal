@@ -20,6 +20,7 @@ p1 <- combinedStream
 p2 <- combinedStream
 p3 <- combinedStream
 p4 <- combinedStream
+p5 <- combinedStream
 
 
 let rpiShape = dirt {cpsStamp = True, latency = 0.4}
@@ -59,7 +60,7 @@ r4 <- combinedStream
 -- rpi <- maxmspStream "192.168.86.83" 5005 5
 
 
-let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4,r1]
+let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4,r1,r2,r3,r4]
 
 let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,r1,r2,r3,r4]
 

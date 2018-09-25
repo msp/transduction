@@ -2,8 +2,8 @@
 -- [A, S, R] are mapped
 p1
 $ slow 2
-$ degradeBy 0.1
-$ chunk 4 (density 4)
+$ degradeBy 0.3
+$ chunk 8 (density 2)
 $ every 8 (# attack 0.6)
 $ every 4 (# release 3)
 $ sound "[mspAdd*8]"
@@ -11,7 +11,7 @@ $ sound "[mspAdd*8]"
 -- # attack (scale 0.15 0.001 $ slow 8 $ rand)
 # sustain 1
 # release 0.4
-# nudge (slow 8 $ sine)
+-- # nudge (slow 8 $ sine)
 # pan (scale 0.3 0.7 $ slow 8 $ rand)
 # gain (scale 0.5 0.95 $ slow 8 $ sine)
 
@@ -38,28 +38,47 @@ $ sound "[msp808*3]"
 # sustain "1.0  0.2  0.5  0.7    1.0  0.8  0.5  0.7 \
           \ 0.1  0.8  0.3  0.7    1.0  0.8  0.5  0.7 "
 -- # voice 0.5
-# nudge (slow 8 $ sine)
+-- # nudge (slow 8 $ sine)
 # pan (scale 0.25 0.65 $ slow 8 $ rand)
 # lpf 100
 # gain 1
 
+p2 silence
+
 -- Simple for mspFM
 -- Nothing mapped!
 p3
-$ slow 2
-$ degradeBy 0.5
--- $ striate 16 -- !!CAREFUL!!/
-$ chunk 4 (density 4)
-$ every 8 (# attack 0.6)
-$ every 4 (# release 3)
-$ sound "[mspFM*4]"
-# nudge (slow 8 $ sine)
+$ slow 1
+$ degradeBy 0.1
+-- $ striate 8 -- !!CAREFUL!!/
+$ every 3 (0.25 ~>)
+$ sometimesBy 0.08 (# sustain 1)
+$ chunk 8 (density 2)
+-- $ every 8 (# attack 0.6)
+-- $ every 4 (# release 3)
+$ sound "[mspFM*8]"
+-- # nudge (slow 4 $ sine)
+# sustain 0.09
 # pan (scale 0.35 0.77 $ slow 8 $ rand)
-# gain 0.8
+# gain 0.9
+
+p4
+$ slow 1
+$ degradeBy 0.1
+$ every 3 (0.25 ~>)
+$ chunk 8 (density 2)
+$ sound "[bd*4, hh:5*8]"
+-- # nudge (slow 4 $ sine)
+# pan (scale 0.35 0.77 $ slow 8 $ rand)
+# shape 0.8
+# speed 0.8
+# gain 0.9
+
+p4 silence
 
 
 -- Snare lines
-p4
+p5
 $ slow 2
 $ degradeBy 0.7
 $ chunk 4 (density 4)
@@ -67,15 +86,15 @@ $ every 8 (# attack 0.6)
 $ every 4 (# release 3)
 $ sound "[mspSnare*4]"
 # attack 0.001
-# decay 1
-# sustain 1
+# decay 0.5
+# sustain 0.3
 # release 0.4
-# nudge (slow 8 $ sine)
+-- # nudge (slow 8 $ sine)
 # hpf 5000
 # pan (scale 0.01 0.95 $ slow 8 $ rand)
 # gain (scale 0.95 0.65 $ slow 8 $ sine)
 
-x4 silence
+p5 silence
 
 
 

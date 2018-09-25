@@ -9,22 +9,96 @@ p5.sendMsg(*~msg);
 )
 
 
+~partialEnvLevels[0].get
+~partialEnvTimes[0].get
 
-(
-var foo = 1;
 
-if (foo.isNil
-    {"Got me a foo!".postln;} ,
-    {"Wot no foo :(".postln;}
-)
-)
+
+Dswitch1([9,8,7,6,5], 0)
 
 
 (
-var x;
-if (x.isNil, { x = 99 });
-x.postln;
+var numberOfEnvPoints= 4;
+
+~fooLevels = Bus.control(s, numberOfEnvPoints);
+~fooTimes = Bus.control(s, numberOfEnvPoints);
+
+~envLevels = Bus.control(s, numberOfEnvPoints);
+~envTimes = Bus.control(s, numberOfEnvPoints);
+
+~envLevels.setn([0, 0.3, 0.7, 0]);
+~envTimes.setn([0.0001, 0.1, 0.1]);
+
+~envLevels.getn
 )
+
+~envLevels.getSynchronous
+
+(
+
+SynthDef("testArrayIndex", {
+    arg outbus, partial = 2.1, amp = 0.1, idx= 0, envLevelsBus = ~envLevels, envTimesBus = ~envTimes;
+    var snd, fund, testFreqs, env, ampEnvLevels, ampEnvTimes;
+
+    // envLevelsBus = ~fooLevels;
+    // envTimesBus = ~fooTimes;
+
+    testFreqs = [220, 440, 660];
+    fund = testFreqs[1];
+
+    ampEnvLevels = envLevelsBus.kr;
+    ampEnvTimes = envTimesBus.kr;
+
+    // env = EnvGen.kr(Env.new([0, 0.3, 0.7, 0], [0.25, 0.25, 0.5]));
+    env = EnvGen.kr(Env.new(ampEnvLevels, ampEnvTimes));
+
+    snd = SinOsc.ar(freq: fund * partial, phase: 0);
+    snd = snd * env * amp;
+
+    Out.ar(outbus, (snd)!2);
+}).add;
+)
+
+x = Synth("testArrayIndex", [\envLevelsBus, ~envLevels, \envTimesBus, ~envTimes]);
+x.free;
+
+
+[0,1,2,3].at(4)
+
+
+(
+var env = Env.circle([0, 1, 0], [0.01, 1, 0.01]);
+
+// ampEnv.duration_(1);
+
+{ SinOsc.ar(444, 0, 0.5) * EnvGen.kr(env) }.play;
+
+)
+
+
+{ SinOsc.ar(EnvGen.kr(Env.circle([0, 1, 0], [0.01, 0.5, 0.2])) * 440 + 200) * 0.2 }.play;
+
+
+
+
+(
+SynthDef("testArrayIndex", {
+    arg outbus, partial = 2.1, amp = 0.01, idx= 0;
+    var snd, fund;
+    var testFreqs = [220, 440, 660];
+
+    fund = Demand.kr(Impulse.kr(1), 0 , Dswitch1(testFreqs, idx));
+
+    snd = SinOsc.ar(freq: fund * partial, phase: 0);
+    snd = snd * amp;
+
+    Out.ar(outbus, (snd)!2);
+}).add;
+)
+
+x = Synth(\testArrayIndex);
+
+x.set(\idx, 3);
 
 
 (

@@ -32,5 +32,11 @@ $ s "gendy"
 # nudge (slow 8 $ rand)
 # gain 0.8
 
-
 d1 silence
+
+
+-- crackly --
+d1
+$ sound "form-msp1:2"
+# hpf (scale 100 2000 $ slow 32 $ sine)
+# pan (slow 4 $ saw)

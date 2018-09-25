@@ -1,8 +1,8 @@
 (
-
-var numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, fundamentalBus, knobArray, partialArray, envArray;
+var numharm, win, continuousOut, percussiveOut, multiSlider, volumeSlider, fundamentalSlider, modeButton, singleNoteButton, attackSlider, releaseSlider, subwin, singleNoteRoutine, att = 0.01, rel = 2, ampBus, fundamentalBus, knobArray, partialArray, envArray, numberOfEnvPoints, tmpEnvLevels, tmpEnvTimes;
 
 numharm = 16;
+numberOfEnvPoints = 4;
 
 partialArray = Array.newClear(16);
 
@@ -14,9 +14,35 @@ ampBus.value = 0.75;
 
 ~sndBus = Bus.audio(s, 2);
 
+~partialEnvLevels = Array.newClear(numharm);
+~partialEnvLevels.do({|env, index|
+    ~partialEnvLevels[index] = Bus.control(s, numberOfEnvPoints);
+});
+
+~partialEnvTimes = Array.newClear(numharm);
+~partialEnvTimes.do({|item, index|
+    ~partialEnvTimes[index] = Bus.control(s, numberOfEnvPoints-1);
+});
+
+~partialEnvs = Array.newClear(numharm);
+~partialEnvs.do({|item, index|
+
+    tmpEnvLevels = {1.0.rand}!numberOfEnvPoints;
+    tmpEnvTimes = ({1.0.rand}!(numberOfEnvPoints-1)).normalizeSum;
+
+    ~partialEnvs[index] =  Env.new(
+        levels: tmpEnvLevels,
+        times: tmpEnvTimes
+    );
+
+    ~partialEnvLevels[index].setn(tmpEnvLevels);
+    ~partialEnvTimes[index].setn(tmpEnvTimes.drop(1));
+});
+
+
 // Main window ///////////////////////////////////////////////////////////////////////
-// Window.closeAll;
-win = Window.new("Additive Synthesis", Rect(400, 30, 1320, 1340));
+Window.closeAll;
+win = Window.new("Additive Synthesis", Rect(0, 0, 1320, 1340), scroll: true);
 win.view.decorator = d = FlowLayout(win.view.bounds, 20@20, 10@10);
 win.front;
 
@@ -34,7 +60,7 @@ multiSlider.action = {multiSlider.value.do({arg value, count;
 
 d.nextLine();
 
-knobArray = Array.fill(16, {Knob(win, 29@29)});
+knobArray = Array.fill(numharm, {Knob(win, 29@29)});
 
 knobArray.do({arg item, count;
     knobArray[count].centered = true;
@@ -50,12 +76,27 @@ knobArray.do({arg item, count;
 d.nextLine();
 
 // Envelopes //////////////////////////////////////////////////////////////////////////
-envArray = Array.fill(16, {EnvelopeView(win, 300@100)});
+envArray = Array.fill(numharm, {EnvelopeView(win, 300@100)});
 
-envArray.do({
-    arg item, count;
-    envArray[count].style = \rects;
-    envArray[count].setEnv(Env([0, 1], [1,1], \exp))});
+envArray.do({|env, index|
+	env.drawLines_(true);
+	env.selectionColor_(Color.red);
+	env.drawRects_(true);
+	env.keepHorizontalOrder_(true);
+    env.setEnv(~partialEnvs[index]);
+	env.step_(0.01);
+	env.thumbSize_(18);
+
+	env.action_({|b|
+        "levels: ".post;
+        b.value[1].postln;
+        "times: ".post;
+        b.value[0].differentiate.drop(1).postln;
+
+        ~partialEnvLevels[index].setn(b.value[1]);
+        ~partialEnvTimes[index].setn(b.value[0].differentiate.drop(1));
+	})
+});
 
 
 // Knobs //////////////////////////////////////////////////////////////////////////////
@@ -131,6 +172,7 @@ singleNoteButton.states = [["perc"]];
 singleNoteButton.action = {
     if(modeButton.value==1, {
         percussiveOut = Synth("mspAdd", [\inbus, ~sndBus, \att, att, \rel, rel, \amp, ampBus.asMap], addAction: \addToTail);
+
         "bang!".postln});
 };
 
@@ -168,9 +210,33 @@ d.nextLine();
 // Routine to add SynthDefs, wait for Server reply, then start Synths
 {
     SynthDef("additive-multislider-2", {
-        arg outbus, fundamental = 110, partial = 2.1, amp = 0.01;
-        var snd = SinOsc.ar(fundamental * partial, 0, Lag.kr(amp, 3));
-        Out.ar(outbus, snd!2);
+        arg outbus, fundamental = 110, partial = 2.1, amp = 0.01, envLevelsBus, envTimesBus;
+
+        var snd, ampEnvLevels, ampEnvTimes, envDuration, ampEnv, ampEnvCtl, loopTime, index = 0;
+
+        loopTime = 1;
+
+        ampEnvLevels = ~partialEnvLevels.at(0).kr;
+        ampEnvTimes = ~partialEnvTimes.at(0).kr;
+        // ampEnvLevels = envLevelsBus.kr;
+        // ampEnvTimes = envTimesBus.kr;
+
+
+        envDuration = 5;
+
+        // ampEnvCtl = EnvGen.kr(Env.circle([0, 1, 0], [0.5, 3, 0.01]));
+        // ampEnvCtl = EnvGen.kr(Env.circle(ampEnvLevels, ampEnvTimes.add(loopTime)));
+
+        ampEnv = Env.circle(ampEnvLevels, ampEnvTimes);
+        // ampEnv.duration_(envDuration);
+
+        ampEnvCtl = EnvGen.kr(ampEnv);
+        // ampEnvCtl = EnvGen.kr(Env.circle(envLevelsBus, envTimesBus));
+
+        snd = SinOsc.ar(freq: fundamental * partial, phase: 0);
+        snd = snd * ampEnvCtl * amp;
+
+        Out.ar(outbus, (snd)!2);
     }).add;
 
     SynthDef("continuousOut", {
@@ -200,7 +266,9 @@ d.nextLine();
     // Now call the Synths:
     ~spectrum = Array.fill(numharm, {
         arg i;
-        Synth("additive-multislider-2", [\fundamental, fundamentalBus.asMap, \partial, partialArray[i], \amp, 0.0, \outbus, ~sndBus])
+        "spectrum: ".post;
+        i.postln;
+        Synth("additive-multislider-2", [\fundamental, fundamentalBus.asMap, \partial, partialArray[i], \amp, 0.0, \outbus, ~sndBus, \partialIndex, i])
     });
 
     continuousOut = Synth("continuousOut", [\inbus,~sndBus, \amp, ampBus.asMap], addAction: \addToTail);
@@ -221,7 +289,9 @@ Server.local.plotTree;
 
 // Mess about with the synth engine values
 (
-~spectrum[0].set(\amp, 1);
+~spectrum[0].set(\amp, 0);
+
+
 ~spectrum[3].set(\amp, 1);
 ~spectrum[15].set(\amp, 0);
 
@@ -241,6 +311,13 @@ Server.local.plotTree;
 
 ~spectrum[15].trace;
 
+)
+
+(
+var levels = ~partialEnvLevels[0].kr;
+var times = ~partialEnvTimes[0].kr;
+
+Env.new(levels, times).plot;
 )
 
 s.boot();

@@ -1,6 +1,6 @@
 // a synth def that has 4 partials
 (
-SynthDef(\mspKlank, { arg out=0, i_freq;
+SynthDef(\mspKlank, { arg out=0, i_freq, pan = 0.5;
     var klank, harm, amp, ring;
 
     // harmonics
@@ -12,37 +12,69 @@ SynthDef(\mspKlank, { arg out=0, i_freq;
 
     klank = Klank.ar(`[harm, amp, ring], { ClipNoise.ar(0.01) }.dup, i_freq);
 
-    Out.ar(out, klank);
+    OffsetOut.ar(out, DirtPan.ar(klank, ~dirt.numChannels, pan))
 }).add;
 )
 
-a = Synth(\mspKlank, [\i_freq, 300]);
-
-a.free;
-
-a = Synth(\mspKlank, [\i_freq, 300, \harm, [1, 3.3, 4.5, 7.8]]);
-a.free;
-
-b = Synth(\mspKlank, [\i_freq, 300, \harm, [2, 3, 4, 8]]);
-b.free;
+y = []
 
 (
-SynthDef(\mspSines, { arg out=0;
+a = Synth(\mspKlank, [\i_freq, 40, \pan, 1.0.rand]);
+y = y.add(a)
+)
+
+(
+a = Synth(\mspKlank, [\i_freq, 300, \harm, [1, 3.3, 4.5, 7.8], \pan, 1.0.rand]);
+y = y.add(a)
+)
+
+(
+a = Synth(\mspKlank, [\i_freq, 300, \harm, [2, 3, 4, 8], \pan, 1.0.rand]);
+y = y.add(a)
+)
+
+(
+if (y.size > 0, {
+    y.size.postln;
+    z = y.removeAt(y.size.rand);
+    z.free;
+    y.size.postln;
+})
+)
+
+
+(
+SynthDef(\mspSines, { arg out=0, pan = 0.5;
     var sines, control, numsines, env;
     numsines = 20;
     control = Control.names(\array).kr(Array.rand(numsines, 400.0, 1000.0));
     sines = Mix(SinOsc.ar(control, 0, numsines.reciprocal)) ;
     env = EnvGen.kr(Env.adsr(0.8, 0.3, 0.5, 1));
     sines = sines * 0.2 * env;
-    Out.ar(out, sines ! 2);
+
+    OffsetOut.ar(out, DirtPan.ar(sines ! 2, ~dirt.numChannels, pan))
 }).add
 )
 
-c = Synth(\mspSines);
-c.setn(\array, Array.rand(20, 200, 1600), \out, 0);
+
+z = []
+
+(
+c = Synth(\mspSines, [\pan, 1.0.rand]);
+z = z.add(c)
+)
+
+c.setn(\array, Array.rand(20, 200, 1600));
 c.setn(\array, Array.rand(20, 200, 1600));
 
-c.free
+(
+if (z.size > 0, {
+    z.size.postln;
+    w = z.removeAt(z.size.rand);
+    w.free;
+    z.size.postln;
+})
+)
 
 (
 SynthDef(\mspDynKlank, { arg out=0, freq = 440, pan = 0.5;
@@ -55,7 +87,7 @@ SynthDef(\mspDynKlank, { arg out=0, freq = 440, pan = 0.5;
     // ring times
     ring = Control.names(\ring).kr(Array.fill(4, 1));
     klank = DynKlank.ar(`[harm, amp, ring], {ClipNoise.ar(0.003)}.dup, freq);
-    // Out.ar(out, klank);
+
     OffsetOut.ar(out, DirtPan.ar(klank, ~dirt.numChannels, pan))
 }).add
 )
@@ -77,12 +109,13 @@ x = x.add(b)
 )
 
 (
-x.size.postln;
-z = x.removeAt(x.size.rand);
-z.free;
-x.size.postln;
+if (x.size > 0, {
+    x.size.postln;
+    z = x.removeAt(x.size.rand);
+    z.free;
+    x.size.postln;
+})
 )
-
 
 
 a.setn(\harm,   Array.rand(4, 1.0, 4.7))

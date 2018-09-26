@@ -4,8 +4,29 @@ $ sound "msp808*4"
 
 d1
 $ slow 1
-$ sound "bd*4"
-# pan (slow 4 $ sine)
+$ degradeBy 0.3
+$ every 5 (slow 2)
+$ sometimesBy 0.15 (fast 2)
+$ sometimesBy 0.15 (# crush 2)
+$ scramble 4
+$ every 4 (0.25 ~>)
+$ sound "[msp808*4, hh*8]"
+-- # pan left
+-- # lpf 50
+-- # attack 0.01
+# decay 1
+# sustain (choose [0.3, 0.8, 1, 2])
+-- # gain 0.7
+-- # orbit allSpeakers
+-- # pan (slow 8 $ sine)
+# pan (choose [left, center, right, leftSurround, rightSurround])
+
+d1 silence
+
+
+
+
+
 
 d2
 $ sound "~ bd*128"

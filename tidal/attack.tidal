@@ -10,12 +10,13 @@ $ degradeBy 0.4
 $ fast 8
 $ rarely (slow 2)
 $ every 4 (0.25 ~>)
-$ juxBy 0.9 (# shape (scale 0 0.8 (slow 8 (sine))))
+-- $ juxBy 0.9 (# shape (scale 0 0.8 (slow 8 (sine))))
 $ degradeBy 0.5
 $ sound "~ ~ ~ <click:2*4 click:2*2>"
 # hpf (scale 1000 3000 $ slow 16 $ sine)
 # nudge (slow 8 $ sine)
 # gain 0.7
+# orbit allSpeakers
 
 d1 silence
 
@@ -36,6 +37,7 @@ $ every 2 (const
   # green 55
   # blue 155
   # ldecay 1
+  # orbit allSpeakers
   )
 $ degradeBy 0.3
 $ slow 1
@@ -49,20 +51,22 @@ $ sound "<tutorial5 ~> tutorial5?> <tutorial5 ~> tutorial5>"
 # gain 1.2
 # red "255 100"
 # blue "55 255"
+# orbit allSpeakers
 
 r2 silence
 
 -- ATTK ------------------------------------------------------------------------
 
-r3
+d1
+-- r3
 $ fast 2
 $ degradeBy 0.3
-$ sometimesBy 0.45 (# crush 2)
+$ sometimesBy 0.15 (# crush 2)
 $ scramble 4
 $ every 4 (0.25 ~>)
 -- $ striate 16 -- !!CAREFUL!!
--- $ sound "[super808*2]"
-$ sound "[msp808*2, form-msp5:1/16, m-metal:4/8]"
+-- $ sound "[msp808*2]"
+$ sound "[msp808*2, form-msp5:1/16, Xm-metal:4/8]"
 -- $ sound "[msp808*3, m-stab*2, m-tape:2]"
 -- $ sound "[msp808 m-boom/4, ascii*1]"
 -- $ sound "808bd:0 cp/8 Xform-msp1:2"
@@ -73,17 +77,16 @@ $ sound "[msp808*2, form-msp5:1/16, m-metal:4/8]"
 -- # speed (scale 0.5 0.9 (slow 3 (rand)))
 # sustain (scale 0.4 3 (slow 16 (sine)))
 # shape "0.5"
--- # red 255
--- # green 255
--- # blue 255
 # red "255 0 0"
 # green "0 255 0"
 # blue "0 0 255"
--- # orbit (choose [0, 1, 2])
-# nudge (slow 4 $ sine)
-# orbit 0
+-- # nudge (slow 4 $ sine)
+# gain 0.8
+# pan leftSurround
+-- # pan (slow 8 $ sine)
+-- # pan (choose [left, center, right, leftSurround, rightSurround])
 
-r1 silence
+r3 silence
 
 
 
@@ -91,11 +94,15 @@ r1 silence
 r1
 -- $ sometimesBy 0.5 (# crush 4)
 $ slow 1
-$ sound "bd*1"
+$ sound "bd*2"
+# red 255
 # green 255
-# red 0
+# blue 255
+-- # blue (scale 0 255 (slow 16 (sine)))
 # ldecay 0.05
 # sustain 1.0
+
+r1 silence
 
 -- OFF --
 r1

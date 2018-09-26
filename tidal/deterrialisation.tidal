@@ -12,7 +12,8 @@ $ sound "[mspAdd*8]"
 # sustain 1
 # release 0.4
 -- # nudge (slow 8 $ sine)
-# pan (scale 0.3 0.7 $ slow 8 $ rand)
+-- # pan (scale 0.3 0.7 $ slow 8 $ rand)
+# pan allSpeakers
 # gain (scale 0.5 0.95 $ slow 8 $ sine)
 
 p1 silence
@@ -39,7 +40,8 @@ $ sound "[msp808*3]"
           \ 0.1  0.8  0.3  0.7    1.0  0.8  0.5  0.7 "
 -- # voice 0.5
 -- # nudge (slow 8 $ sine)
-# pan (scale 0.25 0.65 $ slow 8 $ rand)
+-- # pan (scale 0.25 0.65 $ slow 8 $ rand)
+# pan allSpeakers
 # lpf 100
 # gain 1
 
@@ -60,7 +62,11 @@ $ sound "[mspFM*8]"
 -- # nudge (slow 4 $ sine)
 # sustain 0.09
 # pan (scale 0.35 0.77 $ slow 8 $ rand)
-# gain 0.9
+-- # pan allSpeakers
+# gain 0.8
+
+p3 silence
+
 
 p4
 $ slow 1
@@ -69,7 +75,8 @@ $ every 3 (0.25 ~>)
 $ chunk 8 (density 2)
 $ sound "[bd*4, hh:5*8]"
 -- # nudge (slow 4 $ sine)
-# pan (scale 0.35 0.77 $ slow 8 $ rand)
+-- # pan (scale 0.35 0.77 $ slow 8 $ rand)
+# pan allSpeakers
 # shape 0.8
 # speed 0.8
 # gain 0.9

@@ -7,30 +7,31 @@
 (blue, _) = pF "blue" (Just 255)
 (ldecay, _) = pF "ldecay" (Just 0.05)
 
-
-
 (cps, nudger, getNow) <- cpsUtils'
 
 now <- getNow
 
 
-out1 = 0 -- Focal L&R
-out2 = 1 -- Gen L&R
-live1 = 9
-live2 = 10
-live3 = 11
-live4 = 12
+left = 0
+center = 0.2
+right = 0.4
+leftSurround = 0.8
+rightSurround = 0.6
+allSpeakers = 5
+
+let jux = juxBy 0.5
 
 
 d1
 $ slow 2
 $ s "gendy"
 # legato "1.2"
-# freq 140
+# freq 40
 -- # fratio 2.3
 -- # hpf (scale 10 8000 $ slow 32 $ saw)
 # nudge (slow 8 $ rand)
 # gain 0.8
+# pan (slow 4 $ saw)
 
 d1 silence
 

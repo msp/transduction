@@ -28,16 +28,16 @@ let rpiShape = dirt {cpsStamp = True, latency = 0.4}
                               preamble = []
                              }
     rpiStream = do
-      s <- makeConnection "192.168.1.149" 5005 rpiSlang
+      s <- makeConnection "192.168.0.102" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     rpi2Stream = do
-      s <- makeConnection "192.168.1.150" 5005 rpiSlang
+      s <- makeConnection "192.168.0.104" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     rpi3Stream = do
-      s <- makeConnection "192.168.1.151" 5005 rpiSlang
+      s <- makeConnection "192.168.0.105" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     rpi4Stream = do
-      s <- makeConnection "192.168.1.152" 5005 rpiSlang
+      s <- makeConnection "192.168.0.106" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     (scene, _) = pS "scene" Nothing
     combinedStream = do rpi <- rpiStream
@@ -61,7 +61,5 @@ r4 <- combinedStream
 
 
 let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,p1,p2,p3,p4,r1,r2,r3,r4]
-
-let hush = mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9,r1,r2,r3,r4]
 
 let solo = (>>) hush

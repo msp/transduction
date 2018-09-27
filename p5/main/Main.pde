@@ -41,6 +41,7 @@ void oscEvent(OscMessage m) {
   float decay = 0;
   float sustain = 1;
   float release = 0.5;
+  float gainMult = 1.0;
   Thing thing;
 
   if(m.getAddress().equals( "/amp/env")) {
@@ -74,6 +75,7 @@ void oscEvent(OscMessage m) {
           break;
         case "pan":
           pan = m.get(i+1).floatValue();
+          //pan = random(0,1);
           break;
         case "attack":
           attack = m.get(i+1).floatValue();
@@ -90,6 +92,9 @@ void oscEvent(OscMessage m) {
         case "gain":
           gain = m.get(i+1).floatValue();
           break;
+        case "gmult":
+          gainMult = m.get(i+1).floatValue();
+          break;
         case "scene":
           String scene = m.get(i+1).stringValue();
           println("scene: " + scene);
@@ -104,7 +109,7 @@ void oscEvent(OscMessage m) {
   }
   
   if (sample != null) {
-    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain);
+    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain, gainMult);
     println(thing.toString());
     things.add(thing);
   }

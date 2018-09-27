@@ -4,6 +4,7 @@ class Thing {
   String txt;
   float pan;
   float gain;
+  float gainMult;
   float attack;
   float decay;
   float sustain;
@@ -18,7 +19,7 @@ class Thing {
     this.gain = gain;
   }
 
-  Thing(String txt, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain) {
+  Thing(String txt, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult) {
     start = millis();
     this.txt = txt;
     // this is SC's notion of sustain i.e. a multiplier for each env phase
@@ -29,8 +30,8 @@ class Thing {
     this.release = release * sustain;
     this.pan = pan;
     this.gain = gain;
-    
-    
+    this.gainMult = gainMult;
+        
     if (this.txt.equals("mspAdd") 
       || this.txt.equals("msp808")
       || this.txt.equals("mspSnare")
@@ -61,6 +62,9 @@ class Thing {
     float wobble = randomGaussian() * 1;
     int mainSize = 300;
     int skew = 3;
+     
+    // scale a bit visually
+    gain = gain * gainMult; 
     
     if (progress < 1) {      
       fill(204, 102, 0,this.alpha(progress));
@@ -68,7 +72,7 @@ class Thing {
       //text(txt,width*pan,height/2);
       //text(txt,width/2,height/2);
       
-      if (this.txt.equals("mspAdd") || this.txt.equals("msprhodes")) {
+      if (this.txt.equals("mspAdd") || this.txt.equals("msprhodes") || this.txt.equals("m-metal")) {
         noStroke();
         //fill(255,255,255,this.alpha(progress));
         fill(255,0,0,this.alpha(progress));
@@ -100,7 +104,7 @@ class Thing {
   
   Integer alpha(float progress) {
     Integer a;
-    Float maxOp = 220.0;
+    Float maxOp = 200.0;
     
     if (progress <= this.attack) {
       // fade in

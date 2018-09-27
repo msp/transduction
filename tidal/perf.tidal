@@ -6,6 +6,7 @@
 (green, _) = pF "green" (Just 255)
 (blue, _) = pF "blue" (Just 255)
 (ldecay, _) = pF "ldecay" (Just 0.05)
+(gmult, _) = pF "gmult" (Just 1.0)
 
 (cps, nudger, getNow) <- cpsUtils'
 

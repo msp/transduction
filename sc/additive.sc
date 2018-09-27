@@ -41,7 +41,7 @@ ampBus.value = 0.75;
 
 
 // Main window ///////////////////////////////////////////////////////////////////////
-Window.closeAll;
+// Window.closeAll;
 win = Window.new("Additive Synthesis", Rect(0, 0, 1320, 1340), scroll: true);
 win.view.decorator = d = FlowLayout(win.view.bounds, 20@20, 10@10);
 win.front;
@@ -218,9 +218,6 @@ d.nextLine();
 
         ampEnvLevels = ~partialEnvLevels.at(0).kr;
         ampEnvTimes = ~partialEnvTimes.at(0).kr;
-        // ampEnvLevels = envLevelsBus.kr;
-        // ampEnvTimes = envTimesBus.kr;
-
 
         envDuration = 5;
 
@@ -228,13 +225,13 @@ d.nextLine();
         // ampEnvCtl = EnvGen.kr(Env.circle(ampEnvLevels, ampEnvTimes.add(loopTime)));
 
         ampEnv = Env.circle(ampEnvLevels, ampEnvTimes);
-        // ampEnv.duration_(envDuration);
 
         ampEnvCtl = EnvGen.kr(ampEnv);
         // ampEnvCtl = EnvGen.kr(Env.circle(envLevelsBus, envTimesBus));
 
         snd = SinOsc.ar(freq: fundamental * partial, phase: 0);
-        snd = snd * ampEnvCtl * amp;
+        // snd = snd * ampEnvCtl * amp;
+        snd = snd * amp;
 
         Out.ar(outbus, (snd)!2);
     }).add;

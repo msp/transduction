@@ -31,7 +31,7 @@ let rpiShape = dirt {cpsStamp = True, latency = 0.4}
                               preamble = []
                              }
     rpiStream = do
-      s <- makeConnection "192.168.0.102" 5005 rpiSlang
+      s <- makeConnection "192.168.0.103" 5005 rpiSlang
       stream (Backend s $ (\_ _ _ -> return ())) rpiShape
     rpi2Stream = do
       s <- makeConnection "192.168.0.104" 5005 rpiSlang

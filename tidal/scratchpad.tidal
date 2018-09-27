@@ -24,9 +24,13 @@ $ sound "[msp808*4, hh*8]"
 d1 silence
 
 
-
-
-
+-- 5.1 test
+d1
+$ spin 4
+$ sound "bd*8"
+# gain 0.7
+-- # orbit allSpeakers
+-- # pan (slow 4 $ sine)
 
 d2
 $ sound "~ bd*128"

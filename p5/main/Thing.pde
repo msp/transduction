@@ -104,7 +104,7 @@ class Thing {
   
   Integer alpha(float progress) {
     Integer a;
-    Float maxOp = 200.0;
+    Float maxOp = 255.0;
     
     if (progress <= this.attack) {
       // fade in

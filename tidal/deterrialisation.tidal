@@ -72,7 +72,7 @@ p3 silence
 
 p4
 $ sometimesBy 0.25 (# crush 4)
-$ spin 2
+$ spin 8
 $ slow 1
 $ degradeBy 0.3
 $ every 3 (0.25 ~>)
@@ -118,7 +118,7 @@ $ sound "[form-msp4*2]"
 # legato 1
 -- $ sound "[mspFM*128]"
 # nudge (slow 16 $ sine)
-# speed (scale 0.2 1 $ slow 32 $ sine)
+# speed (scale 0.4 1 $ slow 32 $ sine)
 # gmult (scale 0.8 1.1 $ slow 32 $ sine)
 -- # gmult 1.2
 # gain (scale 0.4 0.9 $ slow 4 $ sine)
@@ -162,7 +162,7 @@ p3 silence
 
 p1
 $ every 2 (# pan (scale 0.1 0.9 $ fast 2 $ saw))
-$ spin 8
+$ spin 2
 $ sound "[form-msp4*1 mspFM*1]"
 -- $ sound "[form-msp4*1 mspFM*1] m-r-play:8"
 # legato 1
@@ -185,6 +185,8 @@ $ sound "[m-metal:1*8, m-metal:8*3]"
 -- # gmult 1.1
 -- # pan 0.5
 # gain (scale 0.9 1.0 $ slow 4 $ sine)
+
+p2 silence
 
 --------------------------------------------------------------------------------
 -- RECYCLE BIN -----------------------------------------------------------------

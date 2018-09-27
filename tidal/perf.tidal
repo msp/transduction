@@ -22,6 +22,7 @@ allSpeakers = 5
 
 let jux = juxBy 0.5
 
+-- Gendy -----------------------------------------------------------------------
 
 d1
 $ slow 2
@@ -37,8 +38,11 @@ $ s "gendy"
 d1 silence
 
 
--- crackly --
-d1
+-- Crackly ---------------------------------------------------------------------
+d2
 $ sound "form-msp1:2"
 # hpf (scale 100 2000 $ slow 32 $ sine)
+# n (irand 7)
 # pan (slow 4 $ saw)
+
+d2 silence

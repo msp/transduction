@@ -6,6 +6,7 @@ cps 1
 
 -- CLICKER ---------------------------------------------------------------------
 d1
+$ spin 4
 $ degradeBy 0.4
 $ fast 8
 $ rarely (slow 2)
@@ -16,12 +17,12 @@ $ sound "~ ~ ~ <click:2*4 click:2*2>"
 # hpf (scale 1000 3000 $ slow 16 $ sine)
 # nudge (slow 8 $ sine)
 # gain 0.7
-# orbit allSpeakers
+
 
 d1 silence
 
 -- SUBZ ------------------------------------------------------------------------
-r2
+r1
 $ every 5 (const
   $ sound "~"
   )
@@ -53,12 +54,12 @@ $ sound "<tutorial5 ~> tutorial5?> <tutorial5 ~> tutorial5>"
 # blue "55 255"
 # orbit allSpeakers
 
-r2 silence
+r1 silence
 
 -- ATTK ------------------------------------------------------------------------
 
-d1
--- r3
+r2
+$ spin 2
 $ fast 2
 $ degradeBy 0.3
 $ sometimesBy 0.15 (# crush 2)
@@ -66,14 +67,14 @@ $ scramble 4
 $ every 4 (0.25 ~>)
 -- $ striate 16 -- !!CAREFUL!!
 -- $ sound "[msp808*2]"
-$ sound "[msp808*2, form-msp5:1/16, Xm-metal:4/8]"
+$ sound "[msp808*3, form-msp5:1/16, m-metal:4/8]"
 -- $ sound "[msp808*3, m-stab*2, m-tape:2]"
 -- $ sound "[msp808 m-boom/4, ascii*1]"
 -- $ sound "808bd:0 cp/8 Xform-msp1:2"
 -- # n (run (choose [0, 2, 0, 1, 2, 1, 9]))
 -- # n (run (choose [4, 20, 0, 1, 2, 10, 9]))
-# n (irand 7)
--- # n (irand 101) --ASCII
+-- # n (irand 7)
+# n (irand 101) --ASCII
 -- # speed (scale 0.5 0.9 (slow 3 (rand)))
 # sustain (scale 0.4 3 (slow 16 (sine)))
 # shape "0.5"
@@ -82,19 +83,62 @@ $ sound "[msp808*2, form-msp5:1/16, Xm-metal:4/8]"
 # blue "0 0 255"
 -- # nudge (slow 4 $ sine)
 # gain 0.8
-# pan leftSurround
+-- # pan leftSurround
 -- # pan (slow 8 $ sine)
--- # pan (choose [left, center, right, leftSurround, rightSurround])
+# pan (choose [left, center, right, leftSurround, rightSurround])
+
+r2 silence
+
+
+-- BAR -------------------------------------------------------------------------
+
+let fill2 = const $ degradeBy 0.2 $ sound "form-msp5:4*16" # begin (scale 0 0.1 (fast 2 sine)) # end (scale 1 0.854 $ sine1) # room (scale 0.2 0.1 (slow 3 (sine))) # size (scale 0.1 0.9 (slow 2 (sine))) # gain 1 # shape 0.3 # pan (scale 0 1 saw1) # red 255
+
+let silence1 = const $ degradeBy 0.3 $ sound "~"
+
+r3
+$ spin 2
+$ degradeBy 0.1
+$ sometimesBy 0.25 (# crush 4)
+-- $ every 4 (silence1)
+$ every 4 (fill2)
+$ degradeBy 0.3
+$ sound "[form-msp7*8, gabba*8?]"
+# gain "1 0.8"
+# shape 0.6
+# legato 1
+# red 255
+# blue 255
+# green 255
+-- # pan (scale 0 1 (slow 2 saw1))
 
 r3 silence
 
+-- FX
+
+d1
+$ spin 4
+$ fast 2
+$ degradeBy 0.1
+$ sometimesBy 0.25 (# crush 2)
+$ scramble 4
+-- $ every 4 (0.25 ~>)
+-- $ striate 16 -- !!CAREFUL!!
+$ sound "[form-msp5:1/16, m-metal:4/8]"
+# gain 0.7
+# n (irand 30)
+# red 255
+# green 200
+# blue 155
+
+d1 silence
 
 
 -- TEST --
 r1
 -- $ sometimesBy 0.5 (# crush 4)
 $ slow 1
-$ sound "bd*2"
+$ sound "bd*4"
 # red 255
 # green 255
 # blue 255
@@ -124,7 +168,8 @@ r1 $ (pure now) ~> seqPLoop [
 
 
 -- fake rpi2
-d1
+r1
+$ spin 4
 $ fast 2
 $ degradeBy 0.1
 $ sometimesBy 0.25 (# crush 2)
@@ -133,4 +178,3 @@ $ sometimesBy 0.25 (# crush 2)
 -- $ striate 16 -- !!CAREFUL!!
 $ sound "[form-msp5:1/16, m-metal:4/8]"
 # n (irand 30)
-# orbit 0

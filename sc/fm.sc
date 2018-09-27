@@ -438,33 +438,27 @@ s.waitForBoot({
 	//////// 12 PRESETS ///////
 	///////////////////////////
 
-	presetArray[0] = {
-
-		~carrFreqEnv = Env.new([ 50, 50, 50, 50, 50, 50, 50, 50 ],[ 0.14, 0.15, 0.14, 0.14, 0.14, 0.15, 0.14 ]);
-		~modFreqEnv = Env.new([ 192.5, 192.5, 192.5, 192.5, 192.5, 192.5, 192.5, 192.5 ],[ 0.14, 0.15, 0.14, 0.14, 0.14, 0.15, 0.14 ]);
-		~modIndexEnv = Env.new([ 0, 6.8, 10, 9.4, 6.5, 4.1, 2.3, 0 ],[ 0.12244897959184, 0.14285714285714, 0.18367346938776, 0.14285714285714, 0.14285714285714, 0.081632653061225, 0.18367346938776 ]);
-		~ampEnv = Env.new([ 0, 1, 1, 0.92, 0.53, 0.27, 0.08, 0 ],[ 0, 0.11, 0.21, 0.16, 0.17, 0.19, 0.16 ]);
-		evCarrFreq.setEnv(adjustEnv.value(~carrFreqEnv));
-		evModFreq.setEnv(adjustEnv.value(~modFreqEnv));
-		evModIndex.setEnv(adjustEnv.value(~modIndexEnv, 0, 10));
-		evAmp.setEnv(~ampEnv);
-
-        timeScale = 1;
-		durationSlider.value = 1;
-
-        ~carrFreqEnvLevels.setn(~carrFreqEnv.levels);
-        ~carrFreqEnvTimes.setn(~carrFreqEnv.times);
-
-        ~modFreqEnvLevels.setn(~modFreqEnv.levels);
-        ~modFreqEnvTimes.setn(~modFreqEnv.times);
-
-        ~modIndexEnvLevels.setn(~modIndexEnv.levels);
-        ~modIndexEnvTimes.setn(~modIndexEnv.times);
-
-        ~ampEnvLevels.setn(~ampEnv.levels);
-        ~ampEnvTimes.setn(~ampEnv.times);
-        ~ampEnvDuration.set(timeScale);
-	};
+    presetArray[0] = {
+        ~carrFreqEnv = Env.new([ 572.5, 183, 173.5, 173.5, 173.5, 192.5, 173.5, 173.5 ],[ 0.04, 0.17, 0.14, 0.14, 0.16, 0.13, 0.14 ]);
+        ~modFreqEnv = Env.new([ 1000, 240, 867, 259, 325.5, 344.5, 325.5, 325.5 ],[ 0.06, 0.07, 0.05, 0.39, 0.18, 0.11, 0.14 ]);
+        ~modIndexEnv = Env.new([ 1.6, 4.9, 4.8, 3.2, 3.2, 1.7, 3.2, 3.2 ],[ 0.17, 0.14, 0.12, 0.14, 0.14, 0.15, 0.14 ]);
+        ~ampEnv = Env.new([ 0.83, 0.29, 0.06, 0, 0, 0, 0, 0.23 ],[ 0.07, 0.07, 0.11, 0.16, 0.12, 0.32, 0.15 ]);
+        evCarrFreq.setEnv(adjustEnv.value(~carrFreqEnv));
+        evModFreq.setEnv(adjustEnv.value(~modFreqEnv));
+        evModIndex.setEnv(adjustEnv.value(~modIndexEnv, 0, 10));
+        evAmp.setEnv(~ampEnv);
+        timeScale = 0.1;
+        durationSlider.value = 0.1;
+        ~carrFreqEnvLevels.setn([ 572.5, 183, 173.5, 173.5, 173.5, 192.5, 173.5, 173.5 ]);
+        ~carrFreqEnvTimes.setn([ 0.04, 0.17, 0.14, 0.14, 0.16, 0.13, 0.14 ]);
+        ~modFreqEnvLevels.setn([ 1000, 240, 867, 259, 325.5, 344.5, 325.5, 325.5 ]);
+        ~modFreqEnvTimes.setn([ 0.06, 0.07, 0.05, 0.39, 0.18, 0.11, 0.14 ]);
+        ~modIndexEnvLevels.setn([ 1.6, 4.9, 4.8, 3.2, 3.2, 1.7, 3.2, 3.2 ]);
+        ~modIndexEnvTimes.setn([ 0.17, 0.14, 0.12, 0.14, 0.14, 0.15, 0.14 ]);
+        ~ampEnvLevels.setn([ 0.83, 0.29, 0.06, 0, 0, 0, 0, 0.23 ]);
+        ~ampEnvTimes.setn([ 0.07, 0.07, 0.11, 0.16, 0.12, 0.32, 0.15 ]);
+        ~ampEnvDuration.set(0.1);
+    };
 
 	presetArray[1] = {
 

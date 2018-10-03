@@ -10,7 +10,7 @@ float globalSustain = 1.0;
 
 void setup() {
   smooth();
-  size(1000, 1000);
+  size(1024, 768);
   //fullScreen();
   textSize(40);
   osc = new OscP5(this, 1818);
@@ -42,6 +42,8 @@ void oscEvent(OscMessage m) {
   float sustain = 1;
   float release = 0.5;
   float gainMult = 1.0;
+  int hCutoff = 0;
+  
   Thing thing;
 
   if(m.getAddress().equals( "/amp/env")) {
@@ -69,6 +71,7 @@ void oscEvent(OscMessage m) {
   } else if(m.getAddress().equals( "/play2")) {    
     for(i = 0; i < m.typetag().length(); ++i) {
       String name = m.get(i).stringValue();
+      //println(name);
       switch(name) {
         case "s":
           sample = m.get(i+1).stringValue();
@@ -95,6 +98,10 @@ void oscEvent(OscMessage m) {
         case "gmult":
           gainMult = m.get(i+1).floatValue();
           break;
+        case "hcutoff":
+          hCutoff = floor(m.get(i+1).floatValue());
+          break;
+
         case "scene":
           String scene = m.get(i+1).stringValue();
           println("scene: " + scene);
@@ -109,7 +116,7 @@ void oscEvent(OscMessage m) {
   }
   
   if (sample != null) {
-    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain, gainMult);
+    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff);
     println(thing.toString());
     things.add(thing);
   }

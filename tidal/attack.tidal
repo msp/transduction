@@ -67,7 +67,7 @@ $ scramble 4
 $ every 4 (0.25 ~>)
 -- $ striate 16 -- !!CAREFUL!!
 -- $ sound "[msp808*2]"
-$ sound "[msp808*3, form-msp5:1/16, m-metal:4/8]"
+$ sound "[form-msp5*4, m-metal/8]"
 -- $ sound "[msp808*3, m-stab*2, m-tape:2]"
 -- $ sound "[msp808 m-boom/4, ascii*1]"
 -- $ sound "808bd:0 cp/8 Xform-msp1:2"
@@ -92,18 +92,28 @@ r2 silence
 
 -- BAR -------------------------------------------------------------------------
 
-let fill2 = const $ degradeBy 0.2 $ sound "form-msp5:4*16" # begin (scale 0 0.1 (fast 2 sine)) # end (scale 1 0.854 $ sine1) # room (scale 0.2 0.1 (slow 3 (sine))) # size (scale 0.1 0.9 (slow 2 (sine))) # gain 1 # shape 0.3 # pan (scale 0 1 saw1) # red 255
+let fill2 = const $ degradeBy 0.2 $ sound "form-msp5:4*8" # begin (scale 0 0.1 (fast 2 sine)) # end (scale 1 0.854 $ sine1) # room (scale 0.2 0.1 (slow 3 (sine))) # size (scale 0.1 0.9 (slow 2 (sine))) # gain 1 # shape 0.3 # pan (scale 0 1 saw1) # red 255
 
 let silence1 = const $ degradeBy 0.3 $ sound "~"
 
 r3
-$ spin 2
-$ degradeBy 0.1
-$ sometimesBy 0.25 (# crush 4)
--- $ every 4 (silence1)
-$ every 4 (fill2)
+
+
+p1
+$ sound "form-msp8:8*4"
+# legato 1
+
+p1
+$ sometimesBy 0.3 (zoom (0.25, 0.75))
+$ spin 8
 $ degradeBy 0.3
-$ sound "[form-msp7*8, gabba*8?]"
+$ sometimesBy 0.25 (# crush 4)
+$ sometimesBy 0.5 (silence1)
+$ every 8 (fill2)
+-- $ sometimesBy 0 (fill2)
+$ degradeBy 0.3
+$ sound "[form-msp7*4, gabba*1?, form-msp8:8/2]"
+-- # n (irand 10)
 # gain "1 0.8"
 # shape 0.6
 # legato 1
@@ -116,7 +126,7 @@ r3 silence
 
 -- FX
 
-d1
+d8
 $ spin 4
 $ fast 2
 $ degradeBy 0.1
@@ -124,14 +134,14 @@ $ sometimesBy 0.25 (# crush 2)
 $ scramble 4
 -- $ every 4 (0.25 ~>)
 -- $ striate 16 -- !!CAREFUL!!
-$ sound "[form-msp5:1/16, m-metal:4/8]"
+$ sound "[form-msp5, m-metal:4/8]"
 # gain 0.7
 # n (irand 30)
 # red 255
 # green 200
 # blue 155
 
-d1 silence
+d8 silence
 
 
 -- TEST --

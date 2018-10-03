@@ -3,6 +3,7 @@ s.quit;
 s.options.numOutputBusChannels = 10;
 s.options.numBuffers = 1024 * 16;
 s.options.memSize = 8192 * 16;
+s.options.maxNodes = 1024 * 32; // increase this if you are getting drop outs and the message "too many nodes"
 
 
 ~dirt.free;

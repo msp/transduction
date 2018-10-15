@@ -1,0 +1,104 @@
+now <- getNow
+
+cps 0.5
+
+d1
+$ sometimesBy 0.05 (# crush 6)
+$ sometimesBy 0.15 (# shape 0.5)
+-- $ fast 8
+-- $ slow 4
+-- $ scramble 4
+$ degradeBy 0.1
+$ (pure now) ~> seqPLoop [
+  (0, 4, sound "c a s t r o"),
+  (4, 12, sound "d e"),
+  (12, 16, sound "c e p e d a")
+]
+# n (irand 100)
+# nudge (slow 16 $ sine)
+# speed (slow 4 $ cosine)
+-- # speed (scale 5 10 $ slow 2 $ cosine)
+-- # speed "-1"
+-- # speed "10"
+-- # legato 1
+# pan (rand)
+# gain 1.0
+
+
+d1
+$ sometimesBy 0.05 (# crush 6)
+$ sometimesBy 0.15 (# shape 0.5)
+-- $ fast 8
+$ slow 8
+$ degradeBy 0.4
+$ sound "c a s t r o d e c e p e d a"
+# n (irand 100)
+# speed (slow 4 $ cosine)
+-- # speed "-1"
+-- # speed "18"
+-- # legato 1
+# pan (rand)
+
+
+d1
+$ sound "c"
+# n (irand 100)
+
+-- The line breaks seem to matter i.e write on single line!
+
+let seqSilence = sound "~"
+
+let seqPerc = sometimesBy 0.5 (# shape 0.5) $ every 8 (# speed 3) $ degradeBy 0.3 $ sound "form-msp5:11*4" # gain 1 # end (scale 0.05 0.17 $ slow 4(sine1)) # speed 1.8
+
+let seqGtr = degradeBy 0.5 $ sound "form-msp5:12*4" # end (scale 0.1 0.5 $ sine1) # pan (scale 0 1 $ slow 16(sine1)) # gain 1
+
+hush
+
+t1 (xfadeIn 16)
+
+d1
+$ (pure now) ~> seqPLoop [
+  (0, 4, sound "ascii*4")
+  -- (4, 12, seqSilence),
+  -- (12, 14, seqPerc)
+  -- (12, 14, seqSilence)
+]
+-- # speed 0.5
+# n (irand 10)
+
+d1
+$ (pure now) ~> seqPLoop [
+  (0, 4, seqGtr),
+  (4, 6, seqSilence),
+  (6, 12, seqPerc),
+  (12, 14, seqSilence)
+]
+# pan (scale 0 1 saw1)
+# speed 0.5
+# cutoff 1150
+
+d1 $ weave 16 (pan sine)
+  [sound "bd sn cp",
+   sound "casio casio:1",
+   sound "[jvbass*2 jvbass:2]/2",
+   sound "hc*4"
+  ]
+
+d1 $ wedge (1/16) (sound "bd*2 arpy*3 cp sn*2") (sound "odx [feel future]*2 hh hh")
+
+d1
+-- $ slow 8
+$ sound "form-msp8:12"
+
+d1
+$ sound "bd <arpy:1 arpy:2 arpy:3>"
+# n (irand 100)
+
+d1
+$ degradeBy 0.2
+$ sound "bd cp ascii bd hh cp cp"
+# n (irand 10)
+
+d1
+$ s "form-msp6:1 bd"
+# speed (rand)

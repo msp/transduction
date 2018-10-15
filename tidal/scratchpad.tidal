@@ -1,5 +1,21 @@
+cps (-1)
+
+cps 1
+
+
+d1 $ fastcat [sound "bd*2 cp", sound "arpy jvbass*3"]
+
+d1 $ append (sound "bd*2 cp") (sound "arpy jvbass*3")
+
+
 d1
-$ sound "msp808*4"
+$ sound "bd"
+# n (irand 10)
+
+4 2 . 6 5 8 8 7 7
+
+# shape 0.6
+
 # pan 0.2
 
 d1

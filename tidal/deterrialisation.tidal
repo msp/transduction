@@ -143,6 +143,7 @@ $ sound "[mspAdd*32]"
 p2 silence
 
 p3
+$ spin 4
 $ every 2 (# pan (scale 0.1 0.9 $ fast 2 $ saw))
 -- $ striate 16 -- !!CAREFUL!!
 -- $ sound "[m-stab:6]"
@@ -199,15 +200,15 @@ $ spin 8
 -- $ sound "[[form-msp4*1 mspFM*1], [m-r-play:0*1, superzow]]"
 -- $ sound "[form-msp4*4 mspFM*4]"
 -- $ sound "[[form-msp4*1 mspFM*1], m-r-play:0*3]"
--- $ sound "[[form-msp4*4 m-r-play:0*4], mspFM*4]"
--- $ sound "[[m-r-play:0*4]]"
-$ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
+-- $ sound "[[form-msp4*1 mspAdd:0*2], mspFM*4]"
+$ sound "[[m-r-play:0*4], mspFM*4]"
+-- $ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
 -- # legato 1
 -- # speed (scale 0.6 1 $ slow 8 $ sine)
 -- # speed "[2, 16]"
 -- # sustain 0.1
-# sustain (scale 0.3 1.5 $ slow rate $ cosine)
-# speed (scale 0.6 1.3 $ slow rate $ cosine)
+# sustain (scale 0.3 1.9 $ slow rate $ cosine)
+# speed (scale 0.6 1.6 $ slow rate $ cosine)
 # gmult (scale 0.8 1.15 $ slow rate $ cosine)
 -- # gmult 1.3
 # gain (scale 1 0.9 $ slow rate $ cosine)

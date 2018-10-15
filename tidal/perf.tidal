@@ -14,13 +14,19 @@ now <- getNow
 
 
 left = 0
-center = 0.2
-right = 0.4
-leftSurround = 0.8
-rightSurround = 0.6
-allSpeakers = 5
+-- center = 0.2
+right = 0.25
+rightSurround = 0.50
+leftSurround = 0.75
+-- allSpeakers = 5
 
 let jux = juxBy 0.5
+
+d1
+$ spin 4
+$ sound "bd*4"
+-- # pan (scale 0.1 0.9 $ slow 2 $ saw)
+-- # pan leftSurround
 
 -- Gendy -----------------------------------------------------------------------
 

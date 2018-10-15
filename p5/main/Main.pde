@@ -10,8 +10,8 @@ float globalSustain = 1.0;
 
 void setup() {
   smooth();
-  size(1024, 768);
-  //fullScreen();
+  //size(1024, 768);
+  fullScreen(2);
   textSize(40);
   osc = new OscP5(this, 1818);
   font = loadFont("Inconsolata-48.vlw");

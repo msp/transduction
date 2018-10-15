@@ -112,21 +112,24 @@ class Thing {
         //line(0, height/3*wobble, width, height/3*wobble);
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
       } else if (this.txt.equals("form-msp8")) {
-        //noStroke();
-        strokeWeight(25);
-        stroke(255,255,255,this.alpha(progress));
+        strokeWeight(15);
+        stroke(255,55,255,this.alpha(progress));
         noFill();
-        //fill(200,255,255,this.alpha(progress));
-        //rect(0, height/3, width, height/3 * wobble);
-        line(0, height/3*wobble, width, height/3*wobble);        
-      } else if (this.txt.equals("gabba") || this.txt.equals("form-msp8")) {
+        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+        ////line(0, height/3*wobble, width, height/3*wobble);
+        //line((width - wobble)*pan, 0, width*pan, height*gain);        
+      } else if (this.txt.equals("gabba") || this.txt.equals("form-msp7")) {
         noStroke();
-        if (this.txt.equals("form-msp8") {
+        if (this.txt.equals("form-msp7")) {
           fill(200,255,255,this.alpha(progress));
         } else {
           fill(0,255,255,this.alpha(progress));
         }
         rect(0, height/3, width, height/3 * wobble);        
+      } else if (this.txt.equals("form-msp5")) {
+        noStroke();
+        fill(255,100,100,this.alpha(progress));
+        rect(0, height/3 * wobble, width, height/3);        
       } else {
         strokeWeight(1);
         stroke(255,255,255,this.alpha(progress));

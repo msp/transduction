@@ -1,0 +1,115 @@
+--------------------------------------------------------------------------------
+-- OTO Beat 2 ------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+let rate = 64
+
+-- Crackly ---------------------------------------------------------------------
+d2
+$ sound "form-msp1:2"
+# hpf (scale 100 2000 $ slow 32 $ sine)
+# n (irand 7)
+# hpf 2000
+# pan (slow 4 $ saw)
+
+d2 silence
+
+d3
+$ slow 12
+$ sometimesBy 0.25 (# freq "[50, 1050]")
+$ spin 8
+-- $ striate 8
+$ sound "mspDynKlank*1"
+-- # freq "[50, 350, 500]"
+# freq "[50, 1150]"
+# sustain 5
+# nudge (slow 8 $ sine)
+# gain 0.9
+
+d3 silence
+
+cps (-1)
+cps 1
+
+p1
+$ every 3 (zoom (0.25, 0.75))
+-- $ every 2 (# pan (scale 0.1 0.9 $ fast 2 $ saw))
+$ spin 8
+-- $ sound "msprhodes*4"
+-- $ sound "[[form-msp4*4 msprhodes*4]]"
+-- $ sound "[[form-msp4*1 mspFM*1], [m-r-play:0*1, superzow]]"
+-- $ sound "[form-msp4*4 mspFM*4]"
+-- $ sound "[[form-msp4*1 mspFM*1], m-r-play:0*3]"
+-- $ sound "[[form-msp4*1 mspAdd:0*2], mspFM*4]"
+$ sound "[[m-r-play:0*4], mspFM*4]"
+-- $ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
+-- # legato 1
+-- # speed (scale 0.6 1 $ slow 8 $ sine)
+-- # speed "[2, 16]"
+-- # sustain 0.1
+# sustain (scale 0.3 1.9 $ slow rate $ cosine)
+# speed (scale 0.6 1.6 $ slow rate $ cosine)
+# gmult (scale 0.8 1.15 $ slow rate $ cosine)
+-- # gmult 1.3
+# gain (scale 1 0.9 $ slow rate $ cosine)
+-- # hpf 2000 --2K max
+# hpf (scale 2000 0 $ slow rate $ cosine)
+
+p1 silence
+
+p2
+$ degradeBy 0.1
+$ spin 8
+$ every 2 (# pan (scale 0.1 0.9 $ fast 2 $ saw))
+$ sound "[m-metal:1*2, m-metal:8*3]"
+# shape 0.5
+# speed (scale 0.2 2.2 $ slow 16 $ saw)
+# sustain (scale 0.3 0.07 $ slow 16 $ sine)
+# gmult (scale 0.8 1.05 $ slow 16 $ sine)
+-- # gmult 1.2
+-- # pan 0.5
+# hpf 900
+# gain (scale 0.7 0.8 $ slow 4 $ sine)
+
+p2 silence
+
+
+--------------------------------------------------------------------------------
+-- GLA -------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+let rate = "<1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 32 0.8 0.7>"
+
+let rate = "16"
+
+-- mess with degrade? & sustain
+p1
+-- $ degradeBy 0.3
+$ every 3 (zoom (0.25, 0.75))
+$ spin (choose [1, 1, 9, 1, 8, 4, 1, 2])
+-- $ sound "[form-msp8:14*8, <mspFM/4 form-msp4/6>, [~ m-r-play:5/32], <m-r-play:2/8>]"
+$ sound "[form-msp8:2*3]"
+-- $ sound "[form-msp8:14*8, <mspFM/4 form-msp8:2*3>]"
+# sustain (scale 0.3 2.9 $ slow rate $ cosine)
+# gmult 1.1
+# gain (scale 1.05 0.85 $ slow rate $ cosine)
+# hpf (scale 2000 400 $ slow rate $ cosine)
+
+p1 silence
+
+p2
+$ degradeBy 0.1
+$ every 3 (zoom (0.25, 0.75))
+-- $ spin 1
+$ spin (choose [2, 2, 4, 1, 8, 4, 1, 2])
+$ sound "[msp808*4, <m-metal/4 m-metal:3/8>]"
+-- $ sound "[msp808*4, <m-metal/4 <~ m-metal:1(5,8)> m-metal:3/8>]"
+# sustain (scale 0.3 2.9 $ slow rate $ cosine)
+# speed (choose [0.4, -1, 1, 1, 1, 1, 1, 1, 0.9, 0.7])
+-- # speed 1
+# gmult 1.02
+-- # lpf 60
+# gain (scale 1.0 0.75 $ slow rate $ cosine)
+-- # hpf (scale 1000 200 $ slow rate $ cosine)
+
+p2 silence
+--------------------------------------------------------------------------------

@@ -24,7 +24,7 @@ void draw() {
 
   for (int i = things.size() - 1; i >= 0; i--) {
     Thing thing = things.get(i);
-      if (thing.alive()) {
+      if (thing != null && thing.alive()) {
         thing.draw();
       }
       else {

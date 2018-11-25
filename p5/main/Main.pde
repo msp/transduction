@@ -9,13 +9,14 @@ PFont font;
 float globalSustain = 1.0;
 
 void setup() {
-  smooth();
   //size(1024, 768);
-  fullScreen(2);
-  textSize(40);
+  size(1920, 1080);  
+  //fullScreen(2);
+  //smooth();
+  //textSize(40);
   osc = new OscP5(this, 1818);
-  font = loadFont("Inconsolata-48.vlw");
-  textFont(font,48);
+  //font = loadFont("Inconsolata-48.vlw");
+  //textFont(font,48);
 }
 
 void draw() {

@@ -36,6 +36,7 @@ void draw() {
 void oscEvent(OscMessage m) {
   int i;
   String sample = null;
+  int sampleNum = 0;
   float pan = 0.5;
   float gain = 1;
   float attack = 0;
@@ -80,6 +81,9 @@ void oscEvent(OscMessage m) {
         case "s":
           sample = m.get(i+1).stringValue();
           break;
+        case "n":
+          sampleNum = floor(m.get(i+1).floatValue());
+          break;
         case "pan":
           pan = m.get(i+1).floatValue();
           //pan = random(0,1);
@@ -120,8 +124,8 @@ void oscEvent(OscMessage m) {
   }
   
   if (sample != null) {
-    thing = new Thing(sample, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff);
-    println(thing.toString());
+    thing = new Thing(sample, sampleNum, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff);    
     things.add(thing);
+    println(thing.toString());
   }
 }

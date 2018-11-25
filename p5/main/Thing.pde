@@ -1,7 +1,8 @@
 class Thing {
   int start;
   float life;
-  String txt;
+  String sample;
+  int sampleNum;
   float pan;
   float gain;
   float gainMult;
@@ -12,17 +13,18 @@ class Thing {
   float release;
   int hCutoff;
   
-  Thing(String txt, float pan, float gain) {
+  Thing(String sample, float pan, float gain) {
     start = millis();
     life = 250;
-    this.txt = txt;
+    this.sample = sample;
     this.pan = pan;
     this.gain = gain;
   }
 
-  Thing(String txt, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff) {
+  Thing(String sample, int sampleNum, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff) {
     start = millis();
-    this.txt = txt;
+    this.sample = sample;
+    this.sampleNum = sampleNum;
     // this is SC's notion of sustain i.e. a multiplier for each env phase
     this.attack = attack * sustain;
     this.decay = decay * sustain;
@@ -34,13 +36,13 @@ class Thing {
     this.gainMult = gainMult;
     this.hCutoff = hCutoff;
         
-    if (this.txt.equals("mspAdd") 
-      || this.txt.equals("msp808")
-      || this.txt.equals("mspSnare")
+    if (this.sample.equals("mspAdd") 
+      || this.sample.equals("msp808")
+      || this.sample.equals("mspSnare")
       ) {
       life = (this.attack + this.decay + this.release) * 1000;
     } else {
-          if (this.txt.equals("mspFM")){
+          if (this.sample.equals("mspFM")){
             // hmmm fudge these as we don't have 'em
             this.attack = 0.01;
             this.decay = 0.1;
@@ -75,15 +77,15 @@ class Thing {
     if (progress < 1) {      
       //fill(204, 102, 0,this.alpha(progress));
       //textAlign(CENTER);
-      //text(txt,width*pan,height/2);
-      //text(txt,width/2,height/2);
+      //text(sample,width*pan,height/2);
+      //text(sample,width/2,height/2);
       
-      if (this.txt.equals("mspAdd") || this.txt.equals("msprhodes") || this.txt.equals("m-metal")) {
+      if (this.sample.equals("mspAdd") || this.sample.equals("msprhodes") || this.sample.equals("m-metal")) {
         noStroke();
         //fill(255,255,255,this.alpha(progress));
         fill(255,0,0,this.alpha(progress));
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      } else if (this.txt.equals("mspFM") || this.txt.equals("superzow")) {
+      } else if (this.sample.equals("mspFM") || this.sample.equals("superzow")) {
         //noStroke();
         //fill(0,255,0,this.alpha(progress));
         strokeWeight(10);
@@ -91,18 +93,18 @@ class Thing {
         noFill();
         
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      } else if (this.txt.equals("form-msp4") || this.txt.equals("msp808")) {
+      } else if (this.sample.equals("form-msp4") || this.sample.equals("msp808")) {
         //noStroke();
         //fill(0,0,255,this.alpha(progress));
         noFill();
         strokeWeight(20);
         stroke(0,0,255,this.alpha(progress));
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);        
-      } else if (this.txt.equals("superstatic")) {
+      } else if (this.sample.equals("superstatic")) {
         noStroke();
         fill(200,255,255,this.alpha(progress));
         ellipse(width*pan*wobble*15,height/2, mainSize*gain*wobble*3, 50*gain*wobble*3);        
-      } else if (this.txt.equals("m-r-play")) {
+      } else if (this.sample.equals("m-r-play")) {
         //noStroke();
         strokeWeight(25);
         stroke(255,255,255,this.alpha(progress));
@@ -111,22 +113,31 @@ class Thing {
         //rect(0, height/3, width, height/3 * wobble);
         //line(0, height/3*wobble, width, height/3*wobble);
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      } else if (this.txt.equals("form-msp8")) {
-        strokeWeight(15);
-        stroke(255,55,255,this.alpha(progress));
-        noFill();
-        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-        ////line(0, height/3*wobble, width, height/3*wobble);
-        //line((width - wobble)*pan, 0, width*pan, height*gain);        
-      } else if (this.txt.equals("gabba") || this.txt.equals("form-msp7")) {
+      } else if (this.sample.equals("form-msp8")) {        
+        if (this.sampleNum == 2) {
+          strokeWeight(mainSize);
+          stroke(55,55,255,this.alpha(progress));
+          //noFill();
+          ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+          //line(0, height/3*wobble, width, height/3*wobble);
+        } else {
+          //strokeWeight(mainSize);
+          //stroke(255,55,255,this.alpha(progress));
+          fill(255,55,255,this.alpha(progress));
+          //noFill();
+          ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+          //line((width - wobble)*pan, 0, width*pan, height*gain);
+
+      }
+      } else if (this.sample.equals("gabba") || this.sample.equals("form-msp7")) {
         noStroke();
-        if (this.txt.equals("form-msp7")) {
+        if (this.sample.equals("form-msp7")) {
           fill(200,255,255,this.alpha(progress));
         } else {
           fill(0,255,255,this.alpha(progress));
         }
         rect(0, height/3, width, height/3 * wobble);        
-      } else if (this.txt.equals("form-msp5")) {
+      } else if (this.sample.equals("form-msp5")) {
         noStroke();
         fill(255,100,100,this.alpha(progress));
         rect(0, height/3 * wobble, width, height/3);        
@@ -159,7 +170,7 @@ class Thing {
   }
   
   public String toString() {
-    String main = "sample: "+this.txt+" | pan: "+this.pan+" | gain: "+this.gain;
+    String main = "sample: "+this.sample+" | pan: "+this.pan+" | gain: "+this.gain;
     String env = "A: "+this.attack+" | D: "+this.decay+" | S: "+this.sustain+" | R: "+this.release;
     return main + " --> "+ env; 
   } 

@@ -47,6 +47,9 @@ void oscEvent(OscMessage m) {
   
   Thing thing;
 
+  //inspect the OSC message
+  //m.print();
+  
   if(m.getAddress().equals( "/amp/env")) {
     println("got test message");
     println("Address\t" + m.getAddress());   

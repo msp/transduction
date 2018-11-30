@@ -9,8 +9,8 @@ PFont font;
 float globalSustain = 1.0;
 
 void setup() {
-  //size(1024, 768);
-  size(1920, 1080);  
+  size(1024, 768);
+  //size(1920, 1080);  
   //fullScreen(2);
   //smooth();
   //textSize(40);
@@ -45,6 +45,7 @@ void oscEvent(OscMessage m) {
   float release = 0.5;
   float gainMult = 1.0;
   int hCutoff = 0;
+  int freq = 440;
   
   Thing thing;
 
@@ -109,6 +110,9 @@ void oscEvent(OscMessage m) {
         case "hcutoff":
           hCutoff = floor(m.get(i+1).floatValue());
           break;
+        case "freq":
+          freq = floor(m.get(i+1).floatValue());
+          break;
 
         case "scene":
           String scene = m.get(i+1).stringValue();
@@ -124,7 +128,7 @@ void oscEvent(OscMessage m) {
   }
   
   if (sample != null) {
-    thing = new Thing(sample, sampleNum, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff);    
+    thing = new Thing(sample, sampleNum, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);    
     things.add(thing);
     println(thing.toString());
   }

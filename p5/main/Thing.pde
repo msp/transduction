@@ -12,6 +12,7 @@ class Thing {
   float globalSustain;
   float release;
   int hCutoff;
+  int freq;
   
   Thing(String sample, float pan, float gain) {
     start = millis();
@@ -21,7 +22,7 @@ class Thing {
     this.gain = gain;
   }
 
-  Thing(String sample, int sampleNum, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff) {
+  Thing(String sample, int sampleNum, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff, int freq) {
     start = millis();
     this.sample = sample;
     this.sampleNum = sampleNum;
@@ -35,6 +36,7 @@ class Thing {
     this.gain = gain;
     this.gainMult = gainMult;
     this.hCutoff = hCutoff;
+    this.freq = freq;
         
     if (this.sample.equals("mspAdd") 
       || this.sample.equals("msp808")
@@ -67,9 +69,12 @@ class Thing {
     int mainSize = 300;
     int maxHPF = 2000;
     int skew = 3;
+    int freq = 440;
          
     // hcutoff -> init height
     mainSize = floor(map(this.hCutoff, 0, maxHPF, height/3, 10));
+    
+    freq = floor(map(this.freq, 0, 8000, 1, 255));
     
     // scale a bit visually
     gain = gain * gainMult; 
@@ -85,14 +90,19 @@ class Thing {
         //fill(255,255,255,this.alpha(progress));
         fill(255,0,0,this.alpha(progress));
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      } else if (this.sample.equals("mspFM") || this.sample.equals("superzow")) {
-        //noStroke();
-        //fill(0,255,0,this.alpha(progress));
+      } else if (this.sample.equals("mspFM")) {
         strokeWeight(10);
         stroke(0,255,0,this.alpha(progress));
-        noFill();
-        
+        noFill();        
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+      } else if (this.sample.equals("superzow")) {
+        noStroke();
+        fill(freq,255,17,this.alpha(progress));
+        //strokeWeight(10);
+        //stroke(0,255,0,this.alpha(progress));
+        //noFill();        
+        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+
       } else if (this.sample.equals("form-msp4") || this.sample.equals("msp808")) {
         //noStroke();
         //fill(0,0,255,this.alpha(progress));

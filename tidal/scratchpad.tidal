@@ -3,6 +3,17 @@ cps (-1)
 cps 1
 
 
+d1
+-- $ degradeBy 0.1
+$ every 3 (zoom (0.25, 0.75))
+$ spin (choose [1, 1, 9, 1, 8, 4, 1, 2])
+-- $ sound "[bd]"
+$ sound "[mspFM]"
+# waveloss (scale 1.0 99.0 $ slow 8 $ cosine)
+-- # waveloss (choose [88.8])
+-- # squiz (scale 0 5 $ slow 4 $ rand)
+
+
 d1 $ fastcat [sound "bd*2 cp", sound "arpy jvbass*3"]
 
 d1 $ append (sound "bd*2 cp") (sound "arpy jvbass*3")

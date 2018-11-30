@@ -7,11 +7,12 @@
 (blue, _) = pF "blue" (Just 255)
 (ldecay, _) = pF "ldecay" (Just 0.05)
 (gmult, _) = pF "gmult" (Just 1.0)
+(squiz, _) = pF "squiz" (Just 1.0)
+(waveloss, _) = pF "waveloss" (Just 0.0)
 
 (cps, nudger, getNow) <- cpsUtils'
 
 now <- getNow
-
 
 left = 0
 -- center = 0.2

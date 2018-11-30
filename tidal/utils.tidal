@@ -26,6 +26,17 @@ p7 <- combinedStream
 p8 <- combinedStream
 
 
+wchooseBy :: Pattern Double -> [(a,Double)] -> Pattern a
+wchooseBy pat pairs = match <$> pat
+  where
+    match r = values !! (head (findIndices (> (r*total)) cweights))
+    cweights = scanl1 (+) (map snd pairs)
+    values = map fst pairs
+    total = sum $ map snd pairs
+
+wchoose :: [(a,Double)] -> Pattern a
+wchoose = wchooseBy rand
+
 let rpiShape = dirt {cpsStamp = True, latency = 0.4}
     rpiSlang = superDirtSlang {timestamp = NoStamp,
                               preamble = []

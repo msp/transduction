@@ -41,6 +41,7 @@ class Thing {
     if (this.sample.equals("mspAdd") 
       || this.sample.equals("msp808")
       || this.sample.equals("mspSnare")
+      || this.sample.equals("superzow")
       ) {
       life = (this.attack + this.decay + this.release) * 1000;
     } else {
@@ -97,11 +98,13 @@ class Thing {
         ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
       } else if (this.sample.equals("superzow")) {
         noStroke();
-        fill(freq,255,17,this.alpha(progress));
+        colorMode(HSB);
+        fill(freq,255,255,this.alpha(progress));
+        colorMode(RGB, 255, 255, 255);
         //strokeWeight(10);
         //stroke(0,255,0,this.alpha(progress));
         //noFill();        
-        ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+        ellipse(width*(pan+wobble/2000),height/2, (mainSize/skew)*gain,mainSize*gain);
 
       } else if (this.sample.equals("form-msp4") || this.sample.equals("msp808")) {
         //noStroke();
@@ -161,7 +164,7 @@ class Thing {
   
   Integer alpha(float progress) {
     Integer a;
-    Float maxOp = 225.0;
+    Float maxOp = 215.0;
     
     if (progress <= this.attack) {
       // fade in

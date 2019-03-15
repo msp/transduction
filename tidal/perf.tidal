@@ -1,15 +1,3 @@
-(freq, _) = pF "freq" (Just 440)
-(f, _) = pF "f" (Just 440)
-(cutoff, _) = pF "cutoff" (Just 200)
-(fatt, _) = pF "fatt" (Just 0.75)
-(red, _) = pF "red" (Just 255)
-(green, _) = pF "green" (Just 255)
-(blue, _) = pF "blue" (Just 255)
-(ldecay, _) = pF "ldecay" (Just 0.05)
-(gmult, _) = pF "gmult" (Just 1.0)
-(squiz, _) = pF "squiz" (Just 1.0)
-(waveloss, _) = pF "waveloss" (Just 0.0)
-
 (cps, nudger, getNow) <- cpsUtils'
 
 now <- getNow

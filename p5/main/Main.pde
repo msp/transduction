@@ -10,7 +10,8 @@ float globalSustain = 1.0;
 
 void setup() {
   size(1024, 768);
-  //size(1920, 1080);  
+  //size(1920, 1080);
+  //size(1920, 1200); -- Gray Arts resolution  
   //fullScreen(2);
   //smooth();
   //textSize(40);
@@ -46,35 +47,35 @@ void oscEvent(OscMessage m) {
   float gainMult = 1.0;
   int hCutoff = 0;
   int freq = 440;
-  
+
   Thing thing;
 
   //inspect the OSC message
   //m.print();
-  
+
   if(m.getAddress().equals( "/amp/env")) {
     println("got test message");
-    println("Address\t" + m.getAddress());   
+    println("Address\t" + m.getAddress());
     println("Typetag\t" + m.getTypetag());
     byte[]  v0 = m.bytesValue(0);
     println("Args\t"+v0);
     println(">--");
-    
-    // TODO: collect into Levels ArrayList and set globally for all 
-    // future FM synths same for env Times    
+
+    // TODO: collect into Levels ArrayList and set globally for all
+    // future FM synths same for env Times
     for( Object o : m.getArguments() ) {
       println( o.getClass().getSimpleName() + "\t" + o );
     }
-    println("--<");    
+    println("--<");
     //r = m.floatValue( 0 );
   } else if(m.getAddress().equals( "/amp/env/sustain")) {
     println("got sustain message");
-    println("Address\t" + m.getAddress());   
+    println("Address\t" + m.getAddress());
     println("Typetag\t" + m.getTypetag());
     println("Args\t"+m.floatValue(0));
-    
+
     globalSustain = m.floatValue(0);
-  } else if(m.getAddress().equals( "/play2")) {    
+  } else if(m.getAddress().equals( "/play2")) {
     for(i = 0; i < m.typetag().length(); ++i) {
       String name = m.get(i).stringValue();
       //println(name);
@@ -126,9 +127,9 @@ void oscEvent(OscMessage m) {
     println( "WARNING! Unhandled OSC at:" );
     println( "Address\t" + m.getAddress() );
   }
-  
+
   if (sample != null) {
-    thing = new Thing(sample, sampleNum, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);    
+    thing = new Thing(sample, sampleNum, attack, decay, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);
     things.add(thing);
     println(thing.toString());
   }

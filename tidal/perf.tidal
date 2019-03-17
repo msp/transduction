@@ -2,20 +2,25 @@
 
 now <- getNow
 
-left = 0
--- center = 0.2
-right = 0.25
-rightSurround = 0.50
-leftSurround = 0.75
--- allSpeakers = 5
+out1 = 0
+out2 = 1 * 0.125
+out3 = 2 * 0.125
+out4 = 3 * 0.125
+out5 = 4 * 0.125
+out6 = 5 * 0.125
+out7 = 6 * 0.125
+out8 = 7 * 0.125
+
+-- use spin to address all speakers together or routing in Totalmix!
 
 let jux = juxBy 0.5
 
 d1
-$ spin 4
+$ spin 8
+$ slow 4
 $ sound "bd*4"
--- # pan (scale 0.1 0.9 $ slow 2 $ saw)
--- # pan leftSurround
+-- # pan out7
+-- # pan (range 0.1 0.9 $ slow 2 $ saw)
 
 -- Gendy -----------------------------------------------------------------------
 

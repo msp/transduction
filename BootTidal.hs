@@ -12,7 +12,7 @@ latency = 0.1
 
 supercolliderTarget = superdirtTarget {oLatency = latency, oAddress = "127.0.0.1"}
 
-processingTarget = OSCTarget {oName = "Processing Target", oAddress = "127.0.0.1", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
+processingTarget = OSCTarget {oName = "Processing Target", oAddress = "10.10.7.192", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
 
 -- rpiTarget = OSCTarget {oName = "RPI Target", oAddress = "192.168.0.103", oPort = 5005, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
 -- rpiTarget = OSCTarget {oName = "RPI2 Target", oAddress = "192.168.0.104", oPort = 5005, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }

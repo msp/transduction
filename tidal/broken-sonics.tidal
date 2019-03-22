@@ -29,8 +29,9 @@ $ sound "mspDynKlank*1"
 
 d3 silence
 
-cps (-1)  --reset
-cps 1     --restart
+setcps 1
+
+resetCycles
 
 let rate = 128
 
@@ -42,14 +43,17 @@ p1
 -- $ every 3 (zoom (0.25, 0.75))
 -- $ every 2 (# pan (range 0.1 0.9 $ fast 2 $ saw))
 $ spin 8
--- $ sound "msprhodes*4"
--- $ sound "[[form-msp4*4 msprhodes*4]]"
+-- $ slow 2
+-- $ sound "[[m-r-play:0*4]]"
+-- $ sound "[[m-r-play:0*4], mspFM*4]"
+$ sound "[form-msp4*8 mspFM*4]"
+-- $ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
+-- bridge
 -- $ sound "[[form-msp4*1 mspFM*1], [m-r-play:0*1, superzow]]"
--- $ sound "[form-msp4*4 mspFM*4]"
+-- recycle?
+-- $ sound "[[form-msp4*4 msprhodes*4]]"
 -- $ sound "[[form-msp4*1 mspFM*1], m-r-play:0*3]"
 -- $ sound "[[form-msp4*1 mspAdd:0*2], mspFM*4]"
-$ sound "[[m-r-play:0*4], mspFM*4]"
--- $ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
 -- # legato 1
 -- # speed (range 0.6 1 $ slow 8 $ sine)
 -- # speed "[2, 16]"
@@ -61,19 +65,22 @@ $ sound "[[m-r-play:0*4], mspFM*4]"
 # gain (range 1 0.9 $ slow rate $ cosine)
 -- # hpf 2000 --2K max
 # hpf (range 2000 0 $ slow rate $ cosine)
+-- # cps (range 0.4 1.5 $ slow rate $ rand)
+# cps 1
 
 p1 silence
 
 p2
 $ degradeBy 0.1
 $ spin 8
+-- $ slow 4
 $ every 2 (# pan (range 0.1 0.9 $ fast 2 $ saw))
 $ sound "[m-metal:1*2, m-metal:8*3]"
 # shape 0.5
 # speed (range 0.2 2.2 $ slow 16 $ saw)
 # sustain (range 0.3 0.07 $ slow 16 $ sine)
 # pF "gmult" (range 0.8 1.05 $ slow 16 $ sine)
--- # gmult 1.2
+-- # pF "gmult" 1.2
 -- # pan 0.5
 # hpf 900
 # gain (range 0.7 0.8 $ slow 4 $ sine)
@@ -91,6 +98,8 @@ let rate = "<100 50 10 266 128>"
 
 let rate 16
 
+resetCycles
+
 p1
 $ every 8 (# pan (range 0.01 0.99 $ fast 4 $ saw))
 -- $ spin (wchoose [(32, 2), (16, 1), (8, 0.5), (4, 0.1)])
@@ -102,12 +111,15 @@ $ sound "[superzow]"
 -- # sustain 2
 # sustain (range 1.1 2.1 $ slow rate $ cosine)
 -- # accelerate (wchoose [(0.01, 2), (0.05, 1), (0.1, 0.5), (0.2, 0.1)])
--- # freq (wchoose [(50, 2), (150, 1), (800, 1), (1000, 0.5), (8000, 0.1)])
+-- # pF "freq" (wchoose [(50, 2), (150, 1), (800, 1), (1000, 0.5), (8000, 0.1)])
 -- # detune (wchoose [(2, 2), (4, 1), (1, 1), (8, 0.5), (32, 0.1)])
 # speed (range 0.6 1.6 $ slow rate $ cosine)
 # pF "gmult" (range 0.9 1.01 $ slow rate $ cosine)
 # gain (range 1 0.9 $ slow rate $ cosine)
 -- # hpf (range 2000 0 $ slow rate $ sine)
+-- # cps (range 0.2 1.2 $ slow rate $ rand) -- not with spin32!
+# cps 1
+
 
 p1 silence
 
@@ -121,8 +133,8 @@ p2
 -- $ degradeBy 0.3
 $ every 3 (zoom (0.25, 0.75))
 $ spin (choose [1, 1, 9, 1, 8, 4, 1, 2])
+$ sound "[form-msp8:2*3]"
 -- $ sound "[form-msp8:14*8, <mspFM/4 form-msp4/6>, [~ m-r-play:5/32], <m-r-play:2/8>]"
--- $ sound "[form-msp8:2*3]"
 -- $ sound "[form-msp8:14*8, <mspFM/4 form-msp8:2*3>]"
 # sustain (range 0.3 2.9 $ slow rate $ cosine)
 # pF "gmult" 1.1
@@ -131,21 +143,4 @@ $ spin (choose [1, 1, 9, 1, 8, 4, 1, 2])
 
 p2 silence
 
-p2
-$ degradeBy 0.1
-$ every 3 (zoom (0.25, 0.75))
--- $ spin 1
--- $ spin (choose [2, 2, 4, 1, 8, 4, 1, 2])
-$ spin (wchoose [(2, 2), (4, 1), (1, 1), (8, 0.5)])
-$ sound "[msp808*4, <m-metal/4 m-metal:3/8>]"
--- $ sound "[msp808*4, <m-metal/4 <~ m-metal:1(5,8)> m-metal:3/8>]"
-# sustain (range 0.3 2.9 $ slow rate $ cosine)
-# speed (choose [0.4, -1, 1, 1, 1, 1, 1, 1, 0.9, 0.7])
--- # speed 1
-# pF "gmult" 1.02
--- # lpf 60
-# gain (scale 1.0 0.75 $ slow rate $ cosine)
--- # hpf (scale 1000 200 $ slow rate $ cosine)
-
-p2 silence
 --------------------------------------------------------------------------------

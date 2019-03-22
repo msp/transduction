@@ -16,13 +16,13 @@ $ sound "form-msp1:2"
 d2 silence
 
 d3
-$ slow 12
-$ sometimesBy 0.25 (# freq "[50, 1050]")
+$ slow 6
+$ sometimesBy 0.25 (# pF "freq" "[50, 1050]")
 $ spin 8
--- $ striate 8
+-- $ striate 8 -- CPU!
 $ sound "mspDynKlank*1"
--- # freq "[50, 350, 500]"
-# freq "[50, 1150]"
+# pF "freq" "[50, 350, 500]"
+-- # pF "freq" "[50, 1150]"
 # sustain 5
 # nudge (slow 8 $ sine)
 # gain 0.9
@@ -44,9 +44,9 @@ p1
 -- $ every 2 (# pan (range 0.1 0.9 $ fast 2 $ saw))
 $ spin 8
 -- $ slow 2
--- $ sound "[[m-r-play:0*4]]"
+$ sound "[[m-r-play:0*4]]"
 -- $ sound "[[m-r-play:0*4], mspFM*4]"
-$ sound "[form-msp4*8 mspFM*4]"
+-- $ sound "[form-msp4*8 mspFM*4]"
 -- $ sound "[form-msp4*8, m-r-play:0*6 [form-msp8:14, form-msp8:2]]"
 -- bridge
 -- $ sound "[[form-msp4*1 mspFM*1], [m-r-play:0*1, superzow]]"

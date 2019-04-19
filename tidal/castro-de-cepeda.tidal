@@ -2,28 +2,34 @@ now <- getNow
 
 cps 0.5
 
-d1
-$ sometimesBy 0.05 (# crush 6)
-$ sometimesBy 0.15 (# shape 0.5)
--- $ fast 8
--- $ slow 4
--- $ scramble 4
-$ degradeBy 0.1
-$ (pure now) ~> seqPLoop [
-  (0, 4, sound "c a s t r o"),
-  (4, 12, sound "d e"),
-  (12, 16, sound "c e p e d a")
-]
-# n (irand 100)
-# nudge (slow 16 $ sine)
-# speed (slow 4 $ cosine)
--- # speed (scale 5 10 $ slow 2 $ cosine)
--- # speed "-1"
--- # speed "10"
--- # legato 1
-# pan (rand)
-# gain 1.0
+do
+{
+  resetCycles;
+  d1
+  $ sometimesBy 0.05 (# crush 6)
+  $ sometimesBy 0.15 (# shape 0.5)
+  -- $ fast 8
+  -- $ slow 4
+  -- $ scramble 4
+  $ degradeBy 0.1
+  $ seqPLoop [
+    (0, 4, sound "c a s t r o"),
+    (4, 12, sound "d e"),
+    (12, 16, sound "c e p e d a")
+  ]
+  # n (irand 100)
+  # nudge (slow 16 $ sine)
+  # speed (slow 4 $ cosine)
+  -- # speed (range 5 10 $ slow 2 $ cosine)
+  -- # speed "-1"
+  -- # speed "10"
+  -- # legato 1
+  # pan (rand)
+  # gain 1.0
+}
 
+
+d1 silence
 
 d1
 $ sometimesBy 0.05 (# crush 6)

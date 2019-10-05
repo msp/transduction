@@ -3,11 +3,13 @@ class Thing {
   float life;
   String sample;
   int sampleNum;
+  float note;
   float pan;
   float gain;
   float gainMult;
   float attack;
   float decay;
+  float hold;
   float sustain;
   float globalSustain;
   float release;
@@ -23,17 +25,19 @@ class Thing {
     this.gain = gain;
   }
 
-  Thing(int scene, String sample, int sampleNum, float attack, float decay, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff, int freq) {
+  Thing(int scene, String sample, int sampleNum, float note, float attack, float decay, float hold, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff, int freq) {
     start = millis();
     this.scene = scene;
     this.sample = sample;
     this.sampleNum = sampleNum;
-    // this is SC's notion of sustain i.e. a multiplier for each env phase
-    this.attack = attack * sustain;
-    this.decay = decay * sustain;
+    this.note = note;
+    // TODO: this is SC's notion of sustain i.e. a multiplier for each env phase
+    this.attack = attack;
+    this.decay = decay;
+    this.hold = hold;
     this.sustain = sustain;
     this.globalSustain = globalSustain;
-    this.release = release * sustain;
+    this.release = release;
     this.pan = pan;
     this.gain = gain;
     this.gainMult = gainMult;
@@ -44,8 +48,12 @@ class Thing {
       || this.sample.equals("msp808")
       || this.sample.equals("mspSnare")
       || this.sample.equals("superzow")
+      || this.sample.equals("testsuperzow")
+      || this.sample.equals("mspWaves")
       ) {
-      life = (this.attack + this.decay + this.release) * 1000;
+      // In SC, the release is the longest part of the env so just convert that to millis 
+      // it may however be scaled by the sustain param so include that.
+      life = this.release * sustain * 1000;
     } else {
           if (this.sample.equals("mspFM")){
             // hmmm fudge these as we don't have 'em
@@ -61,7 +69,7 @@ class Thing {
   }
   
   boolean alive () {
-    //print("start: " + start + " life " + life + " now " + millis() + "\n");
+    //print("start: " + start + " at " + (millis() - start) + "/" + life + "\n");
     return((start+life) >= millis());
   }
   
@@ -69,16 +77,11 @@ class Thing {
     float age = millis() - start;
     float progress = age/life;
     float wobble = randomGaussian() * 1;
-    int mainSize = 300;
+    //int mainSize = 300;
     int maxHPF = 2000;
     int skew = 3;
-    int freq = 440;
-         
-    // hcutoff -> init height
-    mainSize = floor(map(this.hCutoff, 0, maxHPF, height/3, 10));
-    
-    freq = floor(map(this.freq, 0, 8000, 1, 255));
-    
+    //int freq = 440;
+             
     // scale a bit visually
     gain = gain * gainMult; 
         
@@ -88,15 +91,21 @@ class Thing {
       //text(sample,width*pan,height/2);
       //text(sample,width/2,height/2);
       
+      
+      //method("scene" + scene);
+      
       switch(scene) {
         case 1: 
-          scene1(sample, sampleNum, progress, wobble, mainSize, maxHPF, skew, freq, gain, pan, attack, decay, sustain, release);
+          scene1(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
         case 2: 
-          scene2(sample, sampleNum, progress, wobble, mainSize, maxHPF, skew, freq, gain, pan, attack, decay, sustain, release);
+          scene2(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
+          break;
+        case 3: 
+          scene3(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
         default:
-          scene1(sample, sampleNum, progress, wobble, mainSize, maxHPF, skew, freq, gain, pan, attack, decay, sustain, release);
+          scene1(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
       }      
     }
@@ -104,7 +113,7 @@ class Thing {
   
   public String toString() {
     String main = "scene: ["+this.scene+"] | sample: "+this.sample+" | pan: "+this.pan+" | gain: "+this.gain;
-    String env = "A: "+this.attack+" | D: "+this.decay+" | S: "+this.sustain+" | R: "+this.release;
+    String env = "A: "+this.attack+" | D: "+this.decay+" | H: "+this.hold+" | R: "+this.release+ " | " + this.life;
     return main + " --> "+ env; 
   } 
 }

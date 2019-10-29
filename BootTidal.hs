@@ -12,7 +12,10 @@ latency = 0.1
 
 supercolliderTarget = superdirtTarget {oLatency = latency, oAddress = "127.0.0.1"}
 
-processingTarget = OSCTarget {oName = "Processing Target", oAddress = "192.168.0.1", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
+-- squattybox2
+-- processingTarget = OSCTarget {oName = "Processing Target", oAddress = "192.168.86.132", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
+-- horus
+processingTarget = OSCTarget {oName = "Processing Target", oAddress = "192.168.86.221", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
 
 
 
@@ -105,4 +108,4 @@ let setI = streamSetI tidal
     setB = streamSetB tidal
 :}
 
-:set prompt "msp-tidal> "
+:set prompt "msptidal> "

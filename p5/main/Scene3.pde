@@ -102,15 +102,18 @@ public void scene3(String sample,
     rect(0, height/3, width, height/3);
     
   } else if (sample.equals("mspWaves")) {
-    strokeCap(PROJECT);
-    //strokeWeight(80);
-    strokeWeight(map(progress, 0, 1, 1, 160));
-    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-
     //int noteRange = 40;
     int noteRange = 60; // (C0 == -60, C5 == 0, C10 == 60)
     float yPos = floor(map(note, noteRange * -1, noteRange, height, 0));
     float lineLength = (width*pan)+map(progress, 0, 1, width*pan, width-(width*pan));
+    float lineHeight = 160;
+    //float lineHeight = (height / 1.5);
+
+    strokeCap(PROJECT);
+    //strokeWeight(80);
+    strokeWeight(map(progress, 0, 1, 1, floor(lineHeight)));
+    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+
     
     if (pan <= 0.5) {
       line(width*pan, yPos, lineLength, yPos);  
@@ -121,15 +124,30 @@ public void scene3(String sample,
     //line(width*pan, yPos, (width*pan)+ width - (width*pan), yPos);
     
   } else {
-    strokeWeight(1);
-    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-    line((width - wobble)*pan, 0, width*pan, height*gain);
-    //int _alpha = alpha(progress, attack, decay, hold, release);
-    //float widthOffset = map(progress, 0.0, 1.0, 0, width/2);
-    //rect(width/2 + widthOffset, height/2, 10, 1 - _alpha );
+    //strokeWeight(1);
+    //stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    //line((width - wobble)*pan, 0, width*pan, height*gain);    
     
-    //fill(255,100,100,alpha(progress, attack, decay, hold, release));
-    //rect(0, height/3, width, height/3);        
+    //int noteRange = 40;
+    int noteRange = 60; // (C0 == -60, C5 == 0, C10 == 60)
+    float yPos = floor(map(note, noteRange * -1, noteRange, height, 0));
+    float lineLength = (width*pan)+map(progress, 0, 1, width*pan, width-(width*pan));
+    float lineHeight = 160;
+    //float lineHeight = (width / 8);
+
+    strokeCap(PROJECT);
+    //strokeWeight(80);
+    strokeWeight(map(progress, 0, 1, 1, floor(lineHeight)));
+    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+
+    
+    if (pan <= 0.5) {
+      line(width*pan, yPos, width*pan, lineLength);  
+    } else {
+      line(width*pan, yPos, width*pan, (height*pan)-map(progress, 0, 1, height-(height*pan), height*pan));
+    }
+    
+    //line(width*pan, yPos, (width*pan)+ width - (width*pan), yPos);
     
   }
   

@@ -11,11 +11,14 @@ ArrayList<Thing> things = new ArrayList<Thing>();
 PFont font;
 float globalSustain = 1.0;
 
+PShader blur;
+
 void settings() {
   //size(1024, 768);
   //size(1920, 1080);
-  //size(1920, 1200); //Gray Arts resolution  
-  fullScreen(2);
+  size(1920, 1200); //Gray Arts resolution  
+  //fullScreen(2);
+  //fullScreen(P2D, 2);
 }
 
 void setup() {
@@ -24,6 +27,7 @@ void setup() {
   osc = new OscP5(this, 1818);
   //font = loadFont("Inconsolata-48.vlw");
   //textFont(font,48);
+  //blur = loadShader("blur.glsl");
 }
 
 void draw() {
@@ -38,4 +42,6 @@ void draw() {
         things.remove(i);
       }
   }
+  
+  //filter(BLUR, 6);
 }

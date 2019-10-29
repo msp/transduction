@@ -20,7 +20,7 @@ s.waitForBoot({
 	var numberOfPoints, scaleEnv, scaleLevels, win, subwin, evCarrFreq, evModFreq, evModIndex, evAmp, font, font2, labelColor, windowColor, timeScale, volumeSlider, durationSlider, printEnvData, adjustEnv, masterOut, presetArray, presetButtons, tmpAmpEnvLevels, tmpAmpEnvTimes, tmpEnvLevels, tmpEnvTimes, p5;
 
     // p5 = NetAddr.new("127.0.0.1", 1818);
-    p5 = NetAddr.new("10.10.7.192", 1818);
+    p5 = NetAddr.new("192.168.0.1", 1818);
 
 
 	timeScale = 3; // total duration of a "note"

@@ -1,0 +1,60 @@
+p "woozy" ----------------------------------------------------------------------
+  $ slow (range 1 4 $ slow rate $ cosine)
+  $ every 8 (# pan (range 0.01 0.99 $ fast 4 $ saw))
+  -- $ spin (wchoose [(32, 2), (16, 1), (8, 0.5), (4, 0.1)])
+  -- $ spin (wchoose [(16, 1), (8, 0.5), (4, 0.1)])
+  -- $ spin 8
+  -- $ sound "[testsuperzow]"
+  -- $ sound "[testsuperzow, form-msp4:2*4]"
+  $ sound "[form-msp4:2*4]"
+  -- $ sound "[superhex]"
+  -- $ sound "[mspFM/10, superzow]" -- FM #2
+  -- $ sound "[mspFM/20, superzow*5]" -- FM #2
+  -- # pF "mAttackTime" (wchoose [(0.05, 2), (0.2, 1), (0.5, 0.5), (0.9, 0.1)])
+  # pF "mAttackTime" 0.01
+  # pF "mDecayTime" 0.1
+  # pF "mHoldTime" 0.5
+  # pF "mReleaseTime" 1
+  -- Always set sustain as using slow will override it!
+  -- # sustain 2
+  # sustain (range 1.1 2.1 $ slow rate $ cosine)
+  |- sustain 1
+  -- # accelerate (wchoose [(0.01, 2), (0.05, 1), (0.1, 0.5), (0.2, 0.1)])
+  # pF "freq" (wchoose [(50, 2), (150, 1), (800, 1), (1000, 0.5), (8000, 0.1)])
+  -- # detune (wchoose [(2, 2), (4, 1), (1, 1), (8, 0.5), (32, 0.1)])
+  # speed (range 0.6 1.6 $ slow rate $ cosine)
+  # pF "gmult" (range 0.9 1.01 $ slow rate $ cosine)
+  # gain (range 1 0.9 $ slow rate $ cosine)
+  |- gain 0.2
+  # hpf (range 2000 0 $ slow rate $ sine)
+  -- # cps (range 0.2 2.2 $ slow rate $ rand) -- not with spin32!
+  -- # cps 1
+  # pF "scene" 2
+
+p "woozy" $ silence
+
+unsolo "woozy"
+
+
+-- TESTER ----------------------------------------------------------------------
+
+-- Dem Rulez!
+--
+-- 1) my custom env must only be 1 in length. YOu can only set the release by
+--    reducing the other times.
+-- 2) always set sustain! Otherwise it'll derive from fast/slow
+--    e.g slow 4 == sustain 4
+-- Never use attack, hold or release as the will trigger dirt_envelope effect
+
+d1
+$ spin 16
+$ slow 4
+$ sound "testsuperzow"
+# pF "mAttackTime" 0.4
+# pF "mDecayTime" 0.1
+# pF "mHoldTime" 0.1
+# pF "mReleaseTime" 1
+# sustain 4 -- Always set this as using slow will override it!
+# accelerate (wchoose [(0.01, 2), (0.05, 1), (0.1, 0.5), (0.2, 0.1)])
+# detune (wchoose [(2, 2), (4, 1), (1, 1), (8, 0.5), (32, 0.1)])
+# pF "scene" 1

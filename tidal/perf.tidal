@@ -2,6 +2,8 @@
 
 now <- getNow
 
+-- 8 Channel
+
 out1 = 0
 out2 = 1 * 0.125
 out3 = 2 * 0.125
@@ -10,6 +12,32 @@ out5 = 4 * 0.125
 out6 = 5 * 0.125
 out7 = 6 * 0.125
 out8 = 7 * 0.125
+
+-- I/O: JACK multitrack recording
+-- Set Supercollider to output to Jack Router/Loopback
+--
+-- When using with UCX thru Live
+--
+out1 = 9
+out2 = 10
+out3 = 11
+out4 = 12
+out5 = 13
+out6 = 14
+out7 = 15
+out8 = 16
+
+--
+-- When using with headphones direct out
+--
+out1 = 0
+out2 = 0
+out3 = 0
+out4 = 0
+out5 = 0
+out6 = 0
+out7 = 0
+out8 = 0
 
 -- use spin to address all speakers together or routing in Totalmix!
 
@@ -28,7 +56,7 @@ d1
 $ slow 2
 $ s "gendy"
 # legato "1.2"
-# freq 40
+# pF "freq" 40
 -- # fratio 2.3
 -- # hpf (scale 10 8000 $ slow 32 $ saw)
 # nudge (slow 8 $ rand)

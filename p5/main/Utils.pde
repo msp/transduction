@@ -22,3 +22,24 @@ Integer alpha(float progress, float attack, float decay, float hold, float relea
   }
   return a;
 }
+
+boolean postfxLive (HashMap fxValues) {
+  boolean sentfx = false;
+  
+  ArrayList<String> whitelist = new ArrayList<String>();
+  whitelist.add("noiseAmount");
+  whitelist.add("noiseRate");
+  
+  for (Object key : fxValues.keySet()) {
+    if (whitelist.contains(key.toString())) { 
+      sentfx = true;
+      break;
+    }
+  }
+  
+  //if (sentfx) {
+  //  println("--------------- Got some post fx! "+ fxValues);
+  //}
+  
+  return sentfx;
+}

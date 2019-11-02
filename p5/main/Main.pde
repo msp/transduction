@@ -1,33 +1,31 @@
-
 import oscP5.*;
 import netP5.*;
+import ch.bildspur.postfx.builder.*;
+import ch.bildspur.postfx.pass.*;
+import ch.bildspur.postfx.*;
 
-// Needs a manual install of 2.0.4 from here: https://github.com/sojamo/oscp5/releases
-// Instructions in the zip. 
-// NB: it still reports itself as 2.0.3 in library.properties :/ 
+PostFX fx;
 OscP5 osc;
 
 ArrayList<Thing> things = new ArrayList<Thing>();
+HashMap<String, Float> fxValues = new HashMap();
 PFont font;
 float globalSustain = 1.0;
 
 PShader blur;
 
 void settings() {
-  //size(1024, 768);
-  //size(1920, 1080);
-  size(1920, 1200); //Gray Arts resolution  
-  //fullScreen(2);
-  //fullScreen(P2D, 2);
+  size(1920, 1200, P3D); //Gray Arts resolution  
+  //fullScreen(P3D, 2);
 }
 
 void setup() {
-  //smooth();
+  fx = new PostFX(this);
+  //smooth(); // can be set for P2d & P3D
   //textSize(40);
   osc = new OscP5(this, 1818);
   //font = loadFont("Inconsolata-48.vlw");
   //textFont(font,48);
-  //blur = loadShader("blur.glsl");
 }
 
 void draw() {
@@ -37,11 +35,22 @@ void draw() {
     Thing thing = things.get(i);
       if (thing != null && thing.alive()) {
         thing.draw();
+        
       }
       else {
         things.remove(i);
       }
   }
   
-  //filter(BLUR, 6);
+  if (postfxLive(fxValues)) {
+    fx.render()
+      //.sobel()
+      //.bloom(0.5, 20, 30)
+      //.pixelate(50)
+      //.bloom(0.2, 20, 40.0)
+      //.noise(0.15, 0.2)
+      .noise(fxValues.getOrDefault("noiseAmount", 0.15), 
+             fxValues.getOrDefault("noiseRate", 0.2))
+      .compose();  
+  }
 }

@@ -19,7 +19,7 @@ void oscEvent(OscMessage m) {
   Thing thing;
 
   //inspect the OSC message
-  m.print();
+  //m.print();
 
   if(m.getAddress().equals( "/amp/env")) {
     println("got test message");
@@ -92,6 +92,13 @@ void oscEvent(OscMessage m) {
         case "freq":
           freq = floor(m.get(i+1).floatValue());
           break;
+         case "fxNoiseAmount":
+           fxValues.put("noiseAmount", m.get(i+1).floatValue());
+           break;
+         case "fxNoiseRate":
+           fxValues.put("noiseRate", m.get(i+1).floatValue());
+           break;
+           
       }
       ++i;
     }
@@ -104,6 +111,6 @@ void oscEvent(OscMessage m) {
   if (sample != null) {
     thing = new Thing(scene, sample, sampleNum, note, attack, decay, hold, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);
     things.add(thing);
-    println(thing.toString());
+    //println(thing.toString());
   }
 }

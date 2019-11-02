@@ -2,6 +2,13 @@ cps (-1)
 
 cps 1
 
+do -- test --------------------------------------------------------------------
+  let myRate = 32
+  let distAmntX = 0.1
+  --
+  p "mspTester"
+  $ sound "bd(5,8)"
+  # djf distAmntX
 
 d1
 -- $ degradeBy 0.1

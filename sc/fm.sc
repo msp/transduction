@@ -197,7 +197,7 @@ s.waitForBoot({
 	.step_(0.01)
 	.keepHorizontalOrder_(true)
 	.action_({arg b;
-        "send OSC meesage to P5!".postln;
+        "send OSC message to P5!".postln;
         ~msg = ["/amp/env"] ++ b.value[1];
         p5.sendMsg(*~msg);
         ~ampEnvLevels.setn(b.value[1]);
@@ -288,7 +288,7 @@ s.waitForBoot({
 	Button(win, Rect(710, 21, 100, 147))
 	.states_([["PLAY", Color.black]])
 	.action_({
-		Synth.new("mspFM", [
+		Synth.new("mspFM", [\sustain, 1
 		]);
 	})
 	.font_(Font("Verdana", 20));

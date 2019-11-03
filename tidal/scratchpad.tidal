@@ -1,14 +1,83 @@
-cps (-1)
+setcps 1
 
-cps 1
+setcps (175/60/4)
 
-do -- test --------------------------------------------------------------------
-  let myRate = 32
-  let distAmntX = 0.1
+do
   --
-  p "mspTester"
-  $ sound "bd(5,8)"
-  # djf distAmntX
+  let foo5 = 0.1
+  --
+  p "do-let-test"
+    $ sound "glitch"
+    # djf foo5
+    # orbit out1
+
+do -- mspLaser --------------------------------------------------------------------
+  let myRate = 32
+  let attackMod = range 0.01 0.1 (slow (myRate) $ rand)
+  let speedMod = (range 4 0.65 (slow myRate (rand)))
+  let sustainMod = (range 0.3 0.8 (slow myRate (rand)))
+  let slowMod = 1
+  let subMulti = 0.4
+  --
+  p "pulse-synth2"
+    -- $ every 5 (skip)
+    $ fix (# gain 0.5) (s "mspFM")
+    -- $ slow slowMod
+    -- $ fast 2
+    -- $ every 30 (fast 2)
+    -- $ struct "[0 0 0 1 1 0 1 0]"
+    -- $ struct "[1 1]"
+    -- $ struct "1 1? 1 1? [1] 1? 1 1?" --175
+    $ struct "t(5,8)"
+    $ sometimesBy 0.05 (|- n 5)
+    $ sometimesBy 0.06 (|- n 3)
+    $ sometimesBy 0.05 (rev)
+    $ sound "[mspLaser, mspFM]"
+    -- $ sound "[mspsupergong]"
+    -- *| n ("f3 d2 <f3 ff3> d5 f3 ef3 f3" |+ "'minPent")
+    *| n ("f3 d2 <f3 ff3> d5 f3 ef3 f3" |+ "'ritusen")
+    -- *| n ("ff3 f3 d5 ef5 d5" |+ "'minPent")
+    -- *| n ("[ff4, d6]" |+ "'minPent")
+    -- # n 0
+    -- # octave 8
+    # pF "mAttackTime" (attackMod / 2)
+    -- # pF "mAttackTime" 0.7
+    -- # pF "mDecayTime" 1.5
+    # pF "mDecayTime" (sustainMod)
+    -- # pF "mDecayTime" 3
+    -- # pF "mReleaseTime" 4
+    # sustain (sustainMod)
+    -- |+ sustain 0.8
+    -- # sustain "0.25 <0.2*3 <0.5 0.3 0.5>>"
+    # voice "<0 0 0 0.3 0 0.5 0 0.7>"
+    -- # distort (range 0.05 0.2 (slow (myRate/3) (cosine)))
+    # accelerate 0.05
+    -- # djf (range 0.8 0.2 $ fast 16 $ rand)
+    -- # gain 0.9
+    # orbit out5
+
+p "pulse-synth2" $ silence
+unsolo  "pulse-synth2"
+
+p "main" -----------------------------------------------------------------------
+  $ skip
+  -- $ every 15 (skip)
+  $ degradeBy 0
+  $ sometimesBy 0.2 (# n (irand 6))
+  -- $ sound "[bd(<2 3 2>, 8, <0 0 0 2 0 0 0 3>)]" -- main (old)
+  $ sound "[bd(<2 1 3>, 8)]"  -- 175 (minus skip)
+  -- $ sound "[bd(<2 1 2>, 8)]"  -- 175 on the one (minus skip)
+  -- $ sound "[bd(<2 3 2>, 8, <2>)]" -- main (intro 175)
+  # speed (range 0.8 1 $ slow 2 $ rand)
+  # distort (range 0 0.05 $ slow 3 $ cosine)
+  # gain "1 0.9 0.9 0.7 0.5 0.5 0.5"
+  |+ gain 0.2
+  # orbit out1
+
+p "main" $ silence
+
+unsolo "main"
+
 
 d1
 -- $ degradeBy 0.1
@@ -79,3 +148,4 @@ $ slow 3
 $ sound "help_Control_DynKlank"
 # pan (slow 2 $ saw)
 # freq 298
+-- 

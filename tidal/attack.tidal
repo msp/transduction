@@ -11,10 +11,10 @@ $ degradeBy 0.4
 $ fast 8
 $ rarely (slow 2)
 $ every 4 (0.25 ~>)
--- $ juxBy 0.9 (# shape (scale 0 0.8 (slow 8 (sine))))
+-- $ juxBy 0.9 (# shape (range 0 0.8 (slow 8 (sine))))
 $ degradeBy 0.5
 $ sound "~ ~ ~ <click:2*4 click:2*2>"
-# hpf (scale 1000 3000 $ slow 16 $ sine)
+# hpf (range 1000 3000 $ slow 16 $ sine)
 # nudge (slow 8 $ sine)
 # gain 0.7
 
@@ -34,10 +34,10 @@ $ every 2 (const
   # coarse 4
   # sustain 2
   # gain 1.2
-  # red 155
-  # green 55
-  # blue 155
-  # ldecay 1
+  # pF "red" 155
+  # pF "green" 55
+  # pF "blue" 155
+  # pF "ldecay" 1
   # orbit allSpeakers
   )
 $ degradeBy 0.3
@@ -45,13 +45,13 @@ $ slow 1
 $ sometimes (fast 2)
 $ every 4 (0.5 <~)
 $ sound "<tutorial5 ~> tutorial5?> <tutorial5 ~> tutorial5>"
-# f "[50] 40"
+# pF "f" "[50] 40"
 # sustain 2
 # accelerate 0.3
 # cutoff 50
 # gain 1.2
-# red "255 100"
-# blue "55 255"
+# pF "red" "255 100"
+# pF "blue" "55 255"
 # orbit allSpeakers
 
 r1 silence
@@ -63,36 +63,39 @@ $ spin 2
 $ fast 2
 $ degradeBy 0.3
 $ sometimesBy 0.15 (# crush 2)
+$ sometimesBy 0.15 (# n (irand 7))
 $ scramble 4
 $ every 4 (0.25 ~>)
 -- $ striate 16 -- !!CAREFUL!!
 -- $ sound "[msp808*2]"
-$ sound "[form-msp5*4, m-metal/8]"
+-- $ sound "[form-msp5:5*4, m-metal/8]"
+-- $ sound "[m-metal/4]"
 -- $ sound "[msp808*3, m-stab*2, m-tape:2]"
--- $ sound "[msp808 m-boom/4, ascii*1]"
+$ sound "[msp808 m-boom/4, ascii*1]"
 -- $ sound "808bd:0 cp/8 Xform-msp1:2"
 -- # n (run (choose [0, 2, 0, 1, 2, 1, 9]))
 -- # n (run (choose [4, 20, 0, 1, 2, 10, 9]))
 -- # n (irand 7)
 # n (irand 101) --ASCII
--- # speed (scale 0.5 0.9 (slow 3 (rand)))
-# sustain (scale 0.4 3 (slow 16 (sine)))
-# shape "0.5"
-# red "255 0 0"
-# green "0 255 0"
-# blue "0 0 255"
+# speed (range 0.95 1.05 (slow 3 (rand)))
+-- # sustain (range 0.4 3 (slow 16 (sine)))
+-- # shape "0.5"
+-- # red "255 0 0"
+-- # green "0 255 0"
+-- # blue "0 0 255"
 -- # nudge (slow 4 $ sine)
 # gain 0.8
 -- # pan leftSurround
--- # pan (slow 8 $ sine)
-# pan (choose [left, center, right, leftSurround, rightSurround])
+# pan (slow 8 $ sine)
+-- # pan (choose [left, center, right, leftSurround, rightSurround])
+# pF "scene" 3
 
 r2 silence
 
 
 -- BAR -------------------------------------------------------------------------
 
-let fill2 = const $ degradeBy 0.2 $ sound "form-msp5:4*8" # begin (scale 0 0.1 (fast 2 sine)) # end (scale 1 0.854 $ sine1) # room (scale 0.2 0.1 (slow 3 (sine))) # size (scale 0.1 0.9 (slow 2 (sine))) # gain 1 # shape 0.3 # pan (scale 0 1 saw1) # red 255
+let fill2 = const $ degradeBy 0.2 $ sound "form-msp5:4*8" # begin (range 0 0.1 (fast 2 sine)) # end (range 1 0.854 $ sine) # room (range 0.2 0.1 (slow 3 (sine))) # size (range 0.1 0.9 (slow 2 (sine))) # gain 1 # shape 0.3 # pan (range 0 1 saw) # pF "red" 255
 
 let silence1 = const $ degradeBy 0.3 $ sound "~"
 
@@ -117,10 +120,10 @@ $ sound "[form-msp7*4, gabba*1?, form-msp8:8/2]"
 # gain "1 0.8"
 # shape 0.6
 # legato 1
-# red 255
-# blue 255
-# green 255
--- # pan (scale 0 1 (slow 2 saw1))
+# pF "red" 255
+# pF "blue" 255
+# pF "green" 255
+-- # pan (range 0 1 (slow 2 saw1))
 
 r3 silence
 
@@ -137,9 +140,10 @@ $ scramble 4
 $ sound "[form-msp5, m-metal:4/8]"
 # gain 0.7
 # n (irand 30)
-# red 255
-# green 200
-# blue 155
+# pF "red" 255
+# pF "green" 200
+# pF "blue" 155
+# orbit out1
 
 d8 silence
 
@@ -149,20 +153,20 @@ r1
 -- $ sometimesBy 0.5 (# crush 4)
 $ slow 1
 $ sound "bd*4"
-# red 255
-# green 255
-# blue 255
--- # blue (scale 0 255 (slow 16 (sine)))
-# ldecay 0.05
+# pF "red" 255
+# pF "green" 255
+# pF "blue" 255
+-- # pF "blue" (range 0 255 (slow 16 (sine)))
+# pF "ldecay" 0.05
 # sustain 1.0
 
 r1 silence
 
 -- OFF --
 r1
-$ red 0
-# green 0
-# blue 0
+$ pF "red" 0
+# pF "green" 0
+# pF "blue" 0
 
 
 

@@ -13,6 +13,15 @@ out6 = 5 * 0.125
 out7 = 6 * 0.125
 out8 = 7 * 0.125
 
+-- left = 0
+-- center = 0.2
+-- right = 0.25
+-- rightSurround = 0.50
+-- leftSurround = 0.75
+-- allSpeakers = 5
+allSpeakers =  out1
+
+
 -- I/O: JACK multitrack recording
 -- Set Supercollider to output to Jack Router/Loopback
 --

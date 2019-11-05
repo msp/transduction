@@ -31,7 +31,7 @@ class Thing {
     this.sample = sample;
     this.sampleNum = sampleNum;
     this.note = note;
-    // TODO: this is SC's notion of sustain i.e. a multiplier for each env phase
+    // This is SC's notion of sustain i.e. a multiplier for each env phase or duration
     this.attack = attack;
     this.decay = decay;
     this.hold = hold;

@@ -47,15 +47,16 @@ public void scene3(String sample,
     //ellipse(width*(pan),height/2, (mainSize/skew)*gain,mainSize*gain);
 
   } else if (sample.equals("form-msp4") || sample.equals("msp808")) {
-    //noStroke();
-    //fill(0,0,255,this.alpha(progress));
-    shape_width = (mainSize/skew)*gain;
-    noFill();
-    strokeWeight(20);
-    stroke(0,0,0,alpha(progress, attack, decay, hold, release));
-       
+    //shape_width = (mainSize/skew)*gain;
+    //noFill();
+    //strokeWeight(20);
+    //stroke(0,0,0,alpha(progress, attack, decay, hold, release));           
+    //rect(width*pan - shape_width/2, height/2, shape_width, mainSize*gain);
+
+    noStroke();
+    fill(255,100,100, (alphaPerc(progress, attack, release/2)));    
+    rect(0, height/3, width, height/3);    
     
-    rect(width*pan - shape_width/2, height/2, shape_width, mainSize*gain);        
   } else if (sample.equals("superstatic")) {
     noStroke();
     fill(200,255,255,alpha(progress, attack, decay, hold, release));
@@ -106,15 +107,18 @@ public void scene3(String sample,
     fill(255,100,100);
     rect(0, height/3, width, height/3);
 
-  } else if (sample.equals("mspLaser")) {    
-    strokeWeight(sustain);
-    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-    line((width - wobble)*pan, 0, width*pan, height*gain); 
+  
 
-    fill(255,100,100, (255 - alpha(progress, attack, decay, hold, release)));
-    //fill(255,100,100);
-    rect(0, height/3, width, height/3);
+  } else if (sample.equals("mspLaser")) {    
+    strokeWeight(sustain * width/20);
     
+    stroke(255,255,255,alphaPerc(progress, attack, release/2));
+    
+    line((width)*pan, 0, width*pan, height*gain); 
+
+    
+  
+
   } else if (sample.equals("mspWaves")) {
     //int noteRange = 40;
     int noteRange = 60; // (C0 == -60, C5 == 0, C10 == 60)

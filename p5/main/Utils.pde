@@ -1,6 +1,6 @@
 Integer alpha(float progress, float attack, float decay, float hold, float release) {
   Integer a;
-  Float maxOp = 215.0;
+  Float maxOp = maxOpacity();
   
   //println(progress);
   
@@ -14,6 +14,25 @@ Integer alpha(float progress, float attack, float decay, float hold, float relea
     ) {
     //println("--------------- Hold");
     a = int(maxOp);
+  } else {
+    //println("--------------- Release");
+    // fade out
+    a = int(map((release - progress), 0.0, release, 0.0, 1.0) * maxOp);
+    //a = 100;
+  }
+  return a;
+}
+
+Integer alphaPerc(float progress, float attack, float release) {
+  Integer a;
+  Float maxOp = maxOpacity();
+  
+  //println(progress);
+  
+  if (progress <= attack) {
+    // fade in
+    //println("--------------- Attack");
+    a = int(map(progress, 0, attack, 0, 1) * maxOp);
   } else {
     //println("--------------- Release");
     // fade out
@@ -42,4 +61,8 @@ boolean postfxLive (HashMap fxValues) {
   //}
   
   return sentfx;
+}
+
+float maxOpacity  () {
+  return 215.0;
 }

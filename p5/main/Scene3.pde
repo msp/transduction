@@ -16,7 +16,9 @@ public void scene3(String sample,
             float release) {
               
   // hcutoff -> init height
-  float mainSize = floor(map(hCutoff, 0, maxHPF, height/3, 10));              
+  float mainSize = floor(map(hCutoff, 0, maxHPF, height/3, 10));  
+  
+  float shape_width = 1;
 
   if (sample.equals("mspAdd") || sample.equals("msprhodes") || sample.equals("m-metal")) {
     noStroke();
@@ -47,10 +49,13 @@ public void scene3(String sample,
   } else if (sample.equals("form-msp4") || sample.equals("msp808")) {
     //noStroke();
     //fill(0,0,255,this.alpha(progress));
+    shape_width = (mainSize/skew)*gain;
     noFill();
     strokeWeight(20);
-    stroke(0,0,255,alpha(progress, attack, decay, hold, release));
-    ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);        
+    stroke(0,0,0,alpha(progress, attack, decay, hold, release));
+       
+    
+    rect(width*pan - shape_width/2, height/2, shape_width, mainSize*gain);        
   } else if (sample.equals("superstatic")) {
     noStroke();
     fill(200,255,255,alpha(progress, attack, decay, hold, release));
@@ -100,6 +105,15 @@ public void scene3(String sample,
     //fill(255,100,100, (255 - alpha(progress, attack, decay, hold, release)));
     fill(255,100,100);
     rect(0, height/3, width, height/3);
+
+  } else if (sample.equals("mspLaser")) {    
+    strokeWeight(sustain);
+    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    line((width - wobble)*pan, 0, width*pan, height*gain); 
+
+    fill(255,100,100, (255 - alpha(progress, attack, decay, hold, release)));
+    //fill(255,100,100);
+    rect(0, height/3, width, height/3);
     
   } else if (sample.equals("mspWaves")) {
     //int noteRange = 40;
@@ -123,17 +137,11 @@ public void scene3(String sample,
     
     //line(width*pan, yPos, (width*pan)+ width - (width*pan), yPos);
     
-  } else {
-    //strokeWeight(1);
-    //stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-    //line((width - wobble)*pan, 0, width*pan, height*gain);    
-    
-    //int noteRange = 40;
+  } else if (sample.equals("mspVibSawPlucker")) {
     int noteRange = 60; // (C0 == -60, C5 == 0, C10 == 60)
     float yPos = floor(map(note, noteRange * -1, noteRange, height, 0));
     float lineLength = (width*pan)+map(progress, 0, 1, width*pan, width-(width*pan));
     float lineHeight = 160;
-    //float lineHeight = (width / 8);
 
     strokeCap(PROJECT);
     //strokeWeight(80);
@@ -146,9 +154,10 @@ public void scene3(String sample,
     } else {
       line(width*pan, yPos, width*pan, (height*pan)-map(progress, 0, 1, height-(height*pan), height*pan));
     }
-    
-    //line(width*pan, yPos, (width*pan)+ width - (width*pan), yPos);
-    
+  } else {
+    strokeWeight(5);
+    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    line((width - wobble)*pan, 0, width*pan, height*gain); 
   }
   
 }

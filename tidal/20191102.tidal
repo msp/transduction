@@ -79,82 +79,81 @@ unmute "use-me"
 -- Check msp-wavetable.scd also in the tutorials dir
 do -- waves --------------------------------------------------------------------
   let myRate = 32
-  let distAmnt = 0.2
-  let foo = 1
-  --
+  let distAmnt = 0
   p "waves"
-  -- $ spin 8
-  $ sometimesBy 0.25 (fast 2)
-  $ sometimesBy 0.5 (fast 4)
-  $ sometimesBy 0.75 (slow 8)
-  $ slow "<1 7 2 3 4>"
-  -- $ slow "8"
-  -- $ striate 4 --EATS CPU?
-  $ fix (# gain 0.6) (s "mspVibSawPluck")
-  -- $ note 5
-  $ note
-    (
-      -- mask ("1 ~ 1 ~ ")
-      -- mask ("1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 1 1 ~")
-      -- (scale "hexPhrygian"
-      -- (scale "minor"
-      (scale "ritusen"
-        -- $ snowball 8 (+) (slow 3)
-        $ snowball 3 (+) (slow 3)
-        -- $ "a4 f5 ff5 <g3 g6>"
-        -- $ "a4 f5"
-        $ run "<5 2 6 2>"
-        -- $ run "10"
-        -- $ run "<20 5 10 20>"
-        -- $ run "<4>" -- safe
-        -- $ run "<16>" -- with spin2, max with local graphics
-        -- $ run "<20>" -- with spin2, max with remote graphics
+    -- $ spin 8
+    $ sometimesBy 0.25 (fast 2)
+    $ sometimesBy 0.5 (fast 4)
+    $ sometimesBy 0.75 (slow 8)
+    $ slow "<1 7 2 3 4>"
+    -- $ slow "8"
+    -- $ striate 4 --EATS CPU?
+    $ fix (# gain 0.6) (s "mspVibSawPlucker")
+    -- $ note 5
+    $ note
+      (
+        -- mask ("1 ~ 1 ~ ")
+        -- mask ("1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 1 1 ~")
+        -- (scale "hexPhrygian"
+        -- (scale "minor"
+        (scale "ritusen"
+          -- $ snowball 8 (+) (slow 3)
+          $ snowball 3 (+) (slow 3)
+          -- $ "a4 f5 ff5 <g3 g6>"
+          -- $ "a4 f5"
+          $ run "<5 2 6 2>"
+          -- $ run "10"
+          -- $ run "<20 5 10 20>"
+          -- $ run "<4>" -- safe
+          -- $ run "<16>" -- with spin2, max with local graphics
+          -- $ run "<20>" -- with spin2, max with remote graphics
+        )
       )
-    )
-    -- 5 note maj pentatonics
-    -- $ n (scale "egyptian" "0..12")
-    -- $ n (scale "ritusen" "0..12")
-  -- $ n (scale "majPent" "0..12")
-  -- $ n (scale "ritusen" ("<a4 f5 ff5 g3>" |+ "<'major7'6>"))
-    -- END 5 note maj pentatonics
-  -- # sound "[mspWaves]"
-  -- # sound "[mspWaves, arpy*8]"
-  # sound "[mspWaves, mspVibSawPluck]"
-  -- # sound "[mspVibSawPlucker]"
-  -- # sound "[mspVibSawPlucker, arpy*8]"
-  -- # sound "[arpy*8]"
-  # pF "detune" "<0.2 0.1 0.3>"
-  -- # pF "atk" "<3 6>"
-  # pF "rel" "<5 4 6>"
-  # pF "c0" "<2 1 1 3>"
-  # pF "c1" "<-1 -2>"
-  # pF "mAttackTime" (range 0.01 0.5 (slow 16 rand))
-  -- # pF "mAttackTime" 0.3
-  # pF "mDecayTime" 0.1
-  -- # pF "mHoldTime" (range 0.9 0.3 (slow 16 rand))
-  # pF "mHoldTime" 0.3
-  # pF "mReleaseTime" 1
-  # sustain "<8 2 5 3 4>" -- Always set this as using slow will override it!
-  -- # sustain "8" -- Always set this as using slow will override it!
-  -- # enhance 0.5
-  # lpf (range 500 20000 (slow myRate cosine))
-  # djf (range 0.1 0.9 (slow 4 rand))
---   # hpf 1500
-  -- # triode 1
-  # distort (distAmnt)
-  -- # shape 0.5
-  # accelerate 0.5
-  # speed (range 1.01 0.98 $ slow 6 $ cosine)
-  -- # gain 0.9
-  -- # pan (range 0 1 $ slow 6 $ rand)
-  # pan (range 0 1 $ slow 64 $ cosine)
-  -- # pan "0.6"
-  -- # pan "0 0.25 0.5 0.75 1"
-  # pF "scene" 3
-  # pF "fxNoiseAmount" (distAmnt)
-  # pF "fxNoiseRate" 0
-  # gain 0.85
-  # orbit out1
+      -- 5 note maj pentatonics
+      -- $ n (scale "egyptian" "0..12")
+      -- $ n (scale "ritusen" "0..12")
+    -- $ n (scale "majPent" "0..12")
+    -- $ n (scale "ritusen" ("<a4 f5 ff5 g3>" |+ "<'major7'6>"))
+      -- END 5 note maj pentatonics
+    -- # sound "[mspWaves]"
+    -- # sound "[mspWaves, arpy*8]"
+    # sound "[mspWaves, mspVibSawPlucker]"
+    -- # sound "[mspWaves, mspVibSawPlucker, 808bd*5]"
+    -- # sound "[mspVibSawPlucker]"
+    -- # sound "[mspVibSawPlucker, arpy*8]"
+    -- # sound "[arpy*8]"
+    # pF "detune" "<0.2 0.1 0.3>"
+    -- # pF "atk" "<3 6>"
+    # pF "rel" "<5 4 6>"
+    # pF "c0" "<2 1 1 3>"
+    # pF "c1" "<-1 -2>"
+    # pF "mAttackTime" (range 0.01 0.5 (slow 16 rand))
+    -- # pF "mAttackTime" 0.3
+    # pF "mDecayTime" 0.1
+    -- # pF "mHoldTime" (range 0.9 0.3 (slow 16 rand))
+    # pF "mHoldTime" 0.3
+    # pF "mReleaseTime" 1
+    # sustain "<8 2 5 3 4>" -- Always set this as using slow will override it!
+    -- # sustain "8" -- Always set this as using slow will override it!
+    -- # enhance 0.5
+    # lpf (range 500 20000 (slow myRate cosine))
+    # djf (range 0.1 0.9 (slow 4 rand))
+  --   # hpf 1500
+    -- # triode 1
+    # distort (distAmnt)
+    -- # shape 0.5
+    # accelerate 0.5
+    # speed (range 1.01 0.98 $ slow 6 $ cosine)
+    -- # gain 0.9
+    -- # pan (range 0 1 $ slow 6 $ rand)
+    # pan (range 0 1 $ slow 64 $ cosine)
+    -- # pan "0.6"
+    -- # pan "0 0.25 0.5 0.75 1"
+    # pF "fxNoiseAmount" (distAmnt)
+    # pF "fxNoiseRate" 0
+    # pF "scene" 3
+    # gain 0.85
+    # orbit out1
 
 p "waves" $ silence
 

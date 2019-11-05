@@ -81,7 +81,7 @@ SynthDef(\mspWaves, {
     OffsetOut.ar(out, DirtPan.ar(sig, ~dirt.numChannels, pan, env))
 }).add;
 
-SynthDef(\mspVibSawPluck, {
+SynthDef(\mspVibSawPlucker, {
     arg out, sustain = 1, freq = 440, speed = 1, begin=0, end=1, pan, accelerate, offset,
     mAttackTime = 0.01,
     mDecayTime = 0.2,

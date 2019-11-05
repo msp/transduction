@@ -11,6 +11,24 @@ do
     # djf foo5
     # orbit out1
 
+  d1 $ note (scale "ritusen" "{0 -1 2 1 -2}%1") # s "tutorial3" 
+    -- # attack 0.5
+    -- # release 1
+    # sustain 10
+
+
+  do -- fix-perf-bug -----------------------------------------------------------
+    p "fix-perf-bug"
+    $ spin 8
+    $ sometimesBy 0.15 (# n 0)
+    -- $ fix (# gain 0.9) (s "foo")
+    -- $ fix (# gain 0.4) (s "bar")
+    -- $ fix (# gain 0.6) (s "baz")
+    -- $ fix (# djf 0.02) (s "bing")
+    -- $ fix (|+ sustain 0.5) (s "qux")
+    -- $ fix (# speed 0.65) (s "gabba")
+    $ sound "[bd]*4"
+
 do -- mspLaser --------------------------------------------------------------------
   let myRate = 32
   let attackMod = range 0.01 0.1 (slow (myRate) $ rand)

@@ -92,6 +92,9 @@ void oscEvent(OscMessage m) {
         case "freq":
           freq = floor(m.get(i+1).floatValue());
           break;
+         case "distort":
+           fxValues.put("noiseAmount", m.get(i+1).floatValue());
+           break;
          case "fxNoiseAmount":
            fxValues.put("noiseAmount", m.get(i+1).floatValue());
            break;

@@ -1,45 +1,54 @@
+setcps 1
+
 -- MAIN ========================================================================
 --
 -- Mess with partials number in SynthDef!
 --
 do -- laser-drummer ------------------------------------------------------------
   p "laser-drummer"
-  -- $ spin 2
-  $ sometimesBy 0.15 (# n 0)
-  $ fix (# gain 0.9) (s "gretsch")
-  -- $ fix (# gain 0.4) (s "mspLaser")
-  $ fix (# gain 0.6) (s "mspFM")
-  $ fix (# djf 0.02) (s "msp808")
-  $ fix (|+ sustain 0.5) (s "msp808")
-  $ fix (# speed 0.65) (s "gabba")
---   $ sound "[mspLaser]*4"
-  $ sound "[msp808, mspLaser]*4"
---   $ sound "[msp808, gretsch:2, mspLaser]*4" -- TODO: move snare out to it's own pattern and spatialise
-  -- $ sound "[, mspLaser]*4"
-  -- $ sound "[gretsch:2, glitch2:4, mspLaser]*4"
---   $ sound "[msp808, gretsch:2, glitch2:4, mspLaser]*4"
-  -- $ sound "[gabba:4, gretsch:2, glitch2:5?, mspFM]*4"
-  -- $ sound "[gabba:4, gretsch:2, glitch2:4, mspLaser]*4"
-  -- $ sound "[msp808:4, gretsch:2, glitch2:4]*4"
-  -- $ sound "[msp808:4, glitch2:4]*4"
-  -- $ sound "[msp808:4]*4"
-  -- $ sound "[gretsch:2, mspFM/3]*4"
---   # n ("f3 d2 <f3 ff3> d5 f3 ef3 f3" |+ "'ritusen")
---   # n ("ff3 f3 d5 ef5 d5" |+ "'minPent")
---   # n ("[ff4, d6]" |+ "'minPent")
-  # sustain 0.4
-  -- # sustain 3
-  # pF "mAttackTime" (range 0.01 0.1 (slow (16) $ rand))
-  # pF "mDecayTime" (range 0.3 0.8 (slow 16 (rand)))
-  # speed (range 0.98 1.02 (slow 16 (rand)))
-  # djf 0.5
-  # shape 0.5
---   # distort 0.05
---   # crush 4
-  # cps (range 0.8 3.5 $ slow 16 $ isaw)
-  -- # cps (range 0.8 3.5 $ slow (choose [3, 8, 10, 20, 30]) $ isaw)
-  # orbit out1
-  # pF "scene" 3
+    -- $ spin 2
+    -- $ slow "16"
+    $ sometimesBy 0.05 (fast 2)
+    $ sometimesBy 0.1 (skip)
+    -- $ sometimesBy 1 (|+ sustain 8)
+    $ sometimesBy 0.15 (# n 0)
+    -- $ fix (# gain 0.9) (s "gretsch") -- ReFactor as CPU heavy using `fix'!
+    -- $ fix (# gain 0.4) (s "mspLaser")
+    -- $ fix (# gain 0.6) (s "mspFM")
+    -- $ fix (# djf 0.02) (s "msp808")
+    -- $ fix (|+ sustain 0.5) (s "msp808")
+    -- $ fix (# speed 0.65) (s "gabba")
+    -- $ sound "[bd]*4"
+    $ sound "[mspLaser]*4"
+    -- $ sound "[msp808, mspLaser]*4"
+    -- $ sound "[msp808, gretsch:2, mspLaser]*4" -- TODO: move snare out to it's own pattern and spatialise
+    -- $ sound "[, mspLaser]*4"
+    -- $ sound "[gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[msp808, gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[gabba:4, gretsch:2, glitch2:5?, mspFM]*4"
+    -- $ sound "[gabba:4, gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[msp808:4, gretsch:2, glitch2:4]*4"
+    -- $ sound "[msp808:4, glitch2:4]*4"
+    -- $ sound "[msp808:4]*4"
+    -- $ sound "[gretsch:2, mspFM/3]*4"
+    -- # n ("f3 d2 <f3 ff3> d5 f3 ef3 f3" |+ "'ritusen")
+    -- # n ("ff3 f3 d5 ef5 d5" |+ "'minPent")
+    -- # n ("[ff4, d6]" |+ "'minPent")
+    # sustain (range 0.4 3 (slow (16) $ cosine))
+    -- # sustain 3
+    # pF "mAttackTime" (range 0.01 0.1 (slow (16) $ rand))
+    # pF "mDecayTime" (range 0.3 0.8 (slow 16 (rand)))
+    # speed (range 0.98 1.02 (slow 16 (rand)))
+    # djf 0.5
+    # shape 0.5
+    -- # distort (range 0.1 1 $ slow 16 $ isaw)
+    -- # pF "fxNoiseRate" 7
+    -- # crush 4
+    -- # cps (range 0.8 3.5 $ slow 16 $ isaw)
+    -- # cps (range 0.8 3.5 $ slow (choose [3, 8, 10, 20, 30]) $ isaw)
+    # pan rand
+    # orbit out1
+    # pF "scene" 3
 
 p "laser-drummer" $ silence
 
@@ -66,7 +75,7 @@ p "use-me" --------------------------------------------------------------------
   -- # speed (range 3 "-1" $ slow 16 rand)
   # hpf 1000
   # djf (range 0 1 (slow 4 rand))
-  # gain 0.7
+  # gain 0.9
   # orbit 0
 
 p "use-me" $ silence

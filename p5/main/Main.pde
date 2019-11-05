@@ -15,7 +15,8 @@ float globalSustain = 1.0;
 PShader blur;
 
 void settings() {
-  size(1920, 1200, P3D); //Gray Arts resolution  
+  size(1024, 768, P3D); //local low res
+  //size(1920, 1200, P3D); //Gray Arts resolution
   //fullScreen(P3D, 2);
 }
 

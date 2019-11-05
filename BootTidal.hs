@@ -108,4 +108,18 @@ let setI = streamSetI tidal
     setB = streamSetB tidal
 :}
 
+--
+-- When using with headphones direct out
+--
+out1 = 0
+out2 = 0
+out3 = 0
+out4 = 0
+out5 = 0
+out6 = 0
+out7 = 0
+out8 = 0
+
+duration n  = sustain n
+
 :set prompt "msptidal> "

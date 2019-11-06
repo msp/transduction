@@ -2,6 +2,47 @@ setcps 1
 
 setcps (175/60/4)
 
+d1
+-- $ off (1/8) (# gain 0.9)
+$ struct "1 0 1 1 1 0 1 0"
+$ iter "<4 4 4 2>"
+$ sound "bd hh bd sd:1"
+# shape 0.5
+# crush 4
+# cps 1.4
+# distort 0.4
+# gain 0.95
+# orbit out1
+
+d1 silence
+
+asap $ sound "form-msp5:10" # speed 0.2 # gain 1
+
+d1
+
+asap
+  $ sometimesBy 0.3 (# n 9)
+  $ loopAt (wchoose [(4, 2), (8, 1), (16, 0.5), (32, 0.1)])
+  $ sound "form-msp5:1"
+  -- $ sound "form-msp5:9"
+  -- $ sound "form-msp5:10"
+  # speed (wchoose [(0.01, 1), (0.1, 0.6), (0.2, 0.5), (0.4, 0.3), (0.6, 0.6)])
+  # shape 0.5
+  # crush (wchoose [(9, 1), (6, 0.6), (5, 0.5), (4, 0.1)])
+  -- # crush 4
+  # gain 0.8
+  # cut 1
+  # orbit out1
+
+
+d1
+$ slow 4
+$ striate 16
+-- $ chop 64
+$ sound "form-msp5"
+
+
+
 do
   --
   let foo5 = 0.1
@@ -11,23 +52,28 @@ do
     # djf foo5
     # orbit out1
 
-  d1 $ note (scale "ritusen" "{0 -1 2 1 -2}%1") # s "tutorial3" 
-    -- # attack 0.5
-    -- # release 1
-    # sustain 10
+d1
+  $ note (scale "ritusen" "{0 -1 2 1 -2}%1")
+  # s "tutorial3"
+  -- # attack 0.5
+  -- # release 1
+  # sustain 10
+  # hpf 1000
+  # gain 0.7
+  # orbit out1
 
 
-  do -- fix-perf-bug -----------------------------------------------------------
-    p "fix-perf-bug"
-    $ spin 8
-    $ sometimesBy 0.15 (# n 0)
-    -- $ fix (# gain 0.9) (s "foo")
-    -- $ fix (# gain 0.4) (s "bar")
-    -- $ fix (# gain 0.6) (s "baz")
-    -- $ fix (# djf 0.02) (s "bing")
-    -- $ fix (|+ sustain 0.5) (s "qux")
-    -- $ fix (# speed 0.65) (s "gabba")
-    $ sound "[bd]*4"
+do -- fix-perf-bug -----------------------------------------------------------
+  p "fix-perf-bug"
+  $ spin 8
+  $ sometimesBy 0.15 (# n 0)
+  -- $ fix (# gain 0.9) (s "foo")
+  -- $ fix (# gain 0.4) (s "bar")
+  -- $ fix (# gain 0.6) (s "baz")
+  -- $ fix (# djf 0.02) (s "bing")
+  -- $ fix (|+ sustain 0.5) (s "qux")
+  -- $ fix (# speed 0.65) (s "gabba")
+  $ sound "[bd]*4"
 
 do -- mspLaser --------------------------------------------------------------------
   let myRate = 32
@@ -166,4 +212,4 @@ $ slow 3
 $ sound "help_Control_DynKlank"
 # pan (slow 2 $ saw)
 # freq 298
--- 
+--

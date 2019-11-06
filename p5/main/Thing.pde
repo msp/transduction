@@ -51,7 +51,8 @@ class Thing {
       || this.sample.equals("testsuperzow")
       || this.sample.equals("mspWaves")
       || this.sample.equals("mspVibSawPlucker")
-      || this.sample.equals("mspLaser")      
+      || this.sample.equals("mspLaser") 
+      || this.sample.equals("form-msp5") 
       ) {
       // In SC, the release is the longest part of the env so just convert that to millis 
       // it may however be scaled by the sustain param so include that.

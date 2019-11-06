@@ -19,12 +19,15 @@ public void scene3(String sample,
   float mainSize = floor(map(hCutoff, 0, maxHPF, height/3, 10));  
   
   float shape_width = 1;
+  float shape_height = height;
 
-  if (sample.equals("mspAdd") || sample.equals("msprhodes") || sample.equals("m-metal")) {
+  if (sample.equals("m-metal")) {
     noStroke();
-    //fill(255,255,255,this.alpha(progress));
-    fill(255,0,0,alpha(progress, attack, decay, hold, release));
-    ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
+    fill(255,100,100,alphaPerc(progress, attack, release));
+    rect(width*pan*wobble,height/2, (mainSize/skew)*gain,mainSize*gain);
+    
+    //rect(0, height/3 * wobble, width, height/3);
+      
   } else if (sample.equals("mspFM")) {
     strokeWeight(10);
     stroke(0,255,0,alpha(progress, attack, decay, hold, release));
@@ -94,11 +97,29 @@ public void scene3(String sample,
       fill(0,255,255,alpha(progress, attack, decay, hold, release));
     }
     rect(0, height/3, width, height/3 * wobble);        
+  
   } else if (sample.equals("form-msp5")) {
-    noStroke();
-    fill(255,100,100,alpha(progress, attack, decay, hold, release));
-    rect(0, height/3 * wobble, width, height/3);
-  } else if (sample.equals("superhex")) {    
+    
+    //Keep but not for this sound
+    //noStroke();
+    //fill(255,100,100,alpha(progress, attack, decay, hold, release));
+    //rect(0, height/3 * wobble, width, height/3);
+    // end keep
+
+    shape_height = map(progress, 0, 1, 0, height);
+
+    fill(255,100,100);
+    //strokeWeight(progress*shape_height/5);
+    strokeWeight(10);
+    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    //line((width - wobble)*pan, 0, width*pan, height*gain);
+  
+    line(0+((1-progress)*(width/3)), shape_height, width-((1-progress)*(width/3)), shape_height);     //<>//
+    //line(0+((progress)*(width/2)), shape_height, width-((progress)*(width/2)), shape_height);
+    
+    //rect(0, height/3, width, height/3);
+
+} else if (sample.equals("superhex")) {    
     strokeWeight(freq);
     stroke(255,255,255,alpha(progress, attack, decay, hold, release));
     line((width - wobble)*pan, 0, width*pan, height*gain); 

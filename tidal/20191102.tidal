@@ -1,5 +1,40 @@
 setcps 1
 
+
+do -- rise-up ------------------------------------------------------------------
+  let distMax = 0
+  let distAmnt = (range 0 distMax $ slow 16 $ isaw)
+  -- let distAmnt = 0
+  p "rise-up"
+    $ slow 8
+    $ off (1/8) (# crush 2)
+    $ jux (# speed 0.5)
+    $ sound "[form-msp5 ~ form-msp5 ~]*1.5"
+    -- $ sound "form-msp5"
+    # pF "mAttackTime" 0.1
+    # pF "mDecayTime" 0.3
+    # pF "mHoldTime" 0.3
+    # pF "mReleaseTime" 1
+    # duration "<1 1 2 1 1 5 1 1 1 2 1 1 10 >"
+    |+ duration 8
+    -- # duration "10"
+    -- # duration "1"
+    # speed (range 0.95 1.05 $ slow 16 $ sine)
+    # legato (wchoose [(32, 2), (16, 1), (8, 0.5), (4, 0.1)])
+    # hpf 2000
+    # distort distAmnt
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 0.2
+    # pan (range 0 1 $ slow 4 $ sine)
+    # orbit out1
+    # pF "scene" 3
+
+  p "rise-up" $ silence
+
+  solo "rise-up"
+
+
+
 -- MAIN ========================================================================
 --
 -- Mess with partials number in SynthDef!

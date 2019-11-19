@@ -1,0 +1,75 @@
+do -- impact -------------------------------------------------------------------
+  resetCycles
+  let myRate = 16
+  let mySpin = 2
+  let distMax = 0
+  let cpsMax = 3.5 -- 6.5 max (spin 8)
+  let distAmnt = (range 0 distMax $ slow myRate $ isaw)
+  let myCps = (range cpsMax 0.5 $ slow (myRate) $ isaw)
+  -- let myCps = 1
+  -- let distAmnt = "0"
+  p "impact-kicks"
+    $ spin mySpin
+    -- $ off (1/3) (|+ speed "0.5")
+    $ sometimesBy 0.05 (# speed "-1")
+    $ sometimesBy 0 (# tsdelay (range 0 3 $ slow myRate $ isaw))
+    $ sound "[msp808/2, gabba*4]"
+    # sustain (range 1 3 $ slow myRate $ isaw)
+    # speed (range 0.5 2 $ slow myRate $ isaw)
+    # shape 0.6
+    # end (range 0.10 0.85 $ slow myRate $ isaw)
+    # distort (distAmnt)
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 0.5
+    # hpf (range 800 0 $ slow myRate $ isaw)
+    # pan (range 0.4 0.6 (slow 2 saw))
+    # cps myCps
+    # squiz 0
+    -- # xsdelay 1
+    # gain "1 0.8"
+    # orbit out1
+    # pF "scene" 3
+  p "impact-hits"
+    -- $ spin mySpin
+    $ sometimesBy 0.15 (# speed "-1")
+    $ sound "[form-msp7*4]"
+    # speed (range 0.5 2 $ slow myRate $ isaw)
+    # shape 0.4
+    # distort (distAmnt)
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 0.5
+    # hpf (range 800 0 $ slow myRate $ isaw)
+    # hbrick (range 0 0.02 $ slow (myRate * 4) $ isaw)
+    # pan (range 0 1 (slow 2 rand))
+    # cps myCps
+    # squiz 2
+    # gain (range 0.9 0 $ slow myRate $ isaw)
+    # orbit out1
+    # pF "scene" 3
+  p "impact-tones"
+    $ spin mySpin
+    $ sometimesBy 0.15 (# speed "-1")
+    $ sound "[form-msp8:8/4]"
+    -- # n (irand 10)
+    -- # n (slow myRate $ rev $ run 8)
+    -- # speed (range 1 1.5 $ slow myRate $ isaw)
+    # shape 0.1
+    # end (range 0.15 0.65 $ slow myRate $ isaw)
+    -- # legato 1
+    # distort (distAmnt)
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 0.5
+    -- # hpf (range 800 0 $ slow myRate $ isaw)
+    -- # enhance (range 0 0.3 $ slow (myRate * 4) $ isaw)
+    # enhance 0.2
+    # pan (range 0 1 (slow 2 rand))
+    # cps myCps
+    -- # squiz 2
+    # gain "0.8"
+    # orbit out1
+    # pF "scene" 3
+
+
+p "impact" $ silence
+
+unsolo "impact"

@@ -102,7 +102,9 @@ void oscEvent(OscMessage m) {
         case "fxNoiseRate":
           fxValues.put("noiseRate", m.get(i+1).floatValue());
           break;
-           
+        case "fxSobel":
+          fxValues.put("sobel", m.get(i+1).floatValue());
+          break;                     
       }
       ++i;
     }

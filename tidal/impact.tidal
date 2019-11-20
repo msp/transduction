@@ -1,6 +1,6 @@
 do -- impact -------------------------------------------------------------------
   resetCycles
-  let myRate = 16
+  let myRate = 24
   let mySpin = 2
   let distMax = 0
   let cpsMax = 3.5 -- 6.5 max (spin 8)
@@ -9,7 +9,7 @@ do -- impact -------------------------------------------------------------------
   let myCps = (range cpsMax 0.5 $ slow (myRate) $ isaw)
   p "impact-kicks"
     $ spin mySpin
-    -- $ off (1/3) (|+ speed "0.5")
+    -- $ off (1/5) (|+ speed "0.5")
     $ sometimesBy 0.1 (# speed "-1")
     $ sometimesBy 0 (# tsdelay (range 0 3 $ slow myRate $ isaw))
     $ sound "[msp808/4, gabba*4]"
@@ -19,17 +19,18 @@ do -- impact -------------------------------------------------------------------
     # end (range 0.10 0.85 $ slow myRate $ isaw)
     # distort (distAmnt)
     # pF "fxNoiseAmount" distAmnt
-    # pF "fxNoiseRate" 0.5
+    -- # pF "fxNoiseRate" 0.5
     # hpf (range 100 0 $ slow myRate $ isaw)
     # pan (range 0.4 0.6 (slow 2 saw))
     # cps myCps
     # squiz 0
+    # pF "fxSobel" 0
+    -- # pF "fxSobel" 1
     -- # xsdelay 0
     # gain "1 0.8"
     # orbit out1
     # pF "scene" 3
   p "impact-hits"
-    -- $ spin mySpin
     $ sometimesBy 0.15 (# speed "-1")
     $ sound "[form-msp7*4]"
     # speed (range 0.5 2 $ slow myRate $ isaw)

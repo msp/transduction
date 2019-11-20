@@ -48,6 +48,7 @@ boolean postfxLive (HashMap fxValues) {
   ArrayList<String> whitelist = new ArrayList<String>();
   whitelist.add("noiseAmount");
   whitelist.add("noiseRate");
+  whitelist.add("sobel");
   
   for (Object key : fxValues.keySet()) {
     if (whitelist.contains(key.toString())) { 

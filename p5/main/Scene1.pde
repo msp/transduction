@@ -1,5 +1,6 @@
 void scene1(String sample, 
             int sampleNum,
+            float speed,
             float note,
             float progress, 
             float wobble, 

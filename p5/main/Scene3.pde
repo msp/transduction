@@ -1,5 +1,6 @@
 public void scene3(String sample, 
-            int sampleNum, 
+            int sampleNum,
+            float speed,
             float note,
             float progress, 
             float wobble, 
@@ -20,6 +21,7 @@ public void scene3(String sample,
   
   float shape_width = 1;
   float shape_height = height;
+  float impactMaxHPF = 100;
 
   if (sample.equals("m-metal")) {
     noStroke();
@@ -49,7 +51,7 @@ public void scene3(String sample,
     ellipse(width*(pan+wobble/2000),height/2, (mainSize/skew)*gain,mainSize*gain);
     //ellipse(width*(pan),height/2, (mainSize/skew)*gain,mainSize*gain);
 
-  } else if (sample.equals("form-msp4") || sample.equals("msp808")) {
+  } else if (sample.equals("form-msp4")) {
     //shape_width = (mainSize/skew)*gain;
     //noFill();
     //strokeWeight(20);
@@ -73,31 +75,67 @@ public void scene3(String sample,
     //rect(0, height/3, width, height/3 * wobble);
     //line(0, height/3*wobble, width, height/3*wobble);
     ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-  } else if (sample.equals("form-msp8")) {        
-    if (sampleNum == 2) {
-      strokeWeight(mainSize);
-      stroke(55,55,255,alpha(progress, attack, decay, hold, release));
-      //noFill();
-      ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      //line(0, height/3*wobble, width, height/3*wobble);
-    } else {
-      //strokeWeight(mainSize);
-      //stroke(255,55,255,this.alpha(progress));
-      fill(255,55,255,alpha(progress, attack, decay, hold, release));
-      //noFill();
-      ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-      //line((width - wobble)*pan, 0, width*pan, height*gain);
 
-  }
-  } else if (sample.equals("gabba") || sample.equals("form-msp7")) {
+  // impact high perc
+  } else if (sample.equals("form-msp7")) {
     noStroke();
-    if (sample.equals("form-msp7")) {
-      fill(200,255,255,alpha(progress, attack, decay, hold, release));
-    } else {
-      fill(0,255,255,alpha(progress, attack, decay, hold, release));
-    }
-    rect(0, height/3, width, height/3 * wobble);        
+    
+    wobble = 1;
+    float minVisibleGain = 0.5;
+    float maxVisibleGain = 0.85;
+    float rectMaxWidth = width/5;
+    float rectWidth = rectMaxWidth * map(gain, 0, 1, 1, wobble/6);
+    float opacity = map(gain/1.1, minVisibleGain, 1, 0, maxOpacity());
+    
+    //      C -> R
+    fill(0, 255, 255, opacity);
+    
+    rect(map(gain, 0, maxVisibleGain, width/2, width - rectWidth), 
+         0,  
+         rectWidth,
+         height);        
+         
+    // L <- C
+    fill(0, 255, 255, opacity);
+    
+    rect(map(gain, 0, maxVisibleGain, width/2 - rectWidth, 0), 
+         0, 
+         rectWidth,
+         height);        
+
+  } else if (sample.equals("gabba")) {
+    noStroke();
+    
+    fill(speed < 0 ? 255 : 0, 255, 255, alpha(progress, attack, decay, hold, release));
+    rect(0, 
+         map(hCutoff, 0, impactMaxHPF, 0, height), 
+         width, 
+         map(hCutoff, 0, impactMaxHPF, 0, height * (wobble/8))
+         );        
   
+  } else if (sample.equals("msp808")) {
+    noStroke();
+    
+    fill(255,100,100, (alphaPerc(progress, attack, release/2)));    
+    
+    rect(0, 
+         map(hCutoff, 0, impactMaxHPF, 0, height),
+         width, 
+         map(hCutoff, 0, impactMaxHPF, 0, height)
+         //100
+         );        
+    
+  } else if (sample.equals("form-msp8")) {
+    colorMode(HSB, 255);
+    strokeWeight(mainSize/3);
+    
+    //stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    stroke(0,0,210);
+    
+    //ellipse(width/2,height/2, (mainSize/skew)*gain,mainSize*gain);
+    rect(0, 0, width, height);
+    
+    colorMode(RGB, 255);
   } else if (sample.equals("form-msp5")) {
     
     //Keep but not for this sound
@@ -180,9 +218,9 @@ public void scene3(String sample,
       line(width*pan, yPos, width*pan, (height*pan)-map(progress, 0, 1, height-(height*pan), height*pan));
     }
   } else {
-    strokeWeight(5);
-    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-    line((width - wobble)*pan, 0, width*pan, height*gain); 
+    //strokeWeight(5);
+    //stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    //line((width - wobble)*pan, 0, width*pan, height*gain); 
   }
   
 }

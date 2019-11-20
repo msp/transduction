@@ -1,3 +1,118 @@
+SuperDirt.default = ~dirt;
+
+
+(
+(type:\dirt, orbit:0, s: \bd).play;
+(type:\dirt, orbit:1, s: \cr, speed:2/5).play;
+)
+
+
+(
+Pdef(\y,
+	Pbind(
+		\type, \dirt,
+        \s, 'form-msp1',
+        // \n, Pseq([1, 0, 0, 0, 0], inf),
+        // \speed, Pseq([1, 1, 0.5, 1.2], inf),
+		\dur, 0.25 * Pseq([1, 1/2, 1, 2, 2, 1/2], inf),
+		\gain, 0.55,
+		\room, Pseq([0, 0, 0.4], inf)
+	)
+).play
+)
+
+(
+Pdef(\x,
+	Ppar([
+		Pbind(
+			\type, \dirt,
+            // \s, Pwrand([\hh, \cr, \ho], [2, 1, 1].normalizeSum, inf),
+            \s, \hh,
+            // \cut, Prand([0, 1, 2], inf),
+            // \n, Pseq([Prand([1, Pseq([1, 0, 5], 1), Pseq([0, 0])], 1), 0, 0, 0, 0, 0, 0, 0, 0], inf),
+            // \speed, Pseq([1, 1, 0.5, 1.2], inf),
+            // \dur, 0.25 * Pseq([1/2, 1/3, 2/3], inf),
+            \dur, 0.3,
+			\room, Pseq([0, 0, 0.4], inf)
+		),
+		Pbind(
+			\type, \dirt,
+			\s, \bd,
+            \dur, Pseq([0.5, 0.25, 0.25], inf),
+            // \amp, Prand([0.5, 0], inf),
+            // \dur, 3,
+            // \shape, 0.4,
+            \distort, Pseq([0, 0, 0.6], inf),
+			\room, Pseq([0, 0.5], inf)
+		)
+	])
+).play
+)
+
+Pdef(\y).play;
+
+Pdef(\y).stop;
+
+Pdef(\x).play;
+
+PdefAllGui();
+
+(
+Pdef(\x,
+	Pbind(
+		\type, \dirt,
+		\s, \hh,
+		\n, Pseq([1, 0, 0, 0, 0], inf),
+		\speed, Pseq([1, 1, 0.5, 1.2], inf),
+		\dur, 0.25 * Pseq([1, 1/2, Prand([1, 1/2], 1), 2, 2, 1/2], inf),
+		\cutoff, Pseg(Pwhite().linexp(0, 1, 300, 10000), 3, \lin, inf),
+		\resonance, 0.3,
+		\room, Pseq([0, 0, 0.4, 1], inf)
+	)
+).play
+)
+
+(
+Pdef(\x,
+	Pbind(
+		\type, \dirt,
+		\s, \hh,
+		\n, Pseries(),
+		\dur, 0.25 * Pseq([1, 1/2, 1], inf)
+	)
+).play
+)
+
+
+(
+Pdef(\x,
+	Pbind(
+		\type, \dirt,
+		\s, Pseq([\bd, \hh, \bd, \hh], inf),
+        \dur, 0.25 * Pseq([1, Rest(1/2), 1], inf),
+		\cutoff, [1345, 1000, 400] + Prand([0, 0, 0, 0, 0, 0, -100, 200, [-100, 210]], inf),
+        \resonance, 0.8
+	)
+
+).play
+)
+
+(
+Pdef(\x,
+	Pbind(
+		\type, \dirt,
+		\speed, 2,
+		\sound, Pseq([\bd, \hh, \bd, \hh], inf),
+		\vowel, Pn(Plazy {Pshuf([\a, \i, \o, \i, \u, [\i, \a], [\o, \u, \e]], rrand(3, 8)) }),
+		\resonance, 0.7,
+		\shape, Pseq([0.5, 0.8, 0.3, 0.2, 0.2], inf),
+		\dur, 0.25 * Pseq([1, 1/2, 1], inf)
+	)
+).play
+)
+
+
+
 (
 var p5 = NetAddr.new("127.0.0.1", 1818);
 

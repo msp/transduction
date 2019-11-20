@@ -3,6 +3,7 @@ void oscEvent(OscMessage m) {
   String sample = null;
   int scene = 1; 
   int sampleNum = 0; // for samples
+  float speed = 1;
   float note = 0; // for synths
   float pan = 0.5;
   float gain = 1;
@@ -57,6 +58,9 @@ void oscEvent(OscMessage m) {
         case "n":
           sampleNum = floor(m.get(i+1).floatValue());
           break;
+        case "speed":
+          speed = floor(m.get(i+1).floatValue());
+          break;
         case "note":
           note = m.get(i+1).floatValue();
           break;
@@ -92,12 +96,12 @@ void oscEvent(OscMessage m) {
         case "freq":
           freq = floor(m.get(i+1).floatValue());
           break; 
-         case "fxNoiseAmount":
-           fxValues.put("noiseAmount", m.get(i+1).floatValue());
-           break;
-         case "fxNoiseRate":
-           fxValues.put("noiseRate", m.get(i+1).floatValue());
-           break;
+        case "fxNoiseAmount":
+          fxValues.put("noiseAmount", m.get(i+1).floatValue());
+          break;
+        case "fxNoiseRate":
+          fxValues.put("noiseRate", m.get(i+1).floatValue());
+          break;
            
       }
       ++i;
@@ -109,7 +113,7 @@ void oscEvent(OscMessage m) {
   }
 
   if (sample != null) {
-    thing = new Thing(scene, sample, sampleNum, note, attack, decay, hold, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);
+    thing = new Thing(scene, sample, sampleNum, speed, note, attack, decay, hold, sustain, globalSustain, release, pan, gain, gainMult, hCutoff, freq);
     things.add(thing);
     //println(thing.toString());
   }

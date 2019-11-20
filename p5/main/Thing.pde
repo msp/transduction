@@ -3,6 +3,7 @@ class Thing {
   float life;
   String sample;
   int sampleNum;
+  float speed;
   float note;
   float pan;
   float gain;
@@ -25,11 +26,12 @@ class Thing {
     this.gain = gain;
   }
 
-  Thing(int scene, String sample, int sampleNum, float note, float attack, float decay, float hold, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff, int freq) {
+  Thing(int scene, String sample, int sampleNum, float speed, float note, float attack, float decay, float hold, float sustain, float globalSustain, float release, float pan, float gain, float gainMult, int hCutoff, int freq) {
     start = millis();
     this.scene = scene;
     this.sample = sample;
     this.sampleNum = sampleNum;
+    this.speed = speed;
     this.note = note;
     // This is SC's notion of sustain i.e. a multiplier for each env phase or duration
     this.attack = attack;
@@ -99,16 +101,16 @@ class Thing {
       
       switch(scene) {
         case 1: 
-          scene1(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
+          scene1(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
         case 2: 
-          scene2(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
+          scene2(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
         case 3: 
-          scene3(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
+          scene3(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
         default:
-          scene1(sample, sampleNum, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
+          scene1(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
       }      
     }

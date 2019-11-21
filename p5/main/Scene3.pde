@@ -157,7 +157,7 @@ public void scene3(String sample,
     
     //rect(0, height/3, width, height/3);
 
-} else if (sample.equals("superhex")) {    
+} else if (sample.equals("mspSuperhex")) {    
     strokeWeight(freq);
     stroke(255,255,255,alpha(progress, attack, decay, hold, release));
     line((width - wobble)*pan, 0, width*pan, height*gain); 

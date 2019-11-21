@@ -408,7 +408,17 @@ SynthDef(\mspSuperzow, {
     OffsetOut.ar(out, DirtPan.ar(sound/2, ~dirt.numChannels, pan, env));
     // sound = sound * env; // MSP
     // Out.ar(out, sound);
-}).add
+}).add;
+
+// waveguide mesh, hexagonal drum-like membrane
+
+SynthDef(\mspSuperhex,{|out, rate=1, sustain=1, pan, freq, accelerate |
+    var env = EnvGen.ar(Env.linen(0.02, 0.96, 0.02, 1,-3), timeScale:sustain, doneAction:2);
+    var tension = 0.05*freq/400 * Line.kr(1,accelerate+1, sustain);
+    var loss = 1.0 - (0.01 * rate / freq);
+    var sound = MembraneHexagon.ar(Decay.ar(Impulse.ar(0,0,1), 0.01), tension, loss);
+    OffsetOut.ar(out, DirtPan.ar(sound, ~dirt.numChannels, pan, env))
+}).add;
 
 
 

@@ -29,7 +29,6 @@ do -- woozy --------------------------------------------------------------------
     $ sound "[mspSuperzow]"
     -- $ sound "[mspFM/10, mspSuperzow]" -- FM #2
     -- $ sound "[mspFM/20, mspSuperzow*5]" -- FM #2
-    -- $ sound "[superhex]"
     # pF "mAttackTime" 0.1 --0.6
     -- # pF "mAttackTime" (wchoose [(0.2, 0.4), (0.5, 1), (0.9, 0.1)])
     # pF "mDecayTime" 0.1

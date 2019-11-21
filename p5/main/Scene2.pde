@@ -95,7 +95,7 @@ void scene2(String sample,
     noStroke();
     fill(255,100,100,alpha(progress, attack, decay, hold, release));
     rect(0, height/3 * wobble, width, height/3);
-  } else if (sample.equals("superhex")) {    
+  } else if (sample.equals("mspSuperhex")) {    
     strokeWeight(freq);
     stroke(255,255,255,alpha(progress, attack, decay, hold, release));
     line((width - wobble)*pan, 0, width*pan, height*gain); 

@@ -96,9 +96,9 @@ void scene1(String sample,
     fill(255,100,100,alpha(progress, attack, decay, hold, release));
     rect(0, height/3 * wobble, width, height/3);        
   } else {
-    strokeWeight(1);
-    stroke(255,255,255,alpha(progress, attack, decay, hold, release));
-    line((width - wobble)*pan, 0, width*pan, height*gain); 
+    //strokeWeight(1);
+    //stroke(255,255,255,alpha(progress, attack, decay, hold, release));
+    //line((width - wobble)*pan, 0, width*pan, height*gain); 
   }
   
 }

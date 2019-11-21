@@ -38,6 +38,20 @@ SynthDef(\hauntedSine, {
     OffsetOut.ar(out, DirtPan.ar(sig, ~dirt.numChannels, pan))
 }).add;
 
+SynthDef(\mspDynKlank, { arg out=0, freq = 440, pan = 0.5;
+    var klank, harm, amp, ring;
+
+    // harmonics
+    harm = Control.names(\harm).kr(Array.series(4, 1, 1));
+    // amplitudes
+    amp = Control.names(\amp).kr(Array.fill(4, 0.05));
+    // ring times
+    ring = Control.names(\ring).kr(Array.fill(4, 1));
+    klank = DynKlank.ar(`[harm, amp, ring], {ClipNoise.ar(0.003)}.dup, freq);
+
+    OffsetOut.ar(out, DirtPan.ar(klank, ~dirt.numChannels, pan))
+}).add;
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // AMBIENT

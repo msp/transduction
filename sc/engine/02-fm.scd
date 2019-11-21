@@ -742,7 +742,7 @@ s.waitForBoot({
         ~carrFreqEnv = Env.new([ 1000, 183, 173.5, 173.5, 173.5, 192.5, 173.5, 173.5 ],[ 0.12, 0.17, 0.14, 0.14, 0.16, 0.13, 0.14 ]);
         ~modFreqEnv = Env.new([ 1000, 240, 867, 259, 325.5, 344.5, 325.5, 325.5 ],[ 0.06, 0.07, 0.05, 0.39, 0.18, 0.11, 0.14 ]);
         ~modIndexEnv = Env.new([ 10, 6.2, 4.8, 3.2, 3.2, 1.7, 3.2, 3.2 ],[ 0.05, 0.26, 0.12, 0.14, 0.14, 0.15, 0.14 ]);
-        ~ampEnv = Env.new([ 1, 0.68, 0.29, 0.2, 0, 0, 0, 0.23 ],[ 0.22, 0.03, 0.09, 0.07, 0.11, 0.32, 0.15 ]);
+        ~ampEnv = Env.new([ 0.2, 0.28, 0.29, 0.2, 0, 0, 0, 0.23 ],[ 0.22, 0.03, 0.09, 0.07, 0.11, 0.32, 0.15 ]);
         evCarrFreq.setEnv(adjustEnv.value(~carrFreqEnv));
         evModFreq.setEnv(adjustEnv.value(~modFreqEnv));
         evModIndex.setEnv(adjustEnv.value(~modIndexEnv, 0, 10));
@@ -755,7 +755,7 @@ s.waitForBoot({
         ~modFreqEnvTimes.setn([ 0.06, 0.07, 0.05, 0.39, 0.18, 0.11, 0.14 ]);
         ~modIndexEnvLevels.setn([ 10, 6.2, 4.8, 3.2, 3.2, 1.7, 3.2, 3.2 ]);
         ~modIndexEnvTimes.setn([ 0.05, 0.26, 0.12, 0.14, 0.14, 0.15, 0.14 ]);
-        ~ampEnvLevels.setn([ 1, 0.68, 0.29, 0.2, 0, 0, 0, 0.23 ]);
+        ~ampEnvLevels.setn([ 0.2, 0.28, 0.29, 0.2, 0, 0, 0, 0.23 ]);
         ~ampEnvTimes.setn([ 0.22, 0.03, 0.09, 0.07, 0.11, 0.32, 0.15 ]);
         ~ampEnvDuration.set(1);
 	};

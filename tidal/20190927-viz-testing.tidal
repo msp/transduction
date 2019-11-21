@@ -1,15 +1,15 @@
-p "woozy" ----------------------------------------------------------------------
+p "woozy-tester" ----------------------------------------------------------------------
   $ slow (range 1 4 $ slow rate $ cosine)
   $ every 8 (# pan (range 0.01 0.99 $ fast 4 $ saw))
   -- $ spin (wchoose [(32, 2), (16, 1), (8, 0.5), (4, 0.1)])
   -- $ spin (wchoose [(16, 1), (8, 0.5), (4, 0.1)])
   $ spin 8
-  -- $ sound "[testsuperzow]"
-  -- $ sound "[testsuperzow, form-msp4:2*4]"
+  -- $ sound "[mspSuperzow]"
+  -- $ sound "[mspSuperzow, form-msp4:2*4]"
   -- $ sound "[form-msp4:2*4]"
   $ sound "[superhex]"
-  -- $ sound "[mspFM/10, superzow]" -- FM #2
-  -- $ sound "[mspFM/20, superzow*5]" -- FM #2
+  -- $ sound "[mspFM/10, mspSuperzow]" -- FM #2
+  -- $ sound "[mspFM/20, mspSuperzow*5]" -- FM #2
   -- # pF "mAttackTime" (wchoose [(0.05, 2), (0.2, 1), (0.5, 0.5), (0.9, 0.1)])
   # pF "mAttackTime" 0.01
   # pF "mDecayTime" 0.1
@@ -31,9 +31,9 @@ p "woozy" ----------------------------------------------------------------------
   -- # cps 1
   # pF "scene" 2
 
-p "woozy" $ silence
+p "woozy-tester" $ silence
 
-unsolo "woozy"
+unsolo "woozy-tester"
 
 
 -- TESTER ----------------------------------------------------------------------
@@ -49,7 +49,11 @@ unsolo "woozy"
 d1
 -- $ spin 16
 $ slow 2
+<<<<<<< HEAD
 $ sound "superzow"
+=======
+$ sound "mspSuperzow"
+>>>>>>> Split out Woozy
 # pF "mAttackTime" 0.1
 # pF "mDecayTime" 0.1
 # pF "mHoldTime" 0.1

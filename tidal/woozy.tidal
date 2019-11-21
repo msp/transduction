@@ -22,13 +22,13 @@ do -- woozy --------------------------------------------------------------------
   -- let myDuration = (range 1.5 2.3 $ slow rate $ cosine)
   p "woozy"
     $ every 8 (# pan (range 0.01 0.99 $ fast 4 $ saw))
-    -- $ slow 2 -- start only
+    $ slow 2 -- start only
     -- $ spin (wchoose [(24, 2), (16, 1), (8, 0.5), (4, 0.1)])
     -- $ spin (wchoose [(16, 1), (8, 0.5), (4, 0.1)])
-    $ spin 8 -- up to 3..8
-    $ sound "[testsuperzow]"
-    -- $ sound "[mspFM/10, testsuperzow]" -- FM #2
-    -- $ sound "[mspFM/20, testsuperzow*5]" -- FM #2
+    $ spin 3 -- up to 3..8
+    $ sound "[mspSuperzow]"
+    -- $ sound "[mspFM/10, mspSuperzow]" -- FM #2
+    -- $ sound "[mspFM/20, mspSuperzow*5]" -- FM #2
     -- $ sound "[superhex]"
     # pF "mAttackTime" 0.1 --0.6
     -- # pF "mAttackTime" (wchoose [(0.2, 0.4), (0.5, 1), (0.9, 0.1)])

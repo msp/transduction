@@ -32,7 +32,7 @@ void scene2(String sample,
     noFill();        
     ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
     
- } else if (sample.equals("superzow") || sample.equals("testsuperzow")) {
+ } else if (sample.equals("superzow") || sample.equals("testsuperzow") || sample.equals("mspSuperzow")) {
     noStroke();
     colorMode(HSB);
   
@@ -44,7 +44,7 @@ void scene2(String sample,
     //stroke(0,255,0,this.alpha(progress));
     //noFill();        
     
-    ellipse(width*(pan+wobble/2000),height/2, (mainSize/skew)*gain,mainSize*gain);
+    ellipse(width*(pan+wobble/2000),height/2, (mainSize/skew)*gain, mainSize*gain);
     //ellipse(width*(pan),height/2, (mainSize/skew)*gain,mainSize*gain);
 
   } else if (sample.equals("form-msp4") || sample.equals("msp808")) {

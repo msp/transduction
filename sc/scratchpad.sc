@@ -1,3 +1,50 @@
+
+
+
+// SUPERZOW TEST PARAMS ///////////////////////////////////////////////
+(
+
+var attack = 0.5, decay = 0.5, hold = 2, release = 3;
+
+var
+sustain = 4,
+// mAttackTime = 0.01,
+mAttackTime = 0.4 * sustain,
+// mDecayTime = 0.2,
+mDecayTime = 0.1 * sustain,
+mDecayLevel = 0.5,
+mHoldTime = 0.1 * sustain,
+mHoldLevel = 0.5,
+// mReleaseTime = 1;
+mReleaseTime = 1 * sustain;
+
+// Env.linen(attack, hold, release, 1, -3).plot
+// Env.linen.plot;
+
+var env = Env.pairs([
+    [0,0],
+    [mAttackTime,1],
+    [mDecayTime, mDecayLevel],
+    [mHoldTime,mHoldLevel],
+    [mReleaseTime,0]], 0);
+
+
+env.duration.postln;
+env.totalDuration.postln;
+
+env.isSustained.postln;
+
+env.plot(size: 800);
+
+
+
+// Env.adsr(mAttackTime, mDecayTime, mSustainLevel, mReleaseTime).plot;
+)
+
+
+
+
+
 SuperDirt.default = ~dirt;
 
 

@@ -51,6 +51,7 @@ class Thing {
       || this.sample.equals("mspSnare")
       || this.sample.equals("superzow")
       || this.sample.equals("testsuperzow")
+      || this.sample.equals("mspSuperzow")
       || this.sample.equals("mspWaves")
       || this.sample.equals("mspVibSawPlucker")
       || this.sample.equals("mspLaser") 

@@ -36,7 +36,7 @@ public void scene3(String sample,
     noFill();        
     ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
     
- } else if (sample.equals("superzow") || sample.equals("testsuperzow")) {
+ } else if (sample.equals("superzow") || sample.equals("testsuperzow") || sample.equals("mspSuperzow")) {
     noStroke();
     colorMode(HSB);
   

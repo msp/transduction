@@ -36,6 +36,12 @@ public void scene3(String sample,
 
     line((width)*pan, 0, width*pan, height*gain); 
 
+  } else if (sample.equals("gretsch")) {
+    strokeWeight(sustain * width/20);
+    stroke(255, 0, 0, alphaPerc(progress, attack, release/2));
+
+    line((width)*pan, 0, width*pan, height*gain); 
+
  } else if (sample.equals("superzow") || sample.equals("testsuperzow") || sample.equals("mspSuperzow")) {
     noStroke();
     colorMode(HSB);

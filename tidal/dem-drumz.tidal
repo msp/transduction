@@ -43,3 +43,76 @@ do -- dem-drumz ----------------------------------------------------------------
 p "dem-drumz" $ silence
 
 unsolo "dem-drumz"
+
+--------------------------------------------------------------------------------
+-- LASER DRUMMER ---------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- WIP so be careful!
+--
+do -- laser-drummer ------------------------------------------------------------
+  let distMax = 0
+  let distAmnt = (range 0 distMax $ slow 16 $ isaw)
+  -- let distAmnt = 0
+  p "laser-drummer"
+    $ slow 2
+    $ sometimesBy 0.5 (fast 3)
+    $ sometimesBy 0.05 (fast 2)
+    $ sometimesBy 0.1 (skip)
+    $ sometimesBy 0.1 (|+ duration 8)
+    $ sometimesBy 0.15 (# n 0)
+    -- $ sometimesBy 0.05 (# n 3)
+    -- $ sometimesBy 0.25 (# n 7)
+    -------------------------------------
+    -- ReFactor as CPU heavy using `fix'!
+    -- $ fix (# gain 0.9) (s "gretsch")
+    -- $ fix (# gain 0.4) (s "mspLaser")
+    -- $ fix (# gain 0.6) (s "mspFM")
+    -- $ fix (# djf 0.02) (s "msp808")
+    -- $ fix (|+ sustain 0.5) (s "msp808")
+    -- $ fix (# speed 0.65) (s "gabba")
+    -------------------------------------
+    -- $ sound "[bd]*4"
+    -- $ sound "[mspLaser]*4"
+    $ sound "[msp808:4, mspLaser]*4"
+    -- $ sound "[msp808:4, gretsch:2, mspLaser]*4" -- TODO: move snare out to it's own pattern and spatialise
+    -- $ sound "[msp808, mspLaser]*4"
+    -- $ sound "[gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[msp808, gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[gabba:4, gretsch:2, glitch2:5?, mspFM]*4"
+    -- $ sound "[gabba:4, gretsch:2, glitch2:4, mspLaser]*4"
+    -- $ sound "[msp808:4, gretsch:2, glitch2:4]*4"
+    -- $ sound "[msp808:4, glitch2:4]*4"
+    -- $ sound "[msp808:4]"
+    -- $ sound "[gretsch:2, mspFM/3]*4"
+    -- # n ("f3 d3 <f3 ff3> d5 f3 ef3 f3" |+ "'ritusen")
+    # n ("ff3 f3 d5 ef5 d5" |+ "'minPent")
+    -- # n ("[ff4, d6]" |+ "'minPent")
+    -- # octave 5
+    # pF "mAttackTime" (range 0.01 0.1 (slow (16) $ rand))
+    -- # pF "mAttackTime" 0.1
+    # pF "mDecayTime" (range 0.3 0.8 (slow 16 (rand))) -- required!
+    -- # pF "mDecayTime" 1 -- required!
+    # pF "mReleaseTime" 1 -- required!
+    # duration (range 0.1 0.5 (slow (16) $ rand)) --required
+    -- # duration 4 --required
+    # speed (range 0.98 1.02 (slow 16 (rand)))
+    # djf 0.5
+    # shape 0.2
+    # distort distAmnt
+    # pF "fxNoiseAmount" (distAmnt*1.5)
+    # pF "fxNoiseRate" 2
+    -- # crush 4
+    -- # cps 1.4
+    -- # cps (range 0.5 1.5 $ slow 16 $ isaw)
+    -- # cps (range 0.8 3.5 $ slow (choose [3, 8, 10, 20, 30]) $ isaw)
+    -- # pan (range 0 1 $ slow 4 $ sine)
+    -- # pan (wchoose[(0, 0.2), (0.25, 0.5), (0.75, 0.5), (1, 0.2)])
+    -- # gain (wchoose[(0, 0.2), (0.25, 0.5), (0.75, 0.5), (1, 0.2)])
+    # orbit out1
+    # pF "scene" 3
+
+p "laser-drummer" $ silence
+
+unsolo "laser-drummer"
+
+unmute "laser-drummer"

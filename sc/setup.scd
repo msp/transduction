@@ -30,7 +30,7 @@ SuperDirt.default = ~dirt;
 
 // The samples need to exist on your computer!
 // ~dirt.loadSoundFiles("/Users/Sally/Dropbox/oily-cart-awu-samples/*");
-~dirt.loadSoundFiles("/Dropbox-shared/oily-cart-awu-samples/*");
+// ~dirt.loadSoundFiles("/Dropbox-shared/oily-cart-awu-samples/*");
 
 
 // Run to test to check we have sound. You should hear a cymbal

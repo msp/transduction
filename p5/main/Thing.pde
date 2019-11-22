@@ -111,6 +111,9 @@ class Thing {
         case 3: 
           scene3(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;
+        case 99: 
+          // NADA
+          break;          
         default:
           scene1(sample, sampleNum, speed, note, progress, wobble, hCutoff, maxHPF, skew, freq, gain, pan, attack, decay, hold, sustain, release);
           break;

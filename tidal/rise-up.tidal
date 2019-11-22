@@ -1,0 +1,37 @@
+--------------------------------------------------------------------------------
+-- RISE UP ---------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+do -- rise-up ------------------------------------------------------------------
+  let distMax = 0.0 -- YEP
+  let distAmnt = (range 0 distMax $ slow 16 $ isaw)
+  p "rise-up"
+    $ slow 8
+    -- $ off (2/8) (# duration 6)
+    $ off (1/8) (# speed "-1")
+    -- $ layer [id, rev, fast 2]
+    -- $ jux (# speed 0.5)
+    $ sound "[form-msp5 ~ form-msp5 ~]*1.5"
+    -- $ sound "form-msp5"
+    # pF "mAttackTime" 0.1
+    # pF "mDecayTime" 0.3
+    # pF "mHoldTime" 0.3
+    # pF "mReleaseTime" 1
+    # duration 1
+    -- # duration "<1 1 2 1 1 5 1 1 1 2 1 1 10 >"
+    -- |+ duration 5
+    # speed (range 0.95 1.05 $ slow 16 $ sine)
+    # legato (wchoose [(32, 2), (16, 1), (8, 0.5), (4, 0.1)])
+    -- # hpf 1000
+    # distort distAmnt
+    # pF "fxSobel" 0
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 0.7
+    # pan (range 0 1 $ slow 4 $ sine)
+    # orbit out1
+    # pF "scene" 3
+
+  p "rise-up" $ silence
+
+  solo "rise-up"

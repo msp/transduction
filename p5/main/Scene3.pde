@@ -31,11 +31,11 @@ public void scene3(String sample,
     //rect(0, height/3 * wobble, width, height/3);
       
   } else if (sample.equals("mspFM")) {
-    strokeWeight(10);
-    stroke(0,255,0,alpha(progress, attack, decay, hold, release));
-    noFill();        
-    ellipse(width*pan,height/2, (mainSize/skew)*gain,mainSize*gain);
-    
+    strokeWeight(sustain * width/20);
+    stroke(0, 255, 0, alphaPerc(progress, attack, release/2));
+
+    line((width)*pan, 0, width*pan, height*gain); 
+
  } else if (sample.equals("superzow") || sample.equals("testsuperzow") || sample.equals("mspSuperzow")) {
     noStroke();
     colorMode(HSB);

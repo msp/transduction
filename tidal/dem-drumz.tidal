@@ -1,0 +1,45 @@
+--------------------------------------------------------------------------------
+-- DEM DRUMZ -------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+do -- dem-drumz ----------------------------------------------------------------
+  -- resetCycles
+  let distMax = 0.05 -- up to 0.95
+  let distAmnt = (range 0 distMax $ slow 16 $ isaw)
+  p "dem-drumz"
+    -- $ sometimesBy 0.5 (# pan "<0.85 0.65 0.35 0.15> * 4")
+    $ spin "4 4 4 4 8 2"
+    -- $ spin "8 8 8 8 8 8 8 4"
+    -- $ spin "4"
+    -- $ spin "8"
+    -- $ spin "16"
+    -- $ spin "32" -- or 64 BANG!
+    $ iter 8
+    $ sound "[bd:0*2, mspLaser*2]"
+    -- $ sound "[bd:0*8, mspLaser*2]"
+    -- $ sound "[bd:0*8, mspLaser*4]"
+    -- $ sound "[bd:0*8, gretsch:2, mspLaser*4]"
+    -- $ sound "[bd:0*8, gretsch:2, mspLaser*4, mspFM*4]"
+    -- $ sound "[gretsch:2]"
+    -- TODO SPEED?
+    # pF "mAttackTime" (range 0.01 0.1 (slow (16) $ rand))
+    -- # pF "mAttackTime" 0.1
+    -- # pF "mDecayTime" (range 0.3 0.8 (slow 16 (rand))) -- required!
+    # pF "mDecayTime" 0.3 -- required!
+    # pF "mReleaseTime" 1 -- required!
+    # duration (range 0.1 0.5 (slow (32) $ cosine)) --required
+    |* duration 1 -- increase me
+    # distort distAmnt
+    # pF "fxNoiseAmount" distAmnt
+    # pF "fxNoiseRate" 1
+    # pan "<0.25 0.45 0.55 0.75> * 4"
+    -- # cps (range 0.5 2 $ slow 64 $ sine)
+    # cps 1
+    # djf (range 0.1 0.7 $ slow 64 $ rand)
+    # gain (range 0.8 1 $ slow 32 $ rand)
+    # orbit out1
+    # pF "scene" 3
+
+p "dem-drumz" $ silence
+
+unsolo "dem-drumz"

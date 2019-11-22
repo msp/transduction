@@ -1,45 +1,5 @@
 setcps 1
 
-do -- dem-drumz ----------------------------------------------------------------
-  let distMax = 0
-  let distAmnt = (range 0 distMax $ slow 16 $ isaw)
-  -- let distAmnt = "0"
-  p "dem-drumz"
-    -- $ sometimesBy 0.5 (# pan "<0.85 0.65 0.35 0.15> * 4")
-    $ spin "4 4 4 4 8 2"
-    -- $ spin "8 16 4 8"
-    -- $ fast "<4 4 0 8 2>"
-    -- $ fast "<2 2 0 4 2>"
-    $ slow "<4 4 8 2>"
-    -- $ slow "<8>*4"
-    -- $ fast "-3"
-    -- $ sound "bd:0*4"
-    -- $ iter 8
-    -- $ sound "[bd:0*4, gretsch:2, mspLaser]"
-    $ sound "[bd:0, gretsch:2, mspLaser]"
-    -- # speed (range 0.1 1 $ slow 64 $ rand)
-    -- # speed (speed 0.1 1 $ slow 64 $ rand)
-    -- # hpf (range 0 200 $ slow 64 $ rand)
-    -- # hpf 2000
-    -- # pF "mAttackTime" (range 0.01 0.1 (slow (16) $ rand))
-    # pF "mAttackTime" 0.1
-    -- # pF "mDecayTime" (range 0.3 0.8 (slow 16 (rand))) -- required!
-    # pF "mDecayTime" 0.3 -- required!
-    # pF "mReleaseTime" 1 -- required!
-    # duration (range 0.1 0.5 (slow (16) $ cosine)) --required
-    |* duration 5
-    # distort distAmnt
-    # pF "fxNoiseAmount" distAmnt
-    # pF "fxNoiseRate" 7
-    # pan "<0.25 0.45 0.55 0.75> * 4"
-    -- # cps (range 0.5 2 $ slow 64 $ sine)
-    # gain (range 0.7 1 $ slow 16 $ rand)
-    # orbit out1
-    # pF "scene" 3
-
-p "dem-drumz" $ silence
-
-unsolo "dem-drumz"
 
 d1
 -- $ off (1/8) (# duration 6)

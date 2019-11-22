@@ -10,7 +10,7 @@ do -- impact -------------------------------------------------------------------
   p "impact-kicks"
     $ spin mySpin
     -- $ off (1/5) (|+ speed "0.5")
-    $ sometimesBy 0.1 (# speed "-1")
+    $ sometimesBy 0.05 (# speed "-1")
     $ sometimesBy 0 (# tsdelay (range 0 3 $ slow myRate $ isaw))
     $ sound "[msp808/4, gabba*4]"
     # sustain (range 1 3 $ slow myRate $ isaw)

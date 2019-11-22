@@ -56,16 +56,14 @@ void draw() {
           //.blur(10,20)
           //.pixelate(150)
           //.bloom(0.2, 20, 40.0)
-          .noise(0.15, 0.2)
           .noise(fxValues.getOrDefault("noiseAmount", 0.0), 
-                 fxValues.getOrDefault("noiseRate", 0.2))          
+                 fxValues.getOrDefault("noiseRate", 0.0))          
           .compose();
       }
     } else {
       fx.render()
-        .noise(0.15, 0.2)
         .noise(fxValues.getOrDefault("noiseAmount", 0.0), 
-               fxValues.getOrDefault("noiseRate", 0.2))
+               fxValues.getOrDefault("noiseRate", 0.0))
         .compose();
       
     }

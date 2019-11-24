@@ -502,8 +502,8 @@ Pdef(\intro,
             \speed, Pseq([Prand([0.5, 1, 1.6])], inf),
             \dur, Pseq([4, Rest(2)], inf),
             \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
-            \room, Pseq([0.5, 0.25, 0], inf),
-            \size, Pseq([0.5, 0.25, 0], inf),
+            \room, Pseq([0.5, 0.25], inf),
+            \size, Pseq([0.5, 0.25], inf),
             \gain, 0.9,
             \orbit, ~out1_2
         )
@@ -673,7 +673,8 @@ Pdef(\pulser,
             \gain, 0.9,
             \shape, 0.4,
             \crush, Pwrand([50, 4], [20, 1].normalizeSum, inf),
-            \pan, 0.5,
+            // \pan, 0.5,
+            \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
             \orbit, ~out1_2
         )
     ])

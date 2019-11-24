@@ -14,8 +14,9 @@ supercolliderTarget = superdirtTarget {oLatency = latency, oAddress = "127.0.0.1
 
 -- squattybox2
 -- processingTarget = OSCTarget {oName = "Processing Target", oAddress = "192.168.86.132", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
+-- processingTarget = OSCTarget {oName = "Processing Target", oAddress = "169.254.194.116", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
 -- horus
-processingTarget = OSCTarget {oName = "Processing Target", oAddress = "192.168.86.244", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
+processingTarget = OSCTarget {oName = "Processing Target", oAddress = "127.0.0.1", oPort = 1818, oPath = "/play2", oShape = Nothing, oLatency = latency, oPreamble = [], oTimestamp = NoStamp }
 
 
 

@@ -182,7 +182,7 @@ Pdef (
         \amp, Pkey(\harmonic).reciprocal * 0.2,
         \pan, Pwhite(-0.8, 0.8, inf),
         \gain, 0.4,
-        \orbit, ~out1_2
+        \orbit, ~out1
     );
 );
 

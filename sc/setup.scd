@@ -38,13 +38,6 @@ SuperDirt.default = ~dirt;
 (type:\dirt, orbit: ~out1_2, s: \cr, n: 0, speed: 0.3, pan: 0.75, gain: 0.6).play;
 
 
-// configure the audio outputs
-~out1_2 = 0;
-~out3_4 = 1;
-~out5_6 = 2;
-~out7_8 = 3;
-
-
 enginePath = PathName.new(thisProcess.nowExecutingPath.dirname+/+"engine/");
 enginePath.entries;
 

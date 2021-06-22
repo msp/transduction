@@ -1,0 +1,41 @@
+-- How to use in Tidal:
+
+-- record and replace round robin
+d1 $ sound "fooloopRec"
+
+-- stop recording and replacing
+d1 $ silence
+
+-- play recorded loop 3 (bufnamePrefix++counter)
+
+let myRate = 16
+
+d5
+-- $ fast 8
+-- $ striate 4
+$ sound "<fooloop4*5, fooloop1>"
+-- # begin 0.03
+# begin (range 0.001 0.04 $ slow (myRate) $ cosine)
+-- # end 0.02
+# speed (range 0.9 1.6 $ slow myRate $ rand)
+-- # hpf (range 800 1200 $ slow myRate $ isaw)
+-- # hbrick (range 0 0.2 $ slow (myRate) $ isaw)
+# djf (range 0.5 0.8 $ slow myRate $ rand)
+# cps (range 2.8 5.6 $ slow 16 $ cosine)
+# vowel "<a e i o u>"
+-- # squiz 2
+-- # ring 5
+-- # ringf 10000
+-- # ringdf
+# cps 1
+# legato 1
+# xsdelay "1"
+# distort 0.05
+# gain "0.95"
+
+d6 $ sound "fooloop6"
+# gain "0.7"
+# distort 0.5
+
+-- reset buffers.
+once $ sound "fooloopReset"

@@ -18,7 +18,7 @@ Pdef(\rumble,
             \shape, 0.3,
             \distort, 0.01,
             \cutoff, 50,
-            \orbit, ~out1_2
+            \orbit, ~out1
         ),
         Pbind(
             \type, \dirt,
@@ -28,7 +28,7 @@ Pdef(\rumble,
             \dur, Pseq([16, Rest(1)], inf),
             \gain, 0.8,
             \room, Pseq([0, 0, 0.4], inf),
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -47,7 +47,7 @@ Pdef(\industrial,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([0, 0.25, 0.75, 1], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -65,7 +65,7 @@ Pdef(\rain,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([1, 0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -83,7 +83,7 @@ Pdef(\pool,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([1, 0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -103,7 +103,7 @@ Pdef(\charger,
             \comb, Pseq([Prand([0.2, 0.5, 0.8])], inf),
             \hbrick, Pseq([Pwrand([0, 0.1, 0.2],[0.7, 0.2, 0.1])], inf),
             \gain, 0.7,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -119,7 +119,7 @@ Pdef(\seqtest,
             \dur, 1,
             \gain, 0.7,
             \pan, Pseq([0.2, 0.4, 0.6, 0.8, 1], inf),
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -141,7 +141,7 @@ Pdef(\cymbals,
             \hbrick, Pseq([Pwrand([0, 0.1, 0.2],[0.7, 0.2, 0.1])], inf),
             \enhance, 0.05,
             \gain, 0.6,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -163,7 +163,7 @@ Pdef(\twinkle,
             \speed, 1,
             \dur, 10,
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -199,7 +199,7 @@ Pdef(\gravity,
             \room, Pseq([0, 0.25, 0.75], inf),
             \size, Pseq([0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -217,7 +217,7 @@ Pdef(\cellophane,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([1, 0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -235,7 +235,7 @@ Pdef(\paper,
             \room, Pseq([0.75, 0.25, 0], inf),
             \size, Pseq([0.75, 0.25, 0], inf),
             \gain, 1,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -315,7 +315,7 @@ Pdef(\bell_1,
             \room, Pseq([0.75, 0.25, 0], inf),
             \size, Pseq([0.75, 0.25, 0], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -332,7 +332,7 @@ Pdef(\bell_2,
             \amp, 0.3,
             \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -375,7 +375,7 @@ Pbind(
 \amp, Pwhite(0.1, 0.4),
 \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
 \gain, 0.9,
-\orbit, ~out1_2
+\orbit, ~out1
 ),
 Pbind(
 \type, \dirt,
@@ -387,7 +387,7 @@ Pbind(
 \amp, Pwhite(0.1, 0.4),
 \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
 \gain, 0.9,
-\orbit, ~out1_2
+\orbit, ~out1
 ),
 Pbind(
 \type, \dirt,
@@ -399,7 +399,7 @@ Pbind(
 \amp, Pwhite(0.1, 0.4),
 \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
 \gain, 0.9,
-\orbit, ~out1_2
+\orbit, ~out1
 )
 ])
 );*/
@@ -423,7 +423,7 @@ Pdef(\noise,
             // \delayfeedback, 0.5,
             // \delaySend, 1,
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         ),
         Pbind(
             \type, \dirt,
@@ -434,7 +434,7 @@ Pdef(\noise,
             \crush, 4,
             \distort, 0.1,
             \gain, 0.75,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -451,7 +451,7 @@ Pdef(\chimes,
             \dur, Pseq([16, Rest(8)], inf),
             \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -469,7 +469,7 @@ Pdef(\modular,
             \room, Pseq([0.5, 0.25, 0], inf),
             \size, Pseq([0.5, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -487,7 +487,7 @@ Pdef(\scissors,
             \room, Pseq([0.5, 0.25, 0], inf),
             \size, Pseq([0.5, 0.25, 0], inf),
             \gain, 1,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -505,7 +505,7 @@ Pdef(\intro,
             \room, Pseq([0.5, 0.25], inf),
             \size, Pseq([0.5, 0.25], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -523,7 +523,7 @@ Pdef(\choir,
             \room, Pseq([0.5, 0.25], inf),
             \size, Pseq([0.5, 0.25], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -541,7 +541,7 @@ Pdef(\sunrise,
             \room, Pseq([0.5, 0.25], inf),
             \size, Pseq([0.5, 0.25], inf),
             \gain, 0.7,
-            \orbit, ~out1_2
+            \orbit, ~out1
         ),
     ])
 );
@@ -571,7 +571,7 @@ Pdef(
         // \phaserrate, 0.8,
         // \psratio, 1,
         \gain, 0.85,
-        \orbit, ~out1_2
+        \orbit, ~out7
     );
 );
 
@@ -588,7 +588,7 @@ Pdef(\running,
             \room, Pseq([0.5, 0.25], inf),
             \size, Pseq([0.5, 0.25], inf),
             \gain, 0.8,
-            \orbit, ~out1_2
+            \orbit, ~out1
         ),
     ])
 );
@@ -622,7 +622,7 @@ Pdef(\chipsoul,
                 Pseq([200], 1),
             ], inf),
             \gain, 0.85,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -641,7 +641,7 @@ Pdef(\chipsoul2,
             \size, Pseq([0.5], inf),
             \hcutoff, Pseq([400, 800, 2400], inf),
             \gain, 0.5,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -675,7 +675,7 @@ Pdef(\pulser,
             \crush, Pwrand([50, 4], [20, 1].normalizeSum, inf),
             // \pan, 0.5,
             \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -700,7 +700,7 @@ Pdef(\teleharmonic,
             // \room, Pseq([0.5, 0.25], inf),
             // \size, Pseq([0.5, 0.25], inf),
             \gain, 0.9,
-            \orbit, ~out1_2
+            \orbit, ~out1
         ),
         Pbind(
             \type, \dirt,
@@ -718,7 +718,7 @@ Pdef(\teleharmonic,
             \delayfb, 0.8,
             \pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
             \gain, 0.95,
-            \orbit, ~out1_2
+            \orbit, ~out1
         )
     ])
 );
@@ -736,7 +736,7 @@ Pdef(\oooh,
         	\room, Pseq([0.5, 0.25, 0], inf),
         	\size, Pseq([0.5, 0.25, 0], inf),
         	\gain, 0.85,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -754,7 +754,7 @@ Pdef(\move,
         	\room, Pseq([0.5, 0.25, 0], inf),
         	\size, Pseq([0.5, 0.25, 0], inf),
         	\gain, 0.85,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -772,7 +772,7 @@ Pdef(\beat,
         	\room, Pseq([0.5, 0.25, 0], inf),
         	\size, Pseq([0.5, 0.25, 0], inf),
         	\gain, 0.85,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -790,7 +790,7 @@ Pdef(\dubground,
         	\room, Pseq([0.5, 0.25, 0], inf),
         	\size, Pseq([0.5, 0.25, 0], inf),
         	\gain, 0.75,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -808,7 +808,7 @@ Pdef(\sellotape,
         	\room, Pseq([0.75, 0.25, 0], inf),
         	\size, Pseq([0.75, 0.25, 0], inf),
         	\gain, 1,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -826,7 +826,7 @@ Pdef(\paperrip,
         	\room, Pseq([0.75, 0.25, 0], inf),
         	\size, Pseq([0.75, 0.25, 0], inf),
         	\gain, 1.2,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -844,7 +844,7 @@ Pdef(\bubblewrap,
         	\room, Pseq([0.75, 0.25, 0], inf),
         	\size, Pseq([0.75, 0.25, 0], inf),
         	\gain, 0.85,
-        	\orbit, ~out1_2
+        	\orbit, ~out1
     	)
 	])
 );
@@ -862,7 +862,7 @@ Pdef(\synthpluck,
    		 \room, Pseq([0.75, 0.25, 0], inf),
    		 \size, Pseq([0.75, 0.25, 0], inf),
    		 \gain, 1,
-   		 \orbit, ~out1_2
+   		 \orbit, ~out1
    	 )
     ])
 );
@@ -880,7 +880,7 @@ Pdef(\synthpluck2,
    		 \room, Pseq([0.75, 0.25, 0], inf),
    		 \size, Pseq([0.75, 0.25, 0], inf),
    		 \gain, 1,
-   		 \orbit, ~out1_2
+   		 \orbit, ~out1
    	 )
     ])
 );
@@ -898,7 +898,7 @@ Pdef(\chordpluck,
    		 \room, Pseq([0.75, 0.25, 0], inf),
    		 \size, Pseq([0.75, 0.25, 0], inf),
    		 \gain, 0.85,
-   		 \orbit, ~out1_2
+   		 \orbit, ~out1
    	 )
     ])
 );
@@ -916,7 +916,7 @@ Pdef(\percrump,
    		 \room, Pseq([0.75, 0.25, 0], inf),
    		 \size, Pseq([0.75, 0.25, 0], inf),
    		 \gain, 0.85,
-   		 \orbit, ~out1_2
+   		 \orbit, ~out1
    	 )
     ])
 );
@@ -933,8 +933,8 @@ Pdef(\peratmos,
         	\pan, Pseq([Prand([0, 0.25, 0.75, 1])], inf),
         	\room, Pseq([0.5, 0.25], inf),
         	\size, Pseq([0.5, 0.25], inf),
-        	\gain, 0.65,
-        	\orbit, ~out1_2
+        	\gain, 0.45,
+        	\orbit, ~out5
     	),
 	])
 );
@@ -952,7 +952,7 @@ Pdef(\padwater,
         	\room, Pseq([0.5, 0.25], inf),
         	\size, Pseq([0.5, 0.25], inf),
         	\gain, 0.65,
-        	\orbit, ~out1_2
+        	\orbit, ~out3
     	),
 	])
 );
@@ -970,7 +970,7 @@ Pdef(\bassy,
    		 \room, Pseq([0.75, 0.25, 0], inf),
    		 \size, Pseq([0.75, 0.25, 0], inf),
    		 \gain, 0.9,
-   		 \orbit, ~out1_2
+   		 \orbit, ~out1
    	 )
     ])
 );

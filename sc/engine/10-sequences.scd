@@ -18,7 +18,7 @@ Pdef(\rumble,
             \shape, 0.3,
             \distort, 0.01,
             \cutoff, 50,
-            \orbit, ~out1
+            \orbit, ~out7
         ),
         Pbind(
             \type, \dirt,
@@ -28,7 +28,7 @@ Pdef(\rumble,
             \dur, Pseq([16, Rest(1)], inf),
             \gain, 0.8,
             \room, Pseq([0, 0, 0.4], inf),
-            \orbit, ~out1
+            \orbit, ~out7
         )
     ])
 );
@@ -47,7 +47,7 @@ Pdef(\industrial,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([0, 0.25, 0.75, 1], inf),
             \gain, 0.85,
-            \orbit, ~out1
+            \orbit, ~out3
         )
     ])
 );
@@ -83,7 +83,7 @@ Pdef(\pool,
             \room, Pseq([0, 0.25, 0.75, 1], inf),
             \size, Pseq([1, 0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1
+            \orbit, ~out6
         )
     ])
 );
@@ -141,7 +141,7 @@ Pdef(\cymbals,
             \hbrick, Pseq([Pwrand([0, 0.1, 0.2],[0.7, 0.2, 0.1])], inf),
             \enhance, 0.05,
             \gain, 0.6,
-            \orbit, ~out1
+            \orbit, ~out5
         )
     ])
 );
@@ -199,7 +199,7 @@ Pdef(\gravity,
             \room, Pseq([0, 0.25, 0.75], inf),
             \size, Pseq([0.75, 0.25, 0], inf),
             \gain, 0.85,
-            \orbit, ~out1
+            \orbit, ~out15
         )
     ])
 );
@@ -505,7 +505,7 @@ Pdef(\intro,
             \room, Pseq([0.5, 0.25], inf),
             \size, Pseq([0.5, 0.25], inf),
             \gain, 0.9,
-            \orbit, ~out1
+            \orbit, ~out4
         )
     ])
 );
@@ -934,7 +934,7 @@ Pdef(\peratmos,
         	\room, Pseq([0.5, 0.25], inf),
         	\size, Pseq([0.5, 0.25], inf),
         	\gain, 0.45,
-        	\orbit, ~out5
+        	\orbit, ~out9
     	),
 	])
 );

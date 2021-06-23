@@ -242,7 +242,7 @@ Pdef(\paper,
 
 //// pad ///////////////////////////////////////////////////////////////////////
 Pbindef(\pad,
-    \instrument, \osc,
+    \instrument, \mspWaves,
     \dur, Pseq([Rest(10.rand), Prand([1,6,12]),2   , Rest(5.rand), 1.5, 0.5], inf),
     \atk, Pexprand(3,6),
     \sus, 0,
@@ -264,7 +264,7 @@ Pbindef(\pad,
 
 //// pad2 //////////////////////////////////////////////////////////////////////
 Pbindef(\pad2,
-    \instrument, \osc,
+    \instrument, \mspWaves,
     \dur, Prand([
         Pseq([Rest(10.rand), Prand([12,16,20]),2   , 1.5, 0.5], 1),
         Pseq([Rest(10.rand), Prand([12,16,20]),1.5, 1   , 1.5], 1),

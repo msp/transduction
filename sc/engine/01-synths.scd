@@ -93,37 +93,38 @@ SynthDef(\mspWaves, {
     arg buf=0, freq=200, detune=0.2,
     amp=0.2, pan=0, out=0, rout=0, rsend=(-20),
     atk=0.01, sustain=1, rel=0.01, c0=1, c1=(-1),
-    mAttackTime = 0.01,
-    mDecayTime = 0.2,
-    mDecayLevel = 0.5,
-    mHoldTime = 0.95,
-    mHoldLevel = 0.5,
-    mReleaseTime = 1;
+	// mAttackTime = 0.01,
+	// mDecayTime = 0.2,
+	// mDecayLevel = 0.5,
+	// mHoldTime = 0.95,
+	// mHoldLevel = 0.5,
+	// mReleaseTime = 1;
+	foo = 1;
 
     var sig, envShape, env, detuneCtrl;
 
-    // env = EnvGen.ar(
-    //     Env([0,1,1,0],[atk,sus,rel],[c0,0,c1]),
-    //     // timeScale:sus, //MSP
-    //     doneAction:2
-    // );
+    env = EnvGen.ar(
+        Env([0,1,1,0],[atk,sustain,rel],[c0,0,c1]),
+        // timeScale:sus, //MSP
+        doneAction:2
+    );
 
     // These must be our universal shape defaults for use with Processing
-    envShape = Env.pairs([
-        [0,0],
-        [mAttackTime,1],
-        [mDecayTime, mDecayLevel],
-        [mHoldTime,mHoldLevel],
-        [mReleaseTime,0]], -1);
-
-    env = EnvGen.kr(envShape, timeScale:sustain, doneAction:2);
+	// envShape = Env.pairs([
+	// 	[0,0],
+	// 	[mAttackTime,1],
+	// 	[mDecayTime, mDecayLevel],
+	// 	[mHoldTime,mHoldLevel],
+	// [mReleaseTime,0]], -1);
+	//
+	// env = EnvGen.kr(envShape, timeScale:sustain, doneAction:2);
 
 
     //array of eight Oscs with uniquely detune frequencies
     //and unique initial phase offsets
     detuneCtrl = LFNoise1.kr(0.1!8).bipolar(detune).midiratio;
-    //sig = Osc.ar(buf, freq * detuneCtrl, {Rand(0,2pi)}!8);
-    sig = Osc.ar(~wt_buf[5], freq * detuneCtrl, {Rand(0,2pi)}!8); // MSP
+	sig = Osc.ar(buf, freq * detuneCtrl, {Rand(0,2pi)}!8);
+	// sig = Osc.ar(~wt_buf[5], freq * detuneCtrl, {Rand(0,2pi)}!8); // MSP
 
     sig = Splay.ar(sig); //spread 8 signals over stereo field
     sig = LeakDC.ar(sig); //remove DC bias
@@ -131,7 +132,22 @@ SynthDef(\mspWaves, {
     sig = sig * env;
 
     // Out.ar(out, sig);
+	// Out.ar(rout, sig * rsend.dbamp); //"post-fader" send to reverb
     OffsetOut.ar(out, DirtPan.ar(sig, ~dirt.numChannels, pan, env))
+}).add;
+
+SynthDef(\reverb, {
+    arg in=0, out=0, dec=4, lpf=1500;
+    var sig;
+    sig = In.ar(in, 2).sum;
+    sig = DelayN.ar(sig, 0.03, 0.03);
+    sig = CombN.ar(sig, 0.1, {Rand(0.01,0.099)}!32, dec);
+    sig = SplayAz.ar(2, sig);
+    sig = LPF.ar(sig, lpf);
+    5.do{sig = AllpassN.ar(sig, 0.1, {Rand(0.01,0.099)}!2, 3)};
+    sig = LPF.ar(sig, lpf);
+    sig = LeakDC.ar(sig);
+    Out.ar(out, sig);
 }).add;
 
 SynthDef(\mspVibSawPlucker, {
